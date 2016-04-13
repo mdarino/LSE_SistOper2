@@ -9,10 +9,10 @@
 .settings
 
 # Own makefile or mine template
-*.mine
+#*.mine
 
 # Own projects
-projects
+#projects
 
 # Docbook
 *.fo
