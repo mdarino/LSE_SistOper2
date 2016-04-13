@@ -1,5 +1,7 @@
 <h1>Readme</h1>
 
+MARCOS DARINO: VER PROJECT -> SOLO SE REALIZARON EJERCICIOS PARA LA MATERIA RTOS 2, EL RESTO CORRESPONDE AL CIAA FIRMWARE DESCRIPTO:
+
 This is the root directory of the CIAA Firmware Project
 
 <h2>Quality report</h2>
