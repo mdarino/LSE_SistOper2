@@ -93,5 +93,10 @@ BOARD          ?= edu_ciaa_nxp
 # examples/rtos_example              (example using rtos)
 #
 #PROJECT_PATH ?= projects$(DS)baremetal
-PROJECT_PATH  ?= projects$(DS)osekExample
+#PROJECT_PATH  ?= projects$(DS)osekExample
 #PROJECT_PATH ?= examples$(DS)blinking
+
+
+#PROJECT_PATH  ?= projects$(DS)1_1
+#PROJECT_PATH  ?= projects$(DS)1_2
+PROJECT_PATH  ?= projects$(DS)1_3

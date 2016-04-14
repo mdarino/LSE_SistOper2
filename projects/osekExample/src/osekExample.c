@@ -137,17 +137,7 @@ TASK(InitTask)
  */
 TASK(PeriodicTask)
 {
-    // if (test==0)
-    // {
-    //   test=1;
-    //   led_SetON(LED_1);
-    // }
-    // else
-    // {
-    //   test=0;
-    //   led_SetOFF(LED_1);
-    // }
-    // 
+
    led_SetToggle(LED_1);
    led_SetToggle(LED_2);
    /* terminate task */
