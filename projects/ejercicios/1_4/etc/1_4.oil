@@ -73,7 +73,7 @@ OSEK OSEK {
       EVENT = POSIXE;
    }
 
-   TASK PeriodicTask {
+   TASK ButtonTask {
       PRIORITY = 2;
       ACTIVATION = 1;
       STACK = 512;
@@ -83,11 +83,30 @@ OSEK OSEK {
       EVENT = POSIXE;
    }
 
-   ALARM ActivatePeriodicTask {
+   TASK LedTask {
+      PRIORITY = 2;
+      ACTIVATION = 1;
+      STACK = 512;
+      TYPE = EXTENDED;
+      SCHEDULE = NON;
+      RESOURCE = POSIXR;
+      EVENT = POSIXE;
+   }
+
+   ALARM ActivateButtonTask {
       COUNTER = HardwareCounter;
       ACTION = ACTIVATETASK {
-         TASK = PeriodicTask;
+         TASK = ButtonTask;
       }
+      AUTOSTART = FALSE;
+   }
+
+   ALARM ActivateLedTask {
+      COUNTER = HardwareCounter;
+      ACTION = ACTIVATETASK {
+         TASK = LedTask;
+      }
+      AUTOSTART = FALSE;
    }
 
    COUNTER HardwareCounter {

@@ -107,4 +107,4 @@ BOARD          ?= edu_ciaa_nxp
 #PROJECT_PATH  ?= projects/templace/$(DS)example
 #PROJECT_PATH  ?= projects/poxis/$(DS)blinking3
 
-PROJECT_PATH  ?= projects/ejercicios/$(DS)1_3
+PROJECT_PATH  ?= projects/ejercicios/$(DS)1_4

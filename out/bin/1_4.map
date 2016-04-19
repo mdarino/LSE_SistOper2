@@ -111,17 +111,19 @@ Allocating common symbols
 Common symbol       size              file
 
 ReadyList0          0x1               ./out/lib/rtos.a(Os_Internal_Cfg.o)
+StackTaskButtonTask
+                    0x200             ./out/lib/rtos.a(Os_Internal_Cfg.o)
 Osek_ErrorRet       0x4               ./out/lib/rtos.a(Os_Cfg.o)
 ApplicationMode     0x1               ./out/lib/rtos.a(Os_Internal_Cfg.o)
 ciaaSerialDevices   0x3c4             ./out/lib/posix.a(ciaaSerialDevices.o)
 StackTaskInitTask   0x200             ./out/lib/rtos.a(Os_Internal_Cfg.o)
 ReadyVar            0x4               ./out/lib/rtos.a(Os_Internal_Cfg.o)
-AlarmsVar           0xc               ./out/lib/rtos.a(Os_Internal_Cfg.o)
+AlarmsVar           0x18              ./out/lib/rtos.a(Os_Internal_Cfg.o)
 DisableAllInterrupts_Counter
                     0x1               ./out/lib/rtos.a(Os.o)
 Osek_OldTaskPtr_Arch
                     0x4               ./out/lib/rtos.a(Os_Internal_Arch.o)
-ReadyList1          0x1               ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ReadyList1          0x2               ./out/lib/rtos.a(Os_Internal_Cfg.o)
 SystemCoreClock     0x4               ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
 ContextTaskInitTask
                     0x4               ./out/lib/rtos.a(Os_Internal_Cfg.o)
@@ -129,7 +131,10 @@ first_chunk_header  0x4               ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
 ciaaPOSIX_stdlib_sem
                     0x1               ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
 ErrorHookRunning    0x1               ./out/lib/rtos.a(Os_Internal_Cfg.o)
+StackTaskLedTask    0x200             ./out/lib/rtos.a(Os_Internal_Cfg.o)
 ciaaDioDevices      0x54              ./out/lib/posix.a(ciaaDioDevices.o)
+ContextTaskButtonTask
+                    0x4               ./out/lib/rtos.a(Os_Internal_Cfg.o)
 Osek_ErrorApi       0x4               ./out/lib/rtos.a(Os_Cfg.o)
 RunningTask         0x1               ./out/lib/rtos.a(Os_Internal.o)
 Osek_ErrorParam3    0x4               ./out/lib/rtos.a(Os_Cfg.o)
@@ -141,17 +146,14 @@ ciaaPOSIX_stdio_fildes
 SuspendAllInterrupts_Counter
                     0x1               ./out/lib/rtos.a(Os.o)
 ciaaBlockDevices    0x144             ./out/lib/posix.a(ciaaBlockDevices.o)
-TasksVar            0x28              ./out/lib/rtos.a(Os_Internal_Cfg.o)
-ContextTaskPeriodicTask
-                    0x4               ./out/lib/rtos.a(Os_Internal_Cfg.o)
+TasksVar            0x3c              ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ContextTaskLedTask  0x4               ./out/lib/rtos.a(Os_Internal_Cfg.o)
 uartControl         0x33              ./out/lib/drivers.a(ciaaDriverUart.o)
 Osek_ErrorParam1    0x4               ./out/lib/rtos.a(Os_Cfg.o)
 Osek_ErrorParam2    0x4               ./out/lib/rtos.a(Os_Cfg.o)
 aioControl          0x84              ./out/lib/drivers.a(ciaaDriverAio.o)
 SuspendOSInterrupts_Counter
                     0x1               ./out/lib/rtos.a(Os.o)
-StackTaskPeriodicTask
-                    0x200             ./out/lib/rtos.a(Os_Internal_Cfg.o)
 ciaaPOSIX_errno     0x2               ./out/lib/posix.a(ciaaPOSIX_errno.o)
 ActualContext       0x1               ./out/lib/rtos.a(Os_Internal.o)
 
@@ -394,10 +396,6 @@ Discarded input sections
  .text          0x00000000        0x0 ./out/obj/DRIVER_GPIO.o
  .data          0x00000000        0x0 ./out/obj/DRIVER_GPIO.o
  .bss           0x00000000        0x0 ./out/obj/DRIVER_GPIO.o
- .text.Chip_GPIO_SetPinToggle
-                0x00000000       0x30 ./out/obj/DRIVER_GPIO.o
- .text.GPIO_Toggle
-                0x00000000       0x28 ./out/obj/DRIVER_GPIO.o
  .text.GPIO_setValue
                 0x00000000       0x30 ./out/obj/DRIVER_GPIO.o
  .debug_macro   0x00000000      0x868 ./out/obj/DRIVER_GPIO.o
@@ -504,8 +502,6 @@ Discarded input sections
  .text          0x00000000        0x0 ./out/obj/HW_leds.o
  .data          0x00000000        0x0 ./out/obj/HW_leds.o
  .bss           0x00000000        0x0 ./out/obj/HW_leds.o
- .text.led_SetToggle
-                0x00000000       0x30 ./out/obj/HW_leds.o
  .text.led_Test
                 0x00000000       0x74 ./out/obj/HW_leds.o
  .debug_macro   0x00000000      0x868 ./out/obj/HW_leds.o
@@ -628,7 +624,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x22 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .debug_macro   0x00000000       0x3b ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .debug_macro   0x00000000       0x28 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .debug_macro   0x00000000      0x155 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .group         0x00000000        0x8 ./out/lib/posix.a(ciaaPOSIX_assert.o)
@@ -911,7 +907,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x40 ./out/lib/drivers.a(ciaaDriverUart.o)
  .debug_macro   0x00000000       0x22 ./out/lib/drivers.a(ciaaDriverUart.o)
  .debug_macro   0x00000000       0x6b ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_macro   0x00000000       0x6b ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/drivers.a(ciaaDriverUart.o)
  .debug_macro   0x00000000       0x28 ./out/lib/drivers.a(ciaaDriverUart.o)
  .debug_macro   0x00000000      0x155 ./out/lib/drivers.a(ciaaDriverUart.o)
  .group         0x00000000        0x8 ./out/lib/drivers.a(ciaaDriverDio.o)
@@ -1242,7 +1238,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x22 ./out/lib/drivers.a(ciaaDriverAio.o)
  .debug_macro   0x00000000       0x2e ./out/lib/drivers.a(ciaaDriverAio.o)
  .debug_macro   0x00000000       0x6b ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_macro   0x00000000       0x6b ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/drivers.a(ciaaDriverAio.o)
  .debug_macro   0x00000000       0x28 ./out/lib/drivers.a(ciaaDriverAio.o)
  .debug_macro   0x00000000      0x155 ./out/lib/drivers.a(ciaaDriverAio.o)
  .group         0x00000000        0x8 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
@@ -2324,7 +2320,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(StartOS.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(StartOS.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(StartOS.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(StartOS.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(StartOS.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(StartOS.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(StartOS.o)
  .debug_macro   0x00000000       0x84 ./out/lib/rtos.a(StartOS.o)
@@ -2348,7 +2344,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os_Internal.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os_Internal.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os_Internal.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os_Internal.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os_Internal.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os_Internal.o)
@@ -2375,7 +2371,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Schedule.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Schedule.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Schedule.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Schedule.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Schedule.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Schedule.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Schedule.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Schedule.o)
@@ -2402,7 +2398,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(ActivateTask.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ActivateTask.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(ActivateTask.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ActivateTask.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(ActivateTask.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(ActivateTask.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(ActivateTask.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(ActivateTask.o)
@@ -2429,7 +2425,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os.o)
@@ -2456,7 +2452,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(TerminateTask.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(TerminateTask.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(TerminateTask.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(TerminateTask.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(TerminateTask.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(TerminateTask.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(TerminateTask.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(TerminateTask.o)
@@ -2483,7 +2479,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(ShutdownOS.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ShutdownOS.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(ShutdownOS.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(ShutdownOS.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(ShutdownOS.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(ShutdownOS.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(ShutdownOS.o)
@@ -2510,7 +2506,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(GetResource.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(GetResource.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(GetResource.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(GetResource.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(GetResource.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(GetResource.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(GetResource.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(GetResource.o)
@@ -2537,7 +2533,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(ReleaseResource.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ReleaseResource.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(ReleaseResource.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(ReleaseResource.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(ReleaseResource.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(ReleaseResource.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(ReleaseResource.o)
@@ -2564,7 +2560,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(SetRelAlarm.o)
@@ -2591,7 +2587,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(StartOs_Arch.o)
@@ -2618,7 +2614,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os_Internal_Arch.o)
@@ -2645,7 +2641,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os_Cfg.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Cfg.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os_Cfg.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Cfg.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os_Cfg.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os_Cfg.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os_Cfg.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os_Cfg.o)
@@ -2674,7 +2670,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os_Internal_Cfg.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os_Internal_Cfg.o)
@@ -2754,7 +2750,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
@@ -2830,7 +2826,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(SetEvent.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(SetEvent.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(SetEvent.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(SetEvent.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(SetEvent.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(SetEvent.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(SetEvent.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(SetEvent.o)
@@ -3003,7 +2999,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x22 ./out/lib/posix.a(ciaaSerialDevices.o)
  .debug_macro   0x00000000       0x3b ./out/lib/posix.a(ciaaSerialDevices.o)
  .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/posix.a(ciaaSerialDevices.o)
  .debug_macro   0x00000000       0x28 ./out/lib/posix.a(ciaaSerialDevices.o)
  .debug_macro   0x00000000      0x155 ./out/lib/posix.a(ciaaSerialDevices.o)
  .group         0x00000000        0x8 ./out/lib/posix.a(ciaaBlockDevices.o)
@@ -3085,7 +3081,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x22 ./out/lib/posix.a(ciaaBlockDevices.o)
  .debug_macro   0x00000000       0x3b ./out/lib/posix.a(ciaaBlockDevices.o)
  .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/posix.a(ciaaBlockDevices.o)
  .debug_macro   0x00000000       0x28 ./out/lib/posix.a(ciaaBlockDevices.o)
  .debug_macro   0x00000000      0x155 ./out/lib/posix.a(ciaaBlockDevices.o)
  .group         0x00000000        0x8 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
@@ -3190,7 +3186,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x22 ./out/lib/posix.a(ciaaDioDevices.o)
  .debug_macro   0x00000000       0x3b ./out/lib/posix.a(ciaaDioDevices.o)
  .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_macro   0x00000000       0x6b ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/posix.a(ciaaDioDevices.o)
  .debug_macro   0x00000000       0x28 ./out/lib/posix.a(ciaaDioDevices.o)
  .debug_macro   0x00000000      0x155 ./out/lib/posix.a(ciaaDioDevices.o)
  .group         0x00000000        0x8 ./out/lib/posix.a(ciaaPOSIX_errno.o)
@@ -3340,7 +3336,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(GetTaskID.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(GetTaskID.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(GetTaskID.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(GetTaskID.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(GetTaskID.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(GetTaskID.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(GetTaskID.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(GetTaskID.o)
@@ -3367,7 +3363,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(ClearEvent.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ClearEvent.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(ClearEvent.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(ClearEvent.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(ClearEvent.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(ClearEvent.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(ClearEvent.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(ClearEvent.o)
@@ -3394,7 +3390,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3b ./out/lib/rtos.a(WaitEvent.o)
  .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(WaitEvent.o)
  .debug_macro   0x00000000       0x12 ./out/lib/rtos.a(WaitEvent.o)
- .debug_macro   0x00000000       0x6b ./out/lib/rtos.a(WaitEvent.o)
+ .debug_macro   0x00000000       0x77 ./out/lib/rtos.a(WaitEvent.o)
  .debug_macro   0x00000000       0x28 ./out/lib/rtos.a(WaitEvent.o)
  .debug_macro   0x00000000      0x155 ./out/lib/rtos.a(WaitEvent.o)
  .debug_macro   0x00000000       0x82 ./out/lib/rtos.a(WaitEvent.o)
@@ -3533,7 +3529,7 @@ END GROUP
  *(.rodata.$Flash2*)
  *(.rodata.$MFlashB512*)
 
-.text           0x1a000000     0x62c8
+.text           0x1a000000     0x63b0
  FILL mask 0xff
                 0x1a000000                __vectors_start__ = ABSOLUTE (.)
  *(.isr_vector)
@@ -3542,25 +3538,25 @@ END GROUP
                 0x1a000114                . = ALIGN (0x4)
                 0x1a000114                __section_table_start = .
                 0x1a000114                __data_section_table = .
-                0x1a000114        0x4 LONG 0x1a0062c8 LOADADDR (.data)
+                0x1a000114        0x4 LONG 0x1a0063b0 LOADADDR (.data)
                 0x1a000118        0x4 LONG 0x10000000 ADDR (.data)
                 0x1a00011c        0x4 LONG 0x1f0 SIZEOF (.data)
-                0x1a000120        0x4 LONG 0x1a0062c8 LOADADDR (.data_RAM2)
+                0x1a000120        0x4 LONG 0x1a0063b0 LOADADDR (.data_RAM2)
                 0x1a000124        0x4 LONG 0x10080000 ADDR (.data_RAM2)
                 0x1a000128        0x4 LONG 0x0 SIZEOF (.data_RAM2)
-                0x1a00012c        0x4 LONG 0x1a0062c8 LOADADDR (.data_RAM3)
+                0x1a00012c        0x4 LONG 0x1a0063b0 LOADADDR (.data_RAM3)
                 0x1a000130        0x4 LONG 0x20000000 ADDR (.data_RAM3)
                 0x1a000134        0x4 LONG 0x0 SIZEOF (.data_RAM3)
-                0x1a000138        0x4 LONG 0x1a0062c8 LOADADDR (.data_RAM4)
+                0x1a000138        0x4 LONG 0x1a0063b0 LOADADDR (.data_RAM4)
                 0x1a00013c        0x4 LONG 0x20008000 ADDR (.data_RAM4)
                 0x1a000140        0x4 LONG 0x0 SIZEOF (.data_RAM4)
-                0x1a000144        0x4 LONG 0x1a0062c8 LOADADDR (.data_RAM5)
+                0x1a000144        0x4 LONG 0x1a0063b0 LOADADDR (.data_RAM5)
                 0x1a000148        0x4 LONG 0x2000c000 ADDR (.data_RAM5)
                 0x1a00014c        0x4 LONG 0x0 SIZEOF (.data_RAM5)
                 0x1a000150                __data_section_table_end = .
                 0x1a000150                __bss_section_table = .
                 0x1a000150        0x4 LONG 0x100001f0 ADDR (.bss)
-                0x1a000154        0x4 LONG 0x3278 SIZEOF (.bss)
+                0x1a000154        0x4 LONG 0x34a4 SIZEOF (.bss)
                 0x1a000158        0x4 LONG 0x10080000 ADDR (.bss_RAM2)
                 0x1a00015c        0x4 LONG 0x0 SIZEOF (.bss_RAM2)
                 0x1a000160        0x4 LONG 0x20000000 ADDR (.bss_RAM3)
@@ -3620,610 +3616,621 @@ END GROUP
  .text.OSEK_TASK_InitTask
                 0x1a000550       0x50 ./out/obj/main.o
                 0x1a000550                OSEK_TASK_InitTask
- .text.OSEK_TASK_PeriodicTask
-                0x1a0005a0       0x98 ./out/obj/main.o
-                0x1a0005a0                OSEK_TASK_PeriodicTask
+ .text.OSEK_TASK_ButtonTask
+                0x1a0005a0       0xb8 ./out/obj/main.o
+                0x1a0005a0                OSEK_TASK_ButtonTask
+ .text.OSEK_TASK_LedTask
+                0x1a000658       0x10 ./out/obj/main.o
+                0x1a000658                OSEK_TASK_LedTask
  .text.Chip_SCU_PinMuxSet
-                0x1a000638       0x30 ./out/obj/DRIVER_GPIO.o
+                0x1a000668       0x30 ./out/obj/DRIVER_GPIO.o
  .text.Chip_GPIO_SetPinState
-                0x1a000668       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a000698       0x28 ./out/obj/DRIVER_GPIO.o
  .text.Chip_GPIO_ReadPortBit
-                0x1a000690       0x34 ./out/obj/DRIVER_GPIO.o
+                0x1a0006c0       0x34 ./out/obj/DRIVER_GPIO.o
  .text.Chip_GPIO_SetPinDIROutput
-                0x1a0006c4       0x3c ./out/obj/DRIVER_GPIO.o
+                0x1a0006f4       0x3c ./out/obj/DRIVER_GPIO.o
  .text.Chip_GPIO_SetPinDIRInput
-                0x1a000700       0x40 ./out/obj/DRIVER_GPIO.o
+                0x1a000730       0x40 ./out/obj/DRIVER_GPIO.o
+ .text.Chip_GPIO_SetPinToggle
+                0x1a000770       0x30 ./out/obj/DRIVER_GPIO.o
  .text.GPIO_setAsInput
-                0x1a000740       0x28 ./out/obj/DRIVER_GPIO.o
-                0x1a000740                GPIO_setAsInput
+                0x1a0007a0       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a0007a0                GPIO_setAsInput
  .text.GPIO_setAsOutput
-                0x1a000768       0x28 ./out/obj/DRIVER_GPIO.o
-                0x1a000768                GPIO_setAsOutput
+                0x1a0007c8       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a0007c8                GPIO_setAsOutput
  .text.GPIO_setON
-                0x1a000790       0x28 ./out/obj/DRIVER_GPIO.o
-                0x1a000790                GPIO_setON
+                0x1a0007f0       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a0007f0                GPIO_setON
  .text.GPIO_SetOFF
-                0x1a0007b8       0x28 ./out/obj/DRIVER_GPIO.o
-                0x1a0007b8                GPIO_SetOFF
+                0x1a000818       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a000818                GPIO_SetOFF
+ .text.GPIO_Toggle
+                0x1a000840       0x28 ./out/obj/DRIVER_GPIO.o
+                0x1a000840                GPIO_Toggle
  .text.GPIO_pinConfiguration
-                0x1a0007e0       0x2c ./out/obj/DRIVER_GPIO.o
-                0x1a0007e0                GPIO_pinConfiguration
+                0x1a000868       0x2c ./out/obj/DRIVER_GPIO.o
+                0x1a000868                GPIO_pinConfiguration
  .text.GPIO_getValue
-                0x1a00080c       0x2c ./out/obj/DRIVER_GPIO.o
-                0x1a00080c                GPIO_getValue
+                0x1a000894       0x2c ./out/obj/DRIVER_GPIO.o
+                0x1a000894                GPIO_getValue
  .text.led_SetON
-                0x1a000838       0x30 ./out/obj/HW_leds.o
-                0x1a000838                led_SetON
+                0x1a0008c0       0x30 ./out/obj/HW_leds.o
+                0x1a0008c0                led_SetON
  .text.led_SetOFF
-                0x1a000868       0x30 ./out/obj/HW_leds.o
-                0x1a000868                led_SetOFF
+                0x1a0008f0       0x30 ./out/obj/HW_leds.o
+                0x1a0008f0                led_SetOFF
+ .text.led_SetToggle
+                0x1a000920       0x30 ./out/obj/HW_leds.o
+                0x1a000920                led_SetToggle
  .text.led_Init
-                0x1a000898       0x80 ./out/obj/HW_leds.o
-                0x1a000898                led_Init
+                0x1a000950       0x80 ./out/obj/HW_leds.o
+                0x1a000950                led_Init
  .text.ciaaPOSIX_open
-                0x1a000918      0x108 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
-                0x1a000918                ciaaPOSIX_open
+                0x1a0009d0      0x108 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+                0x1a0009d0                ciaaPOSIX_open
  .text.ciaaPOSIX_printf
-                0x1a000a20       0x20 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
-                0x1a000a20                ciaaPOSIX_printf
+                0x1a000ad8       0x20 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+                0x1a000ad8                ciaaPOSIX_printf
  .text.ciaaPOSIX_strlen
-                0x1a000a40       0x30 ./out/lib/posix.a(ciaaPOSIX_string.o)
-                0x1a000a40                ciaaPOSIX_strlen
+                0x1a000af8       0x30 ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x1a000af8                ciaaPOSIX_strlen
  .text.ciaaPOSIX_strcat
-                0x1a000a70       0x4c ./out/lib/posix.a(ciaaPOSIX_string.o)
-                0x1a000a70                ciaaPOSIX_strcat
+                0x1a000b28       0x4c ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x1a000b28                ciaaPOSIX_strcat
  .text.ciaaPOSIX_strncmp
-                0x1a000abc       0xa4 ./out/lib/posix.a(ciaaPOSIX_string.o)
-                0x1a000abc                ciaaPOSIX_strncmp
+                0x1a000b74       0xa4 ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x1a000b74                ciaaPOSIX_strncmp
  .text.ciaaPOSIX_memcpy
-                0x1a000b60       0x38 ./out/lib/posix.a(ciaaPOSIX_string.o)
-                0x1a000b60                ciaaPOSIX_memcpy
+                0x1a000c18       0x38 ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x1a000c18                ciaaPOSIX_memcpy
  .text.ciaaPOSIX_memset
-                0x1a000b98       0x34 ./out/lib/posix.a(ciaaPOSIX_string.o)
-                0x1a000b98                ciaaPOSIX_memset
+                0x1a000c50       0x34 ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x1a000c50                ciaaPOSIX_memset
  .text.ciaaDevices_init
-                0x1a000bcc       0x18 ./out/lib/posix.a(ciaaDevices.o)
-                0x1a000bcc                ciaaDevices_init
+                0x1a000c84       0x18 ./out/lib/posix.a(ciaaDevices.o)
+                0x1a000c84                ciaaDevices_init
  .text.ciaaDevices_addDevice
-                0x1a000be4       0x40 ./out/lib/posix.a(ciaaDevices.o)
-                0x1a000be4                ciaaDevices_addDevice
+                0x1a000c9c       0x40 ./out/lib/posix.a(ciaaDevices.o)
+                0x1a000c9c                ciaaDevices_addDevice
  .text.ciaaDevices_getDevice
-                0x1a000c24       0x7c ./out/lib/posix.a(ciaaDevices.o)
-                0x1a000c24                ciaaDevices_getDevice
+                0x1a000cdc       0x7c ./out/lib/posix.a(ciaaDevices.o)
+                0x1a000cdc                ciaaDevices_getDevice
  .text.ciaak_start
-                0x1a000ca0       0x28 ./out/lib/ciaak.a(ciaak_main.o)
-                0x1a000ca0                ciaak_start
+                0x1a000d58       0x28 ./out/lib/ciaak.a(ciaak_main.o)
+                0x1a000d58                ciaak_start
  .text.ciaak_malloc
-                0x1a000cc8       0x2c ./out/lib/ciaak.a(ciaak_main.o)
-                0x1a000cc8                ciaak_malloc
+                0x1a000d80       0x2c ./out/lib/ciaak.a(ciaak_main.o)
+                0x1a000d80                ciaak_malloc
  .text.Chip_SCU_PinMuxSet
-                0x1a000cf4       0x30 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000dac       0x30 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_SCU_PinMux
-                0x1a000d24       0x2c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000ddc       0x2c ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_TXEnable
-                0x1a000d50       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e08       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_SendByte
-                0x1a000d68       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e20       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_ReadByte
-                0x1a000d84       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e3c       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_IntEnable
-                0x1a000da0       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e58       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_IntDisable
-                0x1a000dc0       0x24 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e78       0x24 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_SetupFIFOS
-                0x1a000de4       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000e9c       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_ReadLineStatus
-                0x1a000e00       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000eb8       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.Chip_UART_SetRS485Flags
-                0x1a000e18       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000ed0       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.ciaaDriverUart_txConfirmation
-                0x1a000e38       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000ef0       0x1c ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.ciaaDriverUart_hwInit
-                0x1a000e54       0xc8 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000f0c       0xc8 ./out/lib/drivers.a(ciaaDriverUart.o)
  .text.ciaaDriverUart_open
-                0x1a000f1c       0x3c ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a000f1c                ciaaDriverUart_open
+                0x1a000fd4       0x3c ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a000fd4                ciaaDriverUart_open
  .text.ciaaDriverUart_close
-                0x1a000f58       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a000f58                ciaaDriverUart_close
+                0x1a001010       0x20 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a001010                ciaaDriverUart_close
  .text.ciaaDriverUart_ioctl
-                0x1a000f78      0x100 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a000f78                ciaaDriverUart_ioctl
+                0x1a001030      0x100 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a001030                ciaaDriverUart_ioctl
  .text.ciaaDriverUart_read
-                0x1a001078       0xd0 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a001078                ciaaDriverUart_read
+                0x1a001130       0xd0 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a001130                ciaaDriverUart_read
  .text.ciaaDriverUart_write
-                0x1a001148       0x78 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a001148                ciaaDriverUart_write
+                0x1a001200       0x78 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a001200                ciaaDriverUart_write
  .text.ciaaDriverUart_init
-                0x1a0011c0       0x38 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x1a0011c0                ciaaDriverUart_init
+                0x1a001278       0x38 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a001278                ciaaDriverUart_init
  .text.Chip_SCU_PinMuxSet
-                0x1a0011f8       0x30 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a0012b0       0x30 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.Chip_SCU_PinMux
-                0x1a001228       0x2c ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a0012e0       0x2c ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.Chip_GPIO_SetPinState
-                0x1a001254       0x28 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a00130c       0x28 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.Chip_GPIO_GetPinState
-                0x1a00127c       0x38 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001334       0x38 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.Chip_GPIO_ClearValue
-                0x1a0012b4       0x28 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a00136c       0x28 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaa_lpc4337_gpio_init
-                0x1a0012dc      0x128 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001394      0x128 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaa_lpc4337_writeOutput
-                0x1a001404       0x48 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a0014bc       0x48 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaa_lpc4337_readInput
-                0x1a00144c       0x4c ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001504       0x4c ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaa_lpc4337_readOutput
-                0x1a001498       0x4c ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001550       0x4c ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaa_lpc4337_readPins
-                0x1a0014e4       0xb8 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a00159c       0xb8 ./out/lib/drivers.a(ciaaDriverDio.o)
  .text.ciaaDriverDio_open
-                0x1a00159c       0x1c ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a00159c                ciaaDriverDio_open
+                0x1a001654       0x1c ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001654                ciaaDriverDio_open
  .text.ciaaDriverDio_close
-                0x1a0015b8       0x18 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a0015b8                ciaaDriverDio_close
+                0x1a001670       0x18 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001670                ciaaDriverDio_close
  .text.ciaaDriverDio_ioctl
-                0x1a0015d0       0x1c ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a0015d0                ciaaDriverDio_ioctl
+                0x1a001688       0x1c ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001688                ciaaDriverDio_ioctl
  .text.ciaaDriverDio_read
-                0x1a0015ec       0x64 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a0015ec                ciaaDriverDio_read
+                0x1a0016a4       0x64 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a0016a4                ciaaDriverDio_read
  .text.ciaaDriverDio_write
-                0x1a001650       0xb4 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a001650                ciaaDriverDio_write
+                0x1a001708       0xb4 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a001708                ciaaDriverDio_write
  .text.ciaaDriverDio_init
-                0x1a001704       0x38 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a001704                ciaaDriverDio_init
+                0x1a0017bc       0x38 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a0017bc                ciaaDriverDio_init
  .text.ciaaDriverFlash_init
-                0x1a00173c        0xc ./out/lib/drivers.a(ciaaDriverFlash.o)
-                0x1a00173c                ciaaDriverFlash_init
+                0x1a0017f4        0xc ./out/lib/drivers.a(ciaaDriverFlash.o)
+                0x1a0017f4                ciaaDriverFlash_init
  .text.NVIC_EnableIRQ
-                0x1a001748       0x30 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001800       0x30 ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.NVIC_DisableIRQ
-                0x1a001778       0x34 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001830       0x34 ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.NVIC_SetPriority
-                0x1a0017ac       0x54 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001864       0x54 ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.Chip_SCU_DAC_Analog_Config
-                0x1a001800       0x20 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a0018b8       0x20 ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.Chip_DAC_ConfigDAConverterControl
-                0x1a001820       0x28 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a0018d8       0x28 ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.Chip_DAC_SetDMATimeOut
-                0x1a001848       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001900       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.ciaaDriverAio_txConfirmation
-                0x1a001864       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a00191c       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
  .text.ciaa_lpc4337_aio_init
-                0x1a001880      0x108 ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001880                ciaa_lpc4337_aio_init
+                0x1a001938      0x108 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001938                ciaa_lpc4337_aio_init
  .text.ciaaDriverAio_open
-                0x1a001988       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001988                ciaaDriverAio_open
+                0x1a001a40       0x1c ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001a40                ciaaDriverAio_open
  .text.ciaaDriverAio_close
-                0x1a0019a4       0x70 ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a0019a4                ciaaDriverAio_close
+                0x1a001a5c       0x70 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001a5c                ciaaDriverAio_close
  .text.ciaaDriverAio_ioctl
-                0x1a001a14      0x364 ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001a14                ciaaDriverAio_ioctl
+                0x1a001acc      0x364 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001acc                ciaaDriverAio_ioctl
  .text.ciaaDriverAio_read
-                0x1a001d78       0xdc ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001d78                ciaaDriverAio_read
+                0x1a001e30       0xdc ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001e30                ciaaDriverAio_read
  .text.ciaaDriverAio_write
-                0x1a001e54      0x10c ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001e54                ciaaDriverAio_write
+                0x1a001f0c      0x10c ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a001f0c                ciaaDriverAio_write
  .text.ciaaDriverAio_init
-                0x1a001f60       0x38 ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x1a001f60                ciaaDriverAio_init
+                0x1a002018       0x38 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a002018                ciaaDriverAio_init
  .text.Chip_GPIO_Init
-                0x1a001f98       0x14 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
-                0x1a001f98                Chip_GPIO_Init
+                0x1a002050       0x14 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+                0x1a002050                Chip_GPIO_Init
  .text.Chip_GPIO_SetDir
-                0x1a001fac       0x5c ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
-                0x1a001fac                Chip_GPIO_SetDir
+                0x1a002064       0x5c ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+                0x1a002064                Chip_GPIO_SetDir
  .text.Chip_UART_TXDisable
-                0x1a002008       0x18 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0020c0       0x18 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_SetupFIFOS
-                0x1a002020       0x1c ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0020d8       0x1c ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_ConfigData
-                0x1a00203c       0x1c ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0020f4       0x1c ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_EnableDivisorAccess
-                0x1a002058       0x20 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a002110       0x20 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_DisableDivisorAccess
-                0x1a002078       0x20 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a002130       0x20 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_SetDivisorLatches
-                0x1a002098       0x28 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a002150       0x28 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_GetIndex
-                0x1a0020c0       0x60 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a002178       0x60 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .text.Chip_UART_Init
-                0x1a002120       0x84 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
-                0x1a002120                Chip_UART_Init
+                0x1a0021d8       0x84 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0021d8                Chip_UART_Init
  .text.Chip_UART_SetBaud
-                0x1a0021a4       0x70 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
-                0x1a0021a4                Chip_UART_SetBaud
+                0x1a00225c       0x70 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a00225c                Chip_UART_SetBaud
  .text.ResetISR
-                0x1a002214       0xe4 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
-                0x1a002214                ResetISR
+                0x1a0022cc       0xe4 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+                0x1a0022cc                ResetISR
  .text.getFullConvClk
-                0x1a0022f8       0x10 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a0023b0       0x10 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
  .text.Chip_ADC_GetClockIndex
-                0x1a002308       0x2c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a0023c0       0x2c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
  .text.getClkDiv
-                0x1a002334       0x60 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a0023ec       0x60 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
  .text.setStartMode
-                0x1a002394       0x2c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a002394                setStartMode
+                0x1a00244c       0x2c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a00244c                setStartMode
  .text.Chip_ADC_Init
-                0x1a0023c0       0x84 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a0023c0                Chip_ADC_Init
+                0x1a002478       0x84 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a002478                Chip_ADC_Init
  .text.Chip_ADC_Int_SetChannelCmd
-                0x1a002444       0x48 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a002444                Chip_ADC_Int_SetChannelCmd
+                0x1a0024fc       0x48 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a0024fc                Chip_ADC_Int_SetChannelCmd
  .text.Chip_ADC_SetStartMode
-                0x1a00248c       0x4c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a00248c                Chip_ADC_SetStartMode
+                0x1a002544       0x4c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a002544                Chip_ADC_SetStartMode
  .text.Chip_ADC_SetSampleRate
-                0x1a0024d8       0x64 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a0024d8                Chip_ADC_SetSampleRate
+                0x1a002590       0x64 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a002590                Chip_ADC_SetSampleRate
  .text.Chip_ADC_SetResolution
-                0x1a00253c       0x28 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a00253c                Chip_ADC_SetResolution
+                0x1a0025f4       0x28 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a0025f4                Chip_ADC_SetResolution
  .text.Chip_ADC_EnableChannel
-                0x1a002564       0x54 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a002564                Chip_ADC_EnableChannel
+                0x1a00261c       0x54 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a00261c                Chip_ADC_EnableChannel
  .text.Chip_ADC_SetBurstCmd
-                0x1a0025b8       0x3c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
-                0x1a0025b8                Chip_ADC_SetBurstCmd
+                0x1a002670       0x3c ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x1a002670                Chip_ADC_SetBurstCmd
  .text.configDMAMux
-                0x1a0025f4      0x1fc ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a0026ac      0x1fc ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
  .text.makeCtrlWord
-                0x1a0027f0      0x128 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a0027f0                makeCtrlWord
+                0x1a0028a8      0x128 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a0028a8                makeCtrlWord
  .text.setupChannel
-                0x1a002918       0xc0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002918                setupChannel
+                0x1a0029d0       0xc0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a0029d0                setupChannel
  .text.Chip_GPDMA_Init
-                0x1a0029d8       0x68 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a0029d8                Chip_GPDMA_Init
+                0x1a002a90       0x68 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002a90                Chip_GPDMA_Init
  .text.Chip_GPDMA_InitChannelCfg
-                0x1a002a40       0xe4 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002a40                Chip_GPDMA_InitChannelCfg
+                0x1a002af8       0xe4 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002af8                Chip_GPDMA_InitChannelCfg
  .text.Chip_GPDMA_IntGetStatus
-                0x1a002b24       0xc0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002b24                Chip_GPDMA_IntGetStatus
+                0x1a002bdc       0xc0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002bdc                Chip_GPDMA_IntGetStatus
  .text.Chip_GPDMA_ChannelCmd
-                0x1a002be4       0x48 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002be4                Chip_GPDMA_ChannelCmd
+                0x1a002c9c       0x48 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002c9c                Chip_GPDMA_ChannelCmd
  .text.Chip_GPDMA_Transfer
-                0x1a002c2c       0xf8 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002c2c                Chip_GPDMA_Transfer
+                0x1a002ce4       0xf8 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002ce4                Chip_GPDMA_Transfer
  .text.Chip_GPDMA_GetFreeChannel
-                0x1a002d24       0x58 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
-                0x1a002d24                Chip_GPDMA_GetFreeChannel
+                0x1a002ddc       0x58 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a002ddc                Chip_GPDMA_GetFreeChannel
  .text.Chip_DAC_Init
-                0x1a002d7c       0x24 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
-                0x1a002d7c                Chip_DAC_Init
+                0x1a002e34       0x24 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+                0x1a002e34                Chip_DAC_Init
  .text.Chip_DAC_SetBias
-                0x1a002da0       0x34 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
-                0x1a002da0                Chip_DAC_SetBias
- .text.ABS      0x1a002dd4       0x24 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a002e58       0x34 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+                0x1a002e58                Chip_DAC_SetBias
+ .text.ABS      0x1a002e8c       0x24 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .text.pll_calc_divs
-                0x1a002df8      0x11c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a002eb0      0x11c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .text.pll_get_frac
-                0x1a002f14      0x178 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a002fcc      0x178 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .text.Chip_Clock_GetDivRate
-                0x1a00308c       0x40 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a003144       0x40 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .text.Chip_Clock_FindBaseClock
-                0x1a0030cc       0x88 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a003184       0x88 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .text.Chip_Clock_EnableCrystal
-                0x1a003154       0x6c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003154                Chip_Clock_EnableCrystal
+                0x1a00320c       0x6c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a00320c                Chip_Clock_EnableCrystal
  .text.Chip_Clock_CalcMainPLLValue
-                0x1a0031c0       0xd4 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a0031c0                Chip_Clock_CalcMainPLLValue
+                0x1a003278       0xd4 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a003278                Chip_Clock_CalcMainPLLValue
  .text.Chip_Clock_GetMainPLLHz
-                0x1a003294       0xc0 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003294                Chip_Clock_GetMainPLLHz
+                0x1a00334c       0xc0 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a00334c                Chip_Clock_GetMainPLLHz
  .text.Chip_Clock_GetDividerSource
-                0x1a003354       0x40 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003354                Chip_Clock_GetDividerSource
+                0x1a00340c       0x40 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a00340c                Chip_Clock_GetDividerSource
  .text.Chip_Clock_GetDividerDivisor
-                0x1a003394       0x38 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003394                Chip_Clock_GetDividerDivisor
+                0x1a00344c       0x38 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a00344c                Chip_Clock_GetDividerDivisor
  .text.Chip_Clock_GetClockInputHz
-                0x1a0033cc      0x140 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a0033cc                Chip_Clock_GetClockInputHz
+                0x1a003484      0x140 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a003484                Chip_Clock_GetClockInputHz
  .text.Chip_Clock_GetBaseClocktHz
-                0x1a00350c       0x24 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a00350c                Chip_Clock_GetBaseClocktHz
+                0x1a0035c4       0x24 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a0035c4                Chip_Clock_GetBaseClocktHz
  .text.Chip_Clock_SetBaseClock
-                0x1a003530       0x8c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003530                Chip_Clock_SetBaseClock
+                0x1a0035e8       0x8c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a0035e8                Chip_Clock_SetBaseClock
  .text.Chip_Clock_GetBaseClock
-                0x1a0035bc       0x4c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a0035bc                Chip_Clock_GetBaseClock
+                0x1a003674       0x4c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a003674                Chip_Clock_GetBaseClock
  .text.Chip_Clock_EnableOpts
-                0x1a003608       0x7c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003608                Chip_Clock_EnableOpts
+                0x1a0036c0       0x7c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a0036c0                Chip_Clock_EnableOpts
  .text.Chip_Clock_GetRate
-                0x1a003684       0x88 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
-                0x1a003684                Chip_Clock_GetRate
+                0x1a00373c       0x88 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a00373c                Chip_Clock_GetRate
  .text.SystemInit
-                0x1a00370c       0x1c ./out/lib/ext_drivers.a(sysinit.o)
-                0x1a00370c                SystemInit
- .text.fpuInit  0x1a003728       0x74 ./out/lib/ext_drivers.a(fpu_init.o)
-                0x1a003728                fpuInit
+                0x1a0037c4       0x1c ./out/lib/ext_drivers.a(sysinit.o)
+                0x1a0037c4                SystemInit
+ .text.fpuInit  0x1a0037e0       0x74 ./out/lib/ext_drivers.a(fpu_init.o)
+                0x1a0037e0                fpuInit
  .text.Chip_Clock_DisableMainPLL
-                0x1a00379c       0x1c ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a003854       0x1c ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
  .text.Chip_Clock_SetupMainPLL
-                0x1a0037b8       0x40 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a003870       0x40 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
  .text.Chip_Clock_MainPLLLocked
-                0x1a0037f8       0x24 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a0038b0       0x24 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
  .text.Chip_SetupCoreClock
-                0x1a00381c      0x15c ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
-                0x1a00381c                Chip_SetupCoreClock
+                0x1a0038d4      0x15c ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a0038d4                Chip_SetupCoreClock
  .text.Chip_SetupIrcClocking
-                0x1a003978       0x14 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
-                0x1a003978                Chip_SetupIrcClocking
+                0x1a003a30       0x14 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a003a30                Chip_SetupIrcClocking
  .text.Chip_SystemInit
-                0x1a00398c        0xc ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
-                0x1a00398c                Chip_SystemInit
- .text.StartOS  0x1a003998       0xc8 ./out/lib/rtos.a(StartOS.o)
-                0x1a003998                StartOS
+                0x1a003a44        0xc ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a003a44                Chip_SystemInit
+ .text.StartOS  0x1a003a50       0xc8 ./out/lib/rtos.a(StartOS.o)
+                0x1a003a50                StartOS
  .text.AddReady
-                0x1a003a60       0xb0 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003a60                AddReady
+                0x1a003b18       0xb0 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003b18                AddReady
  .text.RemoveTask
-                0x1a003b10       0x98 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003b10                RemoveTask
+                0x1a003bc8       0x98 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003bc8                RemoveTask
  .text.GetNextTask
-                0x1a003ba8       0xe8 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003ba8                GetNextTask
+                0x1a003c60       0xe8 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003c60                GetNextTask
  .text.OSEK_ISR_NoHandler
-                0x1a003c90        0x8 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003c90                OSEK_ISR_NoHandler
+                0x1a003d48        0x8 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003d48                OSEK_ISR_NoHandler
  .text.IncrementAlarm
-                0x1a003c98      0x228 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003c98                IncrementAlarm
+                0x1a003d50      0x228 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003d50                IncrementAlarm
  .text.IncrementCounter
-                0x1a003ec0       0xe8 ./out/lib/rtos.a(Os_Internal.o)
-                0x1a003ec0                IncrementCounter
+                0x1a003f78       0xe8 ./out/lib/rtos.a(Os_Internal.o)
+                0x1a003f78                IncrementCounter
  .text.Schedule_Int
-                0x1a003fa8      0x2bc ./out/lib/rtos.a(Schedule.o)
-                0x1a003fa8                Schedule_Int
+                0x1a004060      0x2bc ./out/lib/rtos.a(Schedule.o)
+                0x1a004060                Schedule_Int
  .text.ActivateTask
-                0x1a004264      0x190 ./out/lib/rtos.a(ActivateTask.o)
-                0x1a004264                ActivateTask
+                0x1a00431c      0x190 ./out/lib/rtos.a(ActivateTask.o)
+                0x1a00431c                ActivateTask
  .text.TerminateTask
-                0x1a0043f4      0x158 ./out/lib/rtos.a(TerminateTask.o)
-                0x1a0043f4                TerminateTask
+                0x1a0044ac      0x158 ./out/lib/rtos.a(TerminateTask.o)
+                0x1a0044ac                TerminateTask
  .text.ShutdownOS
-                0x1a00454c        0xc ./out/lib/rtos.a(ShutdownOS.o)
-                0x1a00454c                ShutdownOS
+                0x1a004604        0xc ./out/lib/rtos.a(ShutdownOS.o)
+                0x1a004604                ShutdownOS
  .text.GetResource
-                0x1a004558      0x168 ./out/lib/rtos.a(GetResource.o)
-                0x1a004558                GetResource
+                0x1a004610      0x168 ./out/lib/rtos.a(GetResource.o)
+                0x1a004610                GetResource
  .text.ReleaseResource
-                0x1a0046c0      0x188 ./out/lib/rtos.a(ReleaseResource.o)
-                0x1a0046c0                ReleaseResource
+                0x1a004778      0x188 ./out/lib/rtos.a(ReleaseResource.o)
+                0x1a004778                ReleaseResource
  .text.SetRelAlarm
-                0x1a004848      0x194 ./out/lib/rtos.a(SetRelAlarm.o)
-                0x1a004848                SetRelAlarm
+                0x1a004900      0x194 ./out/lib/rtos.a(SetRelAlarm.o)
+                0x1a004900                SetRelAlarm
  .text.StartOs_Arch_Cpu
-                0x1a0049dc       0x10 ./out/lib/rtos.a(StartOs_Arch.o)
-                0x1a0049dc                StartOs_Arch_Cpu
+                0x1a004a94       0x10 ./out/lib/rtos.a(StartOs_Arch.o)
+                0x1a004a94                StartOs_Arch_Cpu
  .text.StartOs_Arch
-                0x1a0049ec       0x2c ./out/lib/rtos.a(StartOs_Arch.o)
-                0x1a0049ec                StartOs_Arch
+                0x1a004aa4       0x2c ./out/lib/rtos.a(StartOs_Arch.o)
+                0x1a004aa4                StartOs_Arch
  .text.ReturnHook_Arch
-                0x1a004a18        0x8 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                0x1a004a18                ReturnHook_Arch
+                0x1a004ad0        0x8 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x1a004ad0                ReturnHook_Arch
  .text.CheckTerminatingTask_Arch
-                0x1a004a20       0x24 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                0x1a004a20                CheckTerminatingTask_Arch
+                0x1a004ad8       0x24 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x1a004ad8                CheckTerminatingTask_Arch
  .text.InitStack_Arch
-                0x1a004a44       0xc4 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                0x1a004a44                InitStack_Arch
+                0x1a004afc       0xc4 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x1a004afc                InitStack_Arch
  .text.SysTick_Handler
-                0x1a004b08       0x68 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                0x1a004b08                SysTick_Handler
+                0x1a004bc0       0x68 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x1a004bc0                SysTick_Handler
  .text.Enable_User_ISRs
-                0x1a004b70        0xc ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
-                0x1a004b70                Enable_User_ISRs
+                0x1a004c28        0xc ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+                0x1a004c28                Enable_User_ISRs
  .text.SetEvent
-                0x1a004b7c      0x228 ./out/lib/rtos.a(SetEvent.o)
-                0x1a004b7c                SetEvent
+                0x1a004c34      0x228 ./out/lib/rtos.a(SetEvent.o)
+                0x1a004c34                SetEvent
  .text.NVIC_SetPriority
-                0x1a004da4       0x54 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+                0x1a004e5c       0x54 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
  .text.SysTick_Config
-                0x1a004df8       0x44 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+                0x1a004eb0       0x44 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
  .text.StartOs_Arch_SysTick
-                0x1a004e3c       0x48 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
-                0x1a004e3c                StartOs_Arch_SysTick
- .text          0x1a004e84       0x7c ./out/lib/rtos.a(PendSV.o)
-                0x1a004e84                PendSV_Handler
+                0x1a004ef4       0x48 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+                0x1a004ef4                StartOs_Arch_SysTick
+ .text          0x1a004f3c       0x7c ./out/lib/rtos.a(PendSV.o)
+                0x1a004f3c                PendSV_Handler
  .text.ciaaSerialDevices_init
-                0x1a004f00       0x58 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a004f00                ciaaSerialDevices_init
+                0x1a004fb8       0x58 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a004fb8                ciaaSerialDevices_init
  .text.ciaaSerialDevices_addDriver
-                0x1a004f58      0x170 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a004f58                ciaaSerialDevices_addDriver
+                0x1a005010      0x170 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a005010                ciaaSerialDevices_addDriver
  .text.ciaaSerialDevices_open
-                0x1a0050c8       0x74 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a0050c8                ciaaSerialDevices_open
+                0x1a005180       0x74 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a005180                ciaaSerialDevices_open
  .text.ciaaSerialDevices_close
-                0x1a00513c       0x20 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a00513c                ciaaSerialDevices_close
+                0x1a0051f4       0x20 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a0051f4                ciaaSerialDevices_close
  .text.ciaaSerialDevices_ioctl
-                0x1a00515c       0xe8 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a00515c                ciaaSerialDevices_ioctl
+                0x1a005214       0xe8 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a005214                ciaaSerialDevices_ioctl
  .text.ciaaSerialDevices_read
-                0x1a005244       0xb8 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a005244                ciaaSerialDevices_read
+                0x1a0052fc       0xb8 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a0052fc                ciaaSerialDevices_read
  .text.ciaaSerialDevices_write
-                0x1a0052fc       0xd4 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a0052fc                ciaaSerialDevices_write
+                0x1a0053b4       0xd4 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a0053b4                ciaaSerialDevices_write
  .text.ciaaSerialDevices_txConfirmation
-                0x1a0053d0      0x12c ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x1a0053d0                ciaaSerialDevices_txConfirmation
+                0x1a005488      0x12c ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x1a005488                ciaaSerialDevices_txConfirmation
  .text.ciaaBlockDevices_init
-                0x1a0054fc       0x4c ./out/lib/posix.a(ciaaBlockDevices.o)
-                0x1a0054fc                ciaaBlockDevices_init
+                0x1a0055b4       0x4c ./out/lib/posix.a(ciaaBlockDevices.o)
+                0x1a0055b4                ciaaBlockDevices_init
  .text.ciaaPOSIX_chunk_partition
-                0x1a005548       0x5c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x1a005600       0x5c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
  .text.ciaaPOSIX_stdlib_init
-                0x1a0055a4       0x44 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
-                0x1a0055a4                ciaaPOSIX_stdlib_init
+                0x1a00565c       0x44 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x1a00565c                ciaaPOSIX_stdlib_init
  .text.ciaaPOSIX_malloc
-                0x1a0055e8       0x60 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
-                0x1a0055e8                ciaaPOSIX_malloc
+                0x1a0056a0       0x60 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x1a0056a0                ciaaPOSIX_malloc
  .text.ciaaPOSIX_sem_init
-                0x1a005648       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
-                0x1a005648                ciaaPOSIX_sem_init
+                0x1a005700       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+                0x1a005700                ciaaPOSIX_sem_init
  .text.ciaaPOSIX_sem_wait
-                0x1a005660       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
-                0x1a005660                ciaaPOSIX_sem_wait
+                0x1a005718       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+                0x1a005718                ciaaPOSIX_sem_wait
  .text.ciaaPOSIX_sem_post
-                0x1a005678       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
-                0x1a005678                ciaaPOSIX_sem_post
+                0x1a005730       0x18 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+                0x1a005730                ciaaPOSIX_sem_post
  .text.ciaaDioDevices_addDriver
-                0x1a005690       0xf8 ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a005690                ciaaDioDevices_addDriver
+                0x1a005748       0xf8 ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a005748                ciaaDioDevices_addDriver
  .text.ciaaDioDevices_open
-                0x1a005788       0x50 ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a005788                ciaaDioDevices_open
+                0x1a005840       0x50 ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a005840                ciaaDioDevices_open
  .text.ciaaDioDevices_close
-                0x1a0057d8       0x20 ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a0057d8                ciaaDioDevices_close
+                0x1a005890       0x20 ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a005890                ciaaDioDevices_close
  .text.ciaaDioDevices_ioctl
-                0x1a0057f8       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a0057f8                ciaaDioDevices_ioctl
+                0x1a0058b0       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a0058b0                ciaaDioDevices_ioctl
  .text.ciaaDioDevices_read
-                0x1a005824       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a005824                ciaaDioDevices_read
+                0x1a0058dc       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a0058dc                ciaaDioDevices_read
  .text.ciaaDioDevices_write
-                0x1a005850       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a005850                ciaaDioDevices_write
+                0x1a005908       0x2c ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a005908                ciaaDioDevices_write
  .text.SystemCoreClockUpdate
-                0x1a00587c       0x18 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
-                0x1a00587c                SystemCoreClockUpdate
+                0x1a005934       0x18 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+                0x1a005934                SystemCoreClockUpdate
  .text.GetTaskID
-                0x1a005894       0x24 ./out/lib/rtos.a(GetTaskID.o)
-                0x1a005894                GetTaskID
+                0x1a00594c       0x24 ./out/lib/rtos.a(GetTaskID.o)
+                0x1a00594c                GetTaskID
  .text.ClearEvent
-                0x1a0058b8      0x11c ./out/lib/rtos.a(ClearEvent.o)
-                0x1a0058b8                ClearEvent
+                0x1a005970      0x11c ./out/lib/rtos.a(ClearEvent.o)
+                0x1a005970                ClearEvent
  .text.WaitEvent
-                0x1a0059d4      0x22c ./out/lib/rtos.a(WaitEvent.o)
-                0x1a0059d4                WaitEvent
+                0x1a005a8c      0x22c ./out/lib/rtos.a(WaitEvent.o)
+                0x1a005a8c                WaitEvent
  .text.ciaaLibs_circBufInit
-                0x1a005c00       0x5c ./out/lib/libs.a(ciaaLibs_CircBuf.o)
-                0x1a005c00                ciaaLibs_circBufInit
+                0x1a005cb8       0x5c ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+                0x1a005cb8                ciaaLibs_circBufInit
  .text.ciaaLibs_circBufPut
-                0x1a005c5c       0xcc ./out/lib/libs.a(ciaaLibs_CircBuf.o)
-                0x1a005c5c                ciaaLibs_circBufPut
+                0x1a005d14       0xcc ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+                0x1a005d14                ciaaLibs_circBufPut
  .text.ciaaLibs_circBufGet
-                0x1a005d28       0xc8 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
-                0x1a005d28                ciaaLibs_circBufGet
- .text.memset   0x1a005df0       0x94 c:/ciaa/cygwin/usr/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7e-m/softfp\libc.a(lib_a-memset.o)
-                0x1a005df0                memset
+                0x1a005de0       0xc8 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+                0x1a005de0                ciaaLibs_circBufGet
+ .text.memset   0x1a005ea8       0x94 c:/ciaa/cygwin/usr/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7e-m/softfp\libc.a(lib_a-memset.o)
+                0x1a005ea8                memset
  *(.rodata .rodata.* .constdata .constdata.*)
- .rodata        0x1a005e84       0x58 ./out/obj/main.o
- .rodata        0x1a005edc       0x30 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .rodata        0x1a005f0c       0x2c ./out/lib/posix.a(ciaaPOSIX_assert.o)
+ .rodata        0x1a005f3c       0x58 ./out/obj/main.o
+ .rodata        0x1a005f94       0x30 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .rodata        0x1a005fc4       0x2c ./out/lib/posix.a(ciaaPOSIX_assert.o)
  .rodata.ciaaPOSIX_assert_msg
-                0x1a005f38        0x4 ./out/lib/posix.a(ciaaPOSIX_assert.o)
-                0x1a005f38                ciaaPOSIX_assert_msg
- .rodata        0x1a005f3c       0x20 ./out/lib/ciaak.a(ciaak_main.o)
- .rodata        0x1a005f5c       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a005ff0        0x4 ./out/lib/posix.a(ciaaPOSIX_assert.o)
+                0x1a005ff0                ciaaPOSIX_assert_msg
+ .rodata        0x1a005ff4       0x20 ./out/lib/ciaak.a(ciaak_main.o)
+ .rodata        0x1a006014       0x18 ./out/lib/drivers.a(ciaaDriverUart.o)
  .rodata.ciaaUartDevices
-                0x1a005f74        0xc ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x1a00602c        0xc ./out/lib/drivers.a(ciaaDriverUart.o)
  .rodata.ciaaDriverDio_Inputs
-                0x1a005f80       0x20 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a005f80                ciaaDriverDio_Inputs
+                0x1a006038       0x20 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a006038                ciaaDriverDio_Inputs
  .rodata.ciaaDriverDio_Outputs
-                0x1a005fa0       0x48 ./out/lib/drivers.a(ciaaDriverDio.o)
-                0x1a005fa0                ciaaDriverDio_Outputs
- .rodata        0x1a005fe8       0x10 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a006058       0x48 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x1a006058                ciaaDriverDio_Outputs
+ .rodata        0x1a0060a0       0x10 ./out/lib/drivers.a(ciaaDriverDio.o)
  .rodata.ciaaDioDevices
-                0x1a005ff8        0x8 ./out/lib/drivers.a(ciaaDriverDio.o)
- .rodata        0x1a006000       0x24 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a0060b0        0x8 ./out/lib/drivers.a(ciaaDriverDio.o)
+ .rodata        0x1a0060b8       0x24 ./out/lib/drivers.a(ciaaDriverAio.o)
  .rodata.ciaaAioDevices
-                0x1a006024        0xc ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x1a0060dc        0xc ./out/lib/drivers.a(ciaaDriverAio.o)
  .rodata.UART_PClock
-                0x1a006030        0x8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0060e8        0x8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .rodata.UART_BClock
-                0x1a006038        0x8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x1a0060f0        0x8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .rodata.GPDMA_LUTPerBurst
-                0x1a006040       0x20 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a0060f8       0x20 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
  .rodata.GPDMA_LUTPerWid
-                0x1a006060       0x20 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x1a006118       0x20 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
  .rodata.periph_to_base
-                0x1a006080       0x6c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .rodata        0x1a0060ec        0xc ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1a006138       0x6c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .rodata        0x1a0061a4        0xc ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .rodata.ExtRateIn
-                0x1a0060f8        0x4 ./out/lib/ext_drivers.a(sysinit.o)
-                0x1a0060f8                ExtRateIn
+                0x1a0061b0        0x4 ./out/lib/ext_drivers.a(sysinit.o)
+                0x1a0061b0                ExtRateIn
  .rodata.OscRateIn
-                0x1a0060fc        0x4 ./out/lib/ext_drivers.a(sysinit.o)
-                0x1a0060fc                OscRateIn
+                0x1a0061b4        0x4 ./out/lib/ext_drivers.a(sysinit.o)
+                0x1a0061b4                OscRateIn
  .rodata.InitClkStates
-                0x1a006100       0x48 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x1a0061b8       0x48 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
  .rodata.OSEK_ALARMLIST_HardwareCounter
-                0x1a006148        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a006148                OSEK_ALARMLIST_HardwareCounter
+                0x1a006200        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006200                OSEK_ALARMLIST_HardwareCounter
  .rodata.TasksConst
-                0x1a00614c       0x38 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a00614c                TasksConst
+                0x1a006204       0x54 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006204                TasksConst
  .rodata.TasksAppModeAppMode1
-                0x1a006184        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a006184                TasksAppModeAppMode1
+                0x1a006258        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006258                TasksAppModeAppMode1
  .rodata.AutoStart
-                0x1a006188        0x8 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a006188                AutoStart
+                0x1a00625c        0x8 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a00625c                AutoStart
  .rodata.ReadyConst
-                0x1a006190       0x10 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a006190                ReadyConst
+                0x1a006264       0x10 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006264                ReadyConst
  .rodata.ResourcesPriority
-                0x1a0061a0        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a0061a0                ResourcesPriority
+                0x1a006274        0x4 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006274                ResourcesPriority
  .rodata.AlarmsConst
-                0x1a0061a4       0x14 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a0061a4                AlarmsConst
+                0x1a006278       0x28 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a006278                AlarmsConst
  .rodata.CountersConst
-                0x1a0061b8       0x14 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x1a0061b8                CountersConst
- .rodata        0x1a0061cc       0xa0 ./out/lib/posix.a(ciaaSerialDevices.o)
- .rodata        0x1a00626c       0x5c ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1a0062c8                . = ALIGN (0x4)
+                0x1a0062a0       0x14 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x1a0062a0                CountersConst
+ .rodata        0x1a0062b4       0xa0 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .rodata        0x1a006354       0x5c ./out/lib/posix.a(ciaaDioDevices.o)
+                0x1a0063b0                . = ALIGN (0x4)
 
-.glue_7         0x1a0062c8        0x0
+.glue_7         0x1a0063b0        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x1a0062c8        0x0
+.glue_7t        0x1a0063b0        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x1a0062c8        0x0
+.vfp11_veneer   0x1a0063b0        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x1a0062c8        0x0
+.v4_bx          0x1a0063b0        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x1a0062c8        0x0
+.iplt           0x1a0063b0        0x0
  .iplt          0x00000000        0x0 ./out/obj/HW_buttons.o
 
-.rel.dyn        0x1a0062c8        0x0
+.rel.dyn        0x1a0063b0        0x0
  .rel.iplt      0x00000000        0x0 ./out/obj/HW_buttons.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x1a0062c8                __exidx_start = .
+                0x1a0063b0                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x1a0062c8                __exidx_end = .
-                0x1a0062c8                _etext = .
+                0x1a0063b0                __exidx_end = .
+                0x1a0063b0                _etext = .
 
-.data_RAM2      0x10080000        0x0 load address 0x1a0062c8
+.data_RAM2      0x10080000        0x0 load address 0x1a0063b0
  FILL mask 0xff
  *(.ramfunc.$RAM2)
  *(.ramfunc.$RamLoc40)
@@ -4231,7 +4238,7 @@ END GROUP
  *(.data.$RamLoc40*)
                 0x10080000                . = ALIGN (0x4)
 
-.data_RAM3      0x20000000        0x0 load address 0x1a0062c8
+.data_RAM3      0x20000000        0x0 load address 0x1a0063b0
  FILL mask 0xff
  *(.ramfunc.$RAM3)
  *(.ramfunc.$RamAHB32)
@@ -4239,7 +4246,7 @@ END GROUP
  *(.data.$RamAHB32*)
                 0x20000000                . = ALIGN (0x4)
 
-.data_RAM4      0x20008000        0x0 load address 0x1a0062c8
+.data_RAM4      0x20008000        0x0 load address 0x1a0063b0
  FILL mask 0xff
  *(.ramfunc.$RAM4)
  *(.ramfunc.$RamAHB16)
@@ -4247,7 +4254,7 @@ END GROUP
  *(.data.$RamAHB16*)
                 0x20008000                . = ALIGN (0x4)
 
-.data_RAM5      0x2000c000        0x0 load address 0x1a0062c8
+.data_RAM5      0x2000c000        0x0 load address 0x1a0063b0
  FILL mask 0xff
  *(.ramfunc.$RAM5)
  *(.ramfunc.$RamAHB_ETB16)
@@ -4261,7 +4268,7 @@ END GROUP
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _end_uninit_RESERVED = .
 
-.data           0x10000000      0x1f0 load address 0x1a0062c8
+.data           0x10000000      0x1f0 load address 0x1a0063b0
  FILL mask 0xff
                 0x10000000                _data = .
  *(vtable)
@@ -4293,12 +4300,12 @@ END GROUP
                 0x100001e9        0x1 ./out/lib/rtos.a(Os_Internal_Arch.o)
                 0x100001e9                WaitingTask
  *fill*         0x100001ea        0x2 
- .data.CounterIncrement.4316
+ .data.CounterIncrement.4318
                 0x100001ec        0x4 ./out/lib/rtos.a(Os_Internal_Arch.o)
                 0x100001f0                . = ALIGN (0x4)
                 0x100001f0                _edata = .
 
-.igot.plt       0x100001f0        0x0 load address 0x1a0064b8
+.igot.plt       0x100001f0        0x0 load address 0x1a0065a0
  .igot.plt      0x00000000        0x0 ./out/obj/HW_buttons.o
 
 .bss_RAM2       0x10080000        0x0
@@ -4321,79 +4328,83 @@ END GROUP
  *(.bss.$RamAHB_ETB16*)
                 0x2000c000                . = ALIGN (0x4)
 
-.bss            0x100001f0     0x3278
+.bss            0x100001f0     0x34a4
                 0x100001f0                _bss = .
  *(.bss*)
  .bss.fd_out    0x100001f0        0x4 ./out/obj/main.o
  .bss.button1   0x100001f4       0x10 ./out/obj/main.o
- .bss.lastTimeButton.9565
+ .bss.lastTimeButton.9567
                 0x10000204        0x4 ./out/obj/main.o
- .bss.timeButton.9564
+ .bss.timeButton.9566
                 0x10000208        0x4 ./out/obj/main.o
+ .bss.flag.9568
+                0x1000020c        0x4 ./out/obj/main.o
  .bss.ciaaDevices
-                0x1000020c       0x54 ./out/lib/posix.a(ciaaDevices.o)
+                0x10000210       0x54 ./out/lib/posix.a(ciaaDevices.o)
  .bss.ChannelHandlerArray
-                0x10000260        0x8 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x10000264        0x8 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
  .bss.audio_usb_pll_freq
-                0x10000268        0x8 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x1000026c        0x8 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .bss.ciaaPOSIX_buffer
-                0x10000270     0x2710 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x10000274     0x2710 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
  *(COMMON)
- COMMON         0x10002980       0x50 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
-                0x10002980                ciaaPOSIX_stdio_fildes
- COMMON         0x100029d0       0x33 ./out/lib/drivers.a(ciaaDriverUart.o)
-                0x100029d0                uartControl
- *fill*         0x10002a03        0x1 
- COMMON         0x10002a04       0x84 ./out/lib/drivers.a(ciaaDriverAio.o)
-                0x10002a04                aioControl
- COMMON         0x10002a88        0x2 ./out/lib/rtos.a(Os_Internal.o)
-                0x10002a88                RunningTask
-                0x10002a89                ActualContext
- COMMON         0x10002a8a        0x3 ./out/lib/rtos.a(Os.o)
-                0x10002a8a                DisableAllInterrupts_Counter
-                0x10002a8b                SuspendAllInterrupts_Counter
-                0x10002a8c                SuspendOSInterrupts_Counter
- *fill*         0x10002a8d        0x3 
- COMMON         0x10002a90        0x8 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                0x10002a90                Osek_OldTaskPtr_Arch
-                0x10002a94                Osek_NewTaskPtr_Arch
- COMMON         0x10002a98       0x14 ./out/lib/rtos.a(Os_Cfg.o)
-                0x10002a98                Osek_ErrorRet
-                0x10002a9c                Osek_ErrorApi
-                0x10002aa0                Osek_ErrorParam3
-                0x10002aa4                Osek_ErrorParam1
-                0x10002aa8                Osek_ErrorParam2
- COMMON         0x10002aac      0x450 ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                0x10002aac                ReadyList0
-                0x10002aad                ApplicationMode
-                0x10002ab0                StackTaskInitTask
-                0x10002cb0                ReadyVar
-                0x10002cb4                AlarmsVar
-                0x10002cc0                ReadyList1
-                0x10002cc4                ContextTaskInitTask
-                0x10002cc8                ErrorHookRunning
-                0x10002ccc                CountersVar
-                0x10002cd0                TasksVar
-                0x10002cf8                ContextTaskPeriodicTask
-                0x10002cfc                StackTaskPeriodicTask
- COMMON         0x10002efc      0x3c4 ./out/lib/posix.a(ciaaSerialDevices.o)
-                0x10002efc                ciaaSerialDevices
- COMMON         0x100032c0      0x144 ./out/lib/posix.a(ciaaBlockDevices.o)
-                0x100032c0                ciaaBlockDevices
- COMMON         0x10003404        0x5 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
-                0x10003404                first_chunk_header
-                0x10003408                ciaaPOSIX_stdlib_sem
- *fill*         0x10003409        0x3 
- COMMON         0x1000340c       0x54 ./out/lib/posix.a(ciaaDioDevices.o)
-                0x1000340c                ciaaDioDevices
- COMMON         0x10003460        0x2 ./out/lib/posix.a(ciaaPOSIX_errno.o)
-                0x10003460                ciaaPOSIX_errno
- *fill*         0x10003462        0x2 
- COMMON         0x10003464        0x4 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
-                0x10003464                SystemCoreClock
-                0x10003468                . = ALIGN (0x4)
-                0x10003468                _ebss = .
-                0x10003468                PROVIDE (end, .)
+ COMMON         0x10002984       0x50 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+                0x10002984                ciaaPOSIX_stdio_fildes
+ COMMON         0x100029d4       0x33 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x100029d4                uartControl
+ *fill*         0x10002a07        0x1 
+ COMMON         0x10002a08       0x84 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x10002a08                aioControl
+ COMMON         0x10002a8c        0x2 ./out/lib/rtos.a(Os_Internal.o)
+                0x10002a8c                RunningTask
+                0x10002a8d                ActualContext
+ COMMON         0x10002a8e        0x3 ./out/lib/rtos.a(Os.o)
+                0x10002a8e                DisableAllInterrupts_Counter
+                0x10002a8f                SuspendAllInterrupts_Counter
+                0x10002a90                SuspendOSInterrupts_Counter
+ *fill*         0x10002a91        0x3 
+ COMMON         0x10002a94        0x8 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x10002a94                Osek_OldTaskPtr_Arch
+                0x10002a98                Osek_NewTaskPtr_Arch
+ COMMON         0x10002a9c       0x14 ./out/lib/rtos.a(Os_Cfg.o)
+                0x10002a9c                Osek_ErrorRet
+                0x10002aa0                Osek_ErrorApi
+                0x10002aa4                Osek_ErrorParam3
+                0x10002aa8                Osek_ErrorParam1
+                0x10002aac                Osek_ErrorParam2
+ COMMON         0x10002ab0      0x678 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x10002ab0                ReadyList0
+                0x10002ab4                StackTaskButtonTask
+                0x10002cb4                ApplicationMode
+                0x10002cb8                StackTaskInitTask
+                0x10002eb8                ReadyVar
+                0x10002ebc                AlarmsVar
+                0x10002ed4                ReadyList1
+                0x10002ed8                ContextTaskInitTask
+                0x10002edc                ErrorHookRunning
+                0x10002ee0                StackTaskLedTask
+                0x100030e0                ContextTaskButtonTask
+                0x100030e4                CountersVar
+                0x100030e8                TasksVar
+                0x10003124                ContextTaskLedTask
+ COMMON         0x10003128      0x3c4 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x10003128                ciaaSerialDevices
+ COMMON         0x100034ec      0x144 ./out/lib/posix.a(ciaaBlockDevices.o)
+                0x100034ec                ciaaBlockDevices
+ COMMON         0x10003630        0x5 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x10003630                first_chunk_header
+                0x10003634                ciaaPOSIX_stdlib_sem
+ *fill*         0x10003635        0x3 
+ COMMON         0x10003638       0x54 ./out/lib/posix.a(ciaaDioDevices.o)
+                0x10003638                ciaaDioDevices
+ COMMON         0x1000368c        0x2 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+                0x1000368c                ciaaPOSIX_errno
+ *fill*         0x1000368e        0x2 
+ COMMON         0x10003690        0x4 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+                0x10003690                SystemCoreClock
+                0x10003694                . = ALIGN (0x4)
+                0x10003694                _ebss = .
+                0x10003694                PROVIDE (end, .)
 
 .noinit_RAM2    0x10080000        0x0
  *(.noinit.$RAM2*)
@@ -4415,71 +4426,71 @@ END GROUP
  *(.noinit.$RamAHB_ETB16*)
                 0x2000c000                . = ALIGN (0x4)
 
-.noinit         0x10003468        0x0
-                0x10003468                _noinit = .
+.noinit         0x10003694        0x0
+                0x10003694                _noinit = .
  *(.noinit*)
-                0x10003468                . = ALIGN (0x4)
-                0x10003468                _end_noinit = .
-                0x10003468                PROVIDE (_pvHeapStart, .)
+                0x10003694                . = ALIGN (0x4)
+                0x10003694                _end_noinit = .
+                0x10003694                PROVIDE (_pvHeapStart, .)
                 0x10008000                PROVIDE (_vStackTop, (__top_RamLoc32 - 0x0))
-OUTPUT(./out/bin/1_3.axf elf32-littlearm)
+OUTPUT(./out/bin/1_4.axf elf32-littlearm)
 
-.debug_info     0x00000000    0x12530
+.debug_info     0x00000000    0x1259c
  .debug_info    0x00000000      0x314 ./out/obj/HW_buttons.o
- .debug_info    0x00000314      0x6ad ./out/obj/main.o
- .debug_info    0x000009c1      0x6a0 ./out/obj/DRIVER_GPIO.o
- .debug_info    0x00001061      0x660 ./out/obj/HW_leds.o
- .debug_info    0x000016c1       0x3f ./out/obj/crp.o
- .debug_info    0x00001700      0x5aa ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_info    0x00001caa       0x4a ./out/lib/posix.a(ciaaPOSIX_assert.o)
- .debug_info    0x00001cf4      0x312 ./out/lib/posix.a(ciaaPOSIX_string.o)
- .debug_info    0x00002006      0x390 ./out/lib/posix.a(ciaaDevices.o)
- .debug_info    0x00002396       0xce ./out/lib/ciaak.a(ciaak_main.o)
- .debug_info    0x00002464     0x10a6 ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_info    0x0000350a      0xf6c ./out/lib/drivers.a(ciaaDriverDio.o)
- .debug_info    0x00004476      0x423 ./out/lib/drivers.a(ciaaDriverFlash.o)
- .debug_info    0x00004899     0x177c ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_info    0x00006015      0x44c ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
- .debug_info    0x00006461     0x10d8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
- .debug_info    0x00007539      0x1c3 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
- .debug_info    0x000076fc      0x982 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
- .debug_info    0x0000807e     0x160a ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
- .debug_info    0x00009688      0x3d1 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
- .debug_info    0x00009a59     0x158f ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .debug_info    0x0000afe8      0x5c0 ./out/lib/ext_drivers.a(sysinit.o)
- .debug_info    0x0000b5a8      0x145 ./out/lib/ext_drivers.a(fpu_init.o)
- .debug_info    0x0000b6ed      0x902 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
- .debug_info    0x0000bfef      0x225 ./out/lib/rtos.a(StartOS.o)
- .debug_info    0x0000c214      0x7aa ./out/lib/rtos.a(Os_Internal.o)
- .debug_info    0x0000c9be      0x375 ./out/lib/rtos.a(Schedule.o)
- .debug_info    0x0000cd33      0x2f2 ./out/lib/rtos.a(ActivateTask.o)
- .debug_info    0x0000d025       0x99 ./out/lib/rtos.a(Os.o)
- .debug_info    0x0000d0be      0x214 ./out/lib/rtos.a(TerminateTask.o)
- .debug_info    0x0000d2d2       0x8d ./out/lib/rtos.a(ShutdownOS.o)
- .debug_info    0x0000d35f      0x32a ./out/lib/rtos.a(GetResource.o)
- .debug_info    0x0000d689      0x346 ./out/lib/rtos.a(ReleaseResource.o)
- .debug_info    0x0000d9cf      0x351 ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_info    0x0000dd20       0x9e ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_info    0x0000ddbe      0x315 ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_info    0x0000e0d3       0xaf ./out/lib/rtos.a(Os_Cfg.o)
- .debug_info    0x0000e182      0x768 ./out/lib/rtos.a(Os_Internal_Cfg.o)
- .debug_info    0x0000e8ea      0x646 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_info    0x0000ef30      0x317 ./out/lib/rtos.a(SetEvent.o)
- .debug_info    0x0000f247      0x601 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_info    0x0000f848       0x5f ./out/lib/rtos.a(PendSV.o)
- .debug_info    0x0000f8a7      0x818 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_info    0x000100bf      0x6dd ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_info    0x0001079c      0x262 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_info    0x000109fe      0x13b ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_info    0x00010b39      0x559 ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_info    0x00011092       0x8f ./out/lib/posix.a(ciaaPOSIX_errno.o)
- .debug_info    0x00011121      0xa3b ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_info    0x00011b5c       0xbe ./out/lib/rtos.a(GetTaskID.o)
- .debug_info    0x00011c1a      0x31f ./out/lib/rtos.a(ClearEvent.o)
- .debug_info    0x00011f39      0x35d ./out/lib/rtos.a(WaitEvent.o)
- .debug_info    0x00012296      0x29a ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_info    0x00000314      0x6e5 ./out/obj/main.o
+ .debug_info    0x000009f9      0x6a0 ./out/obj/DRIVER_GPIO.o
+ .debug_info    0x00001099      0x660 ./out/obj/HW_leds.o
+ .debug_info    0x000016f9       0x3f ./out/obj/crp.o
+ .debug_info    0x00001738      0x5aa ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_info    0x00001ce2       0x4a ./out/lib/posix.a(ciaaPOSIX_assert.o)
+ .debug_info    0x00001d2c      0x312 ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_info    0x0000203e      0x390 ./out/lib/posix.a(ciaaDevices.o)
+ .debug_info    0x000023ce       0xce ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_info    0x0000249c     0x10a6 ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_info    0x00003542      0xf6c ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_info    0x000044ae      0x423 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_info    0x000048d1     0x177c ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_info    0x0000604d      0x44c ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_info    0x00006499     0x10d8 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_info    0x00007571      0x1c3 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_info    0x00007734      0x982 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_info    0x000080b6     0x160a ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_info    0x000096c0      0x3d1 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_info    0x00009a91     0x158f ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_info    0x0000b020      0x5c0 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_info    0x0000b5e0      0x145 ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_info    0x0000b725      0x902 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_info    0x0000c027      0x225 ./out/lib/rtos.a(StartOS.o)
+ .debug_info    0x0000c24c      0x7aa ./out/lib/rtos.a(Os_Internal.o)
+ .debug_info    0x0000c9f6      0x375 ./out/lib/rtos.a(Schedule.o)
+ .debug_info    0x0000cd6b      0x2f2 ./out/lib/rtos.a(ActivateTask.o)
+ .debug_info    0x0000d05d       0x99 ./out/lib/rtos.a(Os.o)
+ .debug_info    0x0000d0f6      0x214 ./out/lib/rtos.a(TerminateTask.o)
+ .debug_info    0x0000d30a       0x8d ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_info    0x0000d397      0x32a ./out/lib/rtos.a(GetResource.o)
+ .debug_info    0x0000d6c1      0x346 ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_info    0x0000da07      0x351 ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_info    0x0000dd58       0x9e ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_info    0x0000ddf6      0x315 ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_info    0x0000e10b       0xaf ./out/lib/rtos.a(Os_Cfg.o)
+ .debug_info    0x0000e1ba      0x79c ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ .debug_info    0x0000e956      0x646 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_info    0x0000ef9c      0x317 ./out/lib/rtos.a(SetEvent.o)
+ .debug_info    0x0000f2b3      0x601 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_info    0x0000f8b4       0x5f ./out/lib/rtos.a(PendSV.o)
+ .debug_info    0x0000f913      0x818 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_info    0x0001012b      0x6dd ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_info    0x00010808      0x262 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_info    0x00010a6a      0x13b ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_info    0x00010ba5      0x559 ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_info    0x000110fe       0x8f ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_info    0x0001118d      0xa3b ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_info    0x00011bc8       0xbe ./out/lib/rtos.a(GetTaskID.o)
+ .debug_info    0x00011c86      0x31f ./out/lib/rtos.a(ClearEvent.o)
+ .debug_info    0x00011fa5      0x35d ./out/lib/rtos.a(WaitEvent.o)
+ .debug_info    0x00012302      0x29a ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_abbrev   0x00000000     0x3ccf
+.debug_abbrev   0x00000000     0x3ce0
  .debug_abbrev  0x00000000       0xe7 ./out/obj/HW_buttons.o
  .debug_abbrev  0x000000e7      0x101 ./out/obj/main.o
  .debug_abbrev  0x000001e8      0x179 ./out/obj/DRIVER_GPIO.o
@@ -4517,180 +4528,180 @@ OUTPUT(./out/bin/1_3.axf elf32-littlearm)
  .debug_abbrev  0x00002a54       0x79 ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_abbrev  0x00002acd      0x15d ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_abbrev  0x00002c2a       0x3a ./out/lib/rtos.a(Os_Cfg.o)
- .debug_abbrev  0x00002c64       0xf0 ./out/lib/rtos.a(Os_Internal_Cfg.o)
- .debug_abbrev  0x00002d54       0xc9 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_abbrev  0x00002e1d       0xfd ./out/lib/rtos.a(SetEvent.o)
- .debug_abbrev  0x00002f1a      0x157 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_abbrev  0x00003071       0x14 ./out/lib/rtos.a(PendSV.o)
- .debug_abbrev  0x00003085      0x1e9 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_abbrev  0x0000326e      0x1f8 ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_abbrev  0x00003466      0x11c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_abbrev  0x00003582       0xab ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_abbrev  0x0000362d      0x14c ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_abbrev  0x00003779       0x47 ./out/lib/posix.a(ciaaPOSIX_errno.o)
- .debug_abbrev  0x000037c0      0x148 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_abbrev  0x00003908       0x8c ./out/lib/rtos.a(GetTaskID.o)
- .debug_abbrev  0x00003994       0xfd ./out/lib/rtos.a(ClearEvent.o)
- .debug_abbrev  0x00003a91      0x11c ./out/lib/rtos.a(WaitEvent.o)
- .debug_abbrev  0x00003bad      0x122 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_abbrev  0x00002c64      0x101 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ .debug_abbrev  0x00002d65       0xc9 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_abbrev  0x00002e2e       0xfd ./out/lib/rtos.a(SetEvent.o)
+ .debug_abbrev  0x00002f2b      0x157 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_abbrev  0x00003082       0x14 ./out/lib/rtos.a(PendSV.o)
+ .debug_abbrev  0x00003096      0x1e9 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_abbrev  0x0000327f      0x1f8 ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_abbrev  0x00003477      0x11c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_abbrev  0x00003593       0xab ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_abbrev  0x0000363e      0x14c ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_abbrev  0x0000378a       0x47 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_abbrev  0x000037d1      0x148 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_abbrev  0x00003919       0x8c ./out/lib/rtos.a(GetTaskID.o)
+ .debug_abbrev  0x000039a5       0xfd ./out/lib/rtos.a(ClearEvent.o)
+ .debug_abbrev  0x00003aa2      0x11c ./out/lib/rtos.a(WaitEvent.o)
+ .debug_abbrev  0x00003bbe      0x122 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_aranges  0x00000000      0xf18
+.debug_aranges  0x00000000      0xf20
  .debug_aranges
                 0x00000000       0x60 ./out/obj/HW_buttons.o
  .debug_aranges
-                0x00000060       0x38 ./out/obj/main.o
+                0x00000060       0x40 ./out/obj/main.o
  .debug_aranges
-                0x00000098       0x88 ./out/obj/DRIVER_GPIO.o
+                0x000000a0       0x88 ./out/obj/DRIVER_GPIO.o
  .debug_aranges
-                0x00000120       0x40 ./out/obj/HW_leds.o
+                0x00000128       0x40 ./out/obj/HW_leds.o
  .debug_aranges
-                0x00000160       0x18 ./out/obj/crp.o
+                0x00000168       0x18 ./out/obj/crp.o
  .debug_aranges
-                0x00000178       0x58 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+                0x00000180       0x58 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
  .debug_aranges
-                0x000001d0       0x18 ./out/lib/posix.a(ciaaPOSIX_assert.o)
+                0x000001d8       0x18 ./out/lib/posix.a(ciaaPOSIX_assert.o)
  .debug_aranges
-                0x000001e8       0x58 ./out/lib/posix.a(ciaaPOSIX_string.o)
+                0x000001f0       0x58 ./out/lib/posix.a(ciaaPOSIX_string.o)
  .debug_aranges
-                0x00000240       0x30 ./out/lib/posix.a(ciaaDevices.o)
+                0x00000248       0x30 ./out/lib/posix.a(ciaaDevices.o)
  .debug_aranges
-                0x00000270       0x28 ./out/lib/ciaak.a(ciaak_main.o)
+                0x00000278       0x28 ./out/lib/ciaak.a(ciaak_main.o)
  .debug_aranges
-                0x00000298       0xd0 ./out/lib/drivers.a(ciaaDriverUart.o)
+                0x000002a0       0xd0 ./out/lib/drivers.a(ciaaDriverUart.o)
  .debug_aranges
-                0x00000368       0x98 ./out/lib/drivers.a(ciaaDriverDio.o)
+                0x00000370       0x98 ./out/lib/drivers.a(ciaaDriverDio.o)
  .debug_aranges
-                0x00000400       0x48 ./out/lib/drivers.a(ciaaDriverFlash.o)
+                0x00000408       0x48 ./out/lib/drivers.a(ciaaDriverFlash.o)
  .debug_aranges
-                0x00000448       0xb8 ./out/lib/drivers.a(ciaaDriverAio.o)
+                0x00000450       0xb8 ./out/lib/drivers.a(ciaaDriverAio.o)
  .debug_aranges
-                0x00000500       0x68 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+                0x00000508       0x68 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
  .debug_aranges
-                0x00000568      0x118 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+                0x00000570      0x118 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
  .debug_aranges
-                0x00000680       0x30 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+                0x00000688       0x30 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
  .debug_aranges
-                0x000006b0       0x98 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+                0x000006b8       0x98 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
  .debug_aranges
-                0x00000748       0x90 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+                0x00000750       0x90 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
  .debug_aranges
-                0x000007d8       0x38 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+                0x000007e0       0x38 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
  .debug_aranges
-                0x00000810      0x138 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+                0x00000818      0x138 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
  .debug_aranges
-                0x00000948       0x20 ./out/lib/ext_drivers.a(sysinit.o)
+                0x00000950       0x20 ./out/lib/ext_drivers.a(sysinit.o)
  .debug_aranges
-                0x00000968       0x20 ./out/lib/ext_drivers.a(fpu_init.o)
+                0x00000970       0x20 ./out/lib/ext_drivers.a(fpu_init.o)
  .debug_aranges
-                0x00000988       0x50 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+                0x00000990       0x50 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
  .debug_aranges
-                0x000009d8       0x20 ./out/lib/rtos.a(StartOS.o)
+                0x000009e0       0x20 ./out/lib/rtos.a(StartOS.o)
  .debug_aranges
-                0x000009f8       0x48 ./out/lib/rtos.a(Os_Internal.o)
+                0x00000a00       0x48 ./out/lib/rtos.a(Os_Internal.o)
  .debug_aranges
-                0x00000a40       0x20 ./out/lib/rtos.a(Schedule.o)
+                0x00000a48       0x20 ./out/lib/rtos.a(Schedule.o)
  .debug_aranges
-                0x00000a60       0x20 ./out/lib/rtos.a(ActivateTask.o)
+                0x00000a68       0x20 ./out/lib/rtos.a(ActivateTask.o)
  .debug_aranges
-                0x00000a80       0x18 ./out/lib/rtos.a(Os.o)
+                0x00000a88       0x18 ./out/lib/rtos.a(Os.o)
  .debug_aranges
-                0x00000a98       0x20 ./out/lib/rtos.a(TerminateTask.o)
+                0x00000aa0       0x20 ./out/lib/rtos.a(TerminateTask.o)
  .debug_aranges
-                0x00000ab8       0x20 ./out/lib/rtos.a(ShutdownOS.o)
+                0x00000ac0       0x20 ./out/lib/rtos.a(ShutdownOS.o)
  .debug_aranges
-                0x00000ad8       0x20 ./out/lib/rtos.a(GetResource.o)
+                0x00000ae0       0x20 ./out/lib/rtos.a(GetResource.o)
  .debug_aranges
-                0x00000af8       0x20 ./out/lib/rtos.a(ReleaseResource.o)
+                0x00000b00       0x20 ./out/lib/rtos.a(ReleaseResource.o)
  .debug_aranges
-                0x00000b18       0x20 ./out/lib/rtos.a(SetRelAlarm.o)
+                0x00000b20       0x20 ./out/lib/rtos.a(SetRelAlarm.o)
  .debug_aranges
-                0x00000b38       0x28 ./out/lib/rtos.a(StartOs_Arch.o)
+                0x00000b40       0x28 ./out/lib/rtos.a(StartOs_Arch.o)
  .debug_aranges
-                0x00000b60       0x38 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                0x00000b68       0x38 ./out/lib/rtos.a(Os_Internal_Arch.o)
  .debug_aranges
-                0x00000b98       0x18 ./out/lib/rtos.a(Os_Cfg.o)
+                0x00000ba0       0x18 ./out/lib/rtos.a(Os_Cfg.o)
  .debug_aranges
-                0x00000bb0       0x18 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                0x00000bb8       0x18 ./out/lib/rtos.a(Os_Internal_Cfg.o)
  .debug_aranges
-                0x00000bc8       0x68 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+                0x00000bd0       0x68 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
  .debug_aranges
-                0x00000c30       0x20 ./out/lib/rtos.a(SetEvent.o)
+                0x00000c38       0x20 ./out/lib/rtos.a(SetEvent.o)
  .debug_aranges
-                0x00000c50       0x30 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+                0x00000c58       0x30 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
  .debug_aranges
-                0x00000c80       0x20 ./out/lib/rtos.a(PendSV.o)
+                0x00000c88       0x20 ./out/lib/rtos.a(PendSV.o)
  .debug_aranges
-                0x00000ca0       0x60 ./out/lib/posix.a(ciaaSerialDevices.o)
+                0x00000ca8       0x60 ./out/lib/posix.a(ciaaSerialDevices.o)
  .debug_aranges
-                0x00000d00       0x68 ./out/lib/posix.a(ciaaBlockDevices.o)
+                0x00000d08       0x68 ./out/lib/posix.a(ciaaBlockDevices.o)
  .debug_aranges
-                0x00000d68       0x38 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+                0x00000d70       0x38 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
  .debug_aranges
-                0x00000da0       0x30 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+                0x00000da8       0x30 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
  .debug_aranges
-                0x00000dd0       0x50 ./out/lib/posix.a(ciaaDioDevices.o)
+                0x00000dd8       0x50 ./out/lib/posix.a(ciaaDioDevices.o)
  .debug_aranges
-                0x00000e20       0x18 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+                0x00000e28       0x18 ./out/lib/posix.a(ciaaPOSIX_errno.o)
  .debug_aranges
-                0x00000e38       0x40 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+                0x00000e40       0x40 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
  .debug_aranges
-                0x00000e78       0x20 ./out/lib/rtos.a(GetTaskID.o)
+                0x00000e80       0x20 ./out/lib/rtos.a(GetTaskID.o)
  .debug_aranges
-                0x00000e98       0x20 ./out/lib/rtos.a(ClearEvent.o)
+                0x00000ea0       0x20 ./out/lib/rtos.a(ClearEvent.o)
  .debug_aranges
-                0x00000eb8       0x20 ./out/lib/rtos.a(WaitEvent.o)
+                0x00000ec0       0x20 ./out/lib/rtos.a(WaitEvent.o)
  .debug_aranges
-                0x00000ed8       0x40 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+                0x00000ee0       0x40 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_ranges   0x00000000      0xb88
+.debug_ranges   0x00000000      0xb90
  .debug_ranges  0x00000000       0x50 ./out/obj/HW_buttons.o
- .debug_ranges  0x00000050       0x28 ./out/obj/main.o
- .debug_ranges  0x00000078       0x78 ./out/obj/DRIVER_GPIO.o
- .debug_ranges  0x000000f0       0x30 ./out/obj/HW_leds.o
- .debug_ranges  0x00000120       0x48 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_ranges  0x00000168       0x48 ./out/lib/posix.a(ciaaPOSIX_string.o)
- .debug_ranges  0x000001b0       0x20 ./out/lib/posix.a(ciaaDevices.o)
- .debug_ranges  0x000001d0       0x18 ./out/lib/ciaak.a(ciaak_main.o)
- .debug_ranges  0x000001e8       0xc0 ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_ranges  0x000002a8       0x88 ./out/lib/drivers.a(ciaaDriverDio.o)
- .debug_ranges  0x00000330       0x38 ./out/lib/drivers.a(ciaaDriverFlash.o)
- .debug_ranges  0x00000368       0xa8 ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_ranges  0x00000410       0x58 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
- .debug_ranges  0x00000468      0x108 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
- .debug_ranges  0x00000570       0x20 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
- .debug_ranges  0x00000590       0x88 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
- .debug_ranges  0x00000618       0x80 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
- .debug_ranges  0x00000698       0x28 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
- .debug_ranges  0x000006c0      0x128 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .debug_ranges  0x000007e8       0x10 ./out/lib/ext_drivers.a(sysinit.o)
- .debug_ranges  0x000007f8       0x10 ./out/lib/ext_drivers.a(fpu_init.o)
- .debug_ranges  0x00000808       0x40 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
- .debug_ranges  0x00000848       0x10 ./out/lib/rtos.a(StartOS.o)
- .debug_ranges  0x00000858       0x38 ./out/lib/rtos.a(Os_Internal.o)
- .debug_ranges  0x00000890       0x10 ./out/lib/rtos.a(Schedule.o)
- .debug_ranges  0x000008a0       0x10 ./out/lib/rtos.a(ActivateTask.o)
- .debug_ranges  0x000008b0       0x10 ./out/lib/rtos.a(TerminateTask.o)
- .debug_ranges  0x000008c0       0x10 ./out/lib/rtos.a(ShutdownOS.o)
- .debug_ranges  0x000008d0       0x10 ./out/lib/rtos.a(GetResource.o)
- .debug_ranges  0x000008e0       0x10 ./out/lib/rtos.a(ReleaseResource.o)
- .debug_ranges  0x000008f0       0x10 ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_ranges  0x00000900       0x18 ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_ranges  0x00000918       0x28 ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_ranges  0x00000940       0x58 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_ranges  0x00000998       0x10 ./out/lib/rtos.a(SetEvent.o)
- .debug_ranges  0x000009a8       0x20 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_ranges  0x000009c8       0x50 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_ranges  0x00000a18       0x58 ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_ranges  0x00000a70       0x28 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_ranges  0x00000a98       0x20 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_ranges  0x00000ab8       0x40 ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_ranges  0x00000af8       0x30 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_ranges  0x00000b28       0x10 ./out/lib/rtos.a(GetTaskID.o)
- .debug_ranges  0x00000b38       0x10 ./out/lib/rtos.a(ClearEvent.o)
- .debug_ranges  0x00000b48       0x10 ./out/lib/rtos.a(WaitEvent.o)
- .debug_ranges  0x00000b58       0x30 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_ranges  0x00000050       0x30 ./out/obj/main.o
+ .debug_ranges  0x00000080       0x78 ./out/obj/DRIVER_GPIO.o
+ .debug_ranges  0x000000f8       0x30 ./out/obj/HW_leds.o
+ .debug_ranges  0x00000128       0x48 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_ranges  0x00000170       0x48 ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_ranges  0x000001b8       0x20 ./out/lib/posix.a(ciaaDevices.o)
+ .debug_ranges  0x000001d8       0x18 ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_ranges  0x000001f0       0xc0 ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_ranges  0x000002b0       0x88 ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_ranges  0x00000338       0x38 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_ranges  0x00000370       0xa8 ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_ranges  0x00000418       0x58 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_ranges  0x00000470      0x108 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_ranges  0x00000578       0x20 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_ranges  0x00000598       0x88 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_ranges  0x00000620       0x80 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_ranges  0x000006a0       0x28 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_ranges  0x000006c8      0x128 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_ranges  0x000007f0       0x10 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_ranges  0x00000800       0x10 ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_ranges  0x00000810       0x40 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_ranges  0x00000850       0x10 ./out/lib/rtos.a(StartOS.o)
+ .debug_ranges  0x00000860       0x38 ./out/lib/rtos.a(Os_Internal.o)
+ .debug_ranges  0x00000898       0x10 ./out/lib/rtos.a(Schedule.o)
+ .debug_ranges  0x000008a8       0x10 ./out/lib/rtos.a(ActivateTask.o)
+ .debug_ranges  0x000008b8       0x10 ./out/lib/rtos.a(TerminateTask.o)
+ .debug_ranges  0x000008c8       0x10 ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_ranges  0x000008d8       0x10 ./out/lib/rtos.a(GetResource.o)
+ .debug_ranges  0x000008e8       0x10 ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_ranges  0x000008f8       0x10 ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_ranges  0x00000908       0x18 ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_ranges  0x00000920       0x28 ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_ranges  0x00000948       0x58 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_ranges  0x000009a0       0x10 ./out/lib/rtos.a(SetEvent.o)
+ .debug_ranges  0x000009b0       0x20 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_ranges  0x000009d0       0x50 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_ranges  0x00000a20       0x58 ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_ranges  0x00000a78       0x28 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_ranges  0x00000aa0       0x20 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_ranges  0x00000ac0       0x40 ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_ranges  0x00000b00       0x30 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_ranges  0x00000b30       0x10 ./out/lib/rtos.a(GetTaskID.o)
+ .debug_ranges  0x00000b40       0x10 ./out/lib/rtos.a(ClearEvent.o)
+ .debug_ranges  0x00000b50       0x10 ./out/lib/rtos.a(WaitEvent.o)
+ .debug_ranges  0x00000b60       0x30 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_macro    0x00000000     0xa45a
+.debug_macro    0x00000000     0xa466
  .debug_macro   0x00000000      0x2f9 ./out/obj/HW_buttons.o
  .debug_macro   0x000002f9      0x868 ./out/obj/HW_buttons.o
  .debug_macro   0x00000b61       0x10 ./out/obj/HW_buttons.o
@@ -4748,250 +4759,250 @@ OUTPUT(./out/bin/1_3.axf elf32-littlearm)
  .debug_macro   0x00004876       0x3b ./out/obj/main.o
  .debug_macro   0x000048b1       0x6b ./out/obj/main.o
  .debug_macro   0x0000491c       0x12 ./out/obj/main.o
- .debug_macro   0x0000492e       0x6b ./out/obj/main.o
- .debug_macro   0x00004999       0x28 ./out/obj/main.o
- .debug_macro   0x000049c1      0x155 ./out/obj/main.o
- .debug_macro   0x00004b16       0x84 ./out/obj/main.o
- .debug_macro   0x00004b9a      0x166 ./out/obj/main.o
- .debug_macro   0x00004d00       0x58 ./out/obj/main.o
- .debug_macro   0x00004d58       0x35 ./out/obj/main.o
- .debug_macro   0x00004d8d       0xa2 ./out/obj/main.o
- .debug_macro   0x00004e2f       0x52 ./out/obj/main.o
- .debug_macro   0x00004e81       0x16 ./out/obj/main.o
- .debug_macro   0x00004e97       0x43 ./out/obj/main.o
- .debug_macro   0x00004eda       0x22 ./out/obj/main.o
- .debug_macro   0x00004efc       0xbd ./out/obj/main.o
- .debug_macro   0x00004fb9       0x1c ./out/obj/main.o
- .debug_macro   0x00004fd5       0xc8 ./out/obj/main.o
- .debug_macro   0x0000509d       0x16 ./out/obj/main.o
- .debug_macro   0x000050b3       0x84 ./out/obj/main.o
- .debug_macro   0x00005137       0x62 ./out/obj/main.o
- .debug_macro   0x00005199       0x11 ./out/obj/main.o
- .debug_macro   0x000051aa       0xb8 ./out/obj/main.o
- .debug_macro   0x00005262       0x2e ./out/obj/main.o
- .debug_macro   0x00005290      0x2ea ./out/obj/DRIVER_GPIO.o
- .debug_macro   0x0000557a      0x2fd ./out/obj/HW_leds.o
- .debug_macro   0x00005877       0x17 ./out/obj/crp.o
- .debug_macro   0x0000588e      0x1c6 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_macro   0x00005a54       0x22 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_macro   0x00005a76       0x16 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_macro   0x00005a8c       0x11 ./out/lib/posix.a(ciaaPOSIX_assert.o)
- .debug_macro   0x00005a9d      0x111 ./out/lib/posix.a(ciaaPOSIX_string.o)
- .debug_macro   0x00005bae      0x14f ./out/lib/posix.a(ciaaDevices.o)
- .debug_macro   0x00005cfd      0x19d ./out/lib/ciaak.a(ciaak_main.o)
- .debug_macro   0x00005e9a       0x10 ./out/lib/ciaak.a(ciaak_main.o)
- .debug_macro   0x00005eaa       0x10 ./out/lib/ciaak.a(ciaak_main.o)
- .debug_macro   0x00005eba      0x459 ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_macro   0x00006313       0x6e ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_macro   0x00006381       0x2e ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_macro   0x000063af      0x3ee ./out/lib/drivers.a(ciaaDriverDio.o)
- .debug_macro   0x0000679d      0x113 ./out/lib/drivers.a(ciaaDriverFlash.o)
- .debug_macro   0x000068b0      0x463 ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_macro   0x00006d13      0x2e0 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
- .debug_macro   0x00006ff3      0x2e0 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
- .debug_macro   0x000072d3       0x23 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
- .debug_macro   0x000072f6      0x2e0 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
- .debug_macro   0x000075d6      0x2e0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
- .debug_macro   0x000078b6      0x2e0 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
- .debug_macro   0x00007b96      0x2e6 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .debug_macro   0x00007e7c      0x2e0 ./out/lib/ext_drivers.a(sysinit.o)
- .debug_macro   0x0000815c       0xc6 ./out/lib/ext_drivers.a(fpu_init.o)
- .debug_macro   0x00008222      0x2e0 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
- .debug_macro   0x00008502       0x9d ./out/lib/rtos.a(StartOS.o)
- .debug_macro   0x0000859f       0x82 ./out/lib/rtos.a(StartOS.o)
- .debug_macro   0x00008621       0x9c ./out/lib/rtos.a(StartOS.o)
- .debug_macro   0x000086bd       0x90 ./out/lib/rtos.a(StartOS.o)
- .debug_macro   0x0000874d       0x9d ./out/lib/rtos.a(Os_Internal.o)
- .debug_macro   0x000087ea       0x9d ./out/lib/rtos.a(Schedule.o)
- .debug_macro   0x00008887       0x9d ./out/lib/rtos.a(ActivateTask.o)
- .debug_macro   0x00008924       0x9d ./out/lib/rtos.a(Os.o)
- .debug_macro   0x000089c1       0x9d ./out/lib/rtos.a(TerminateTask.o)
- .debug_macro   0x00008a5e       0x9d ./out/lib/rtos.a(ShutdownOS.o)
- .debug_macro   0x00008afb       0x9d ./out/lib/rtos.a(GetResource.o)
- .debug_macro   0x00008b98       0x9d ./out/lib/rtos.a(ReleaseResource.o)
- .debug_macro   0x00008c35       0x9d ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_macro   0x00008cd2       0xa1 ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_macro   0x00008d73       0x9d ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_macro   0x00008e10       0x9d ./out/lib/rtos.a(Os_Cfg.o)
- .debug_macro   0x00008ead       0x9d ./out/lib/rtos.a(Os_Internal_Cfg.o)
- .debug_macro   0x00008f4a      0x378 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_macro   0x000092c2       0x9d ./out/lib/rtos.a(SetEvent.o)
- .debug_macro   0x0000935f      0x2f3 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_macro   0x00009652      0x1ff ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_macro   0x00009851       0x16 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_macro   0x00009867       0x28 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_macro   0x0000988f       0x4d ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_macro   0x000098dc      0x1f3 ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_macro   0x00009acf      0x119 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_macro   0x00009be8       0x5f ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_macro   0x00009c47      0x1bb ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_macro   0x00009e02       0x64 ./out/lib/posix.a(ciaaPOSIX_errno.o)
- .debug_macro   0x00009e66       0x10 ./out/lib/posix.a(ciaaPOSIX_errno.o)
- .debug_macro   0x00009e76      0x2e0 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_macro   0x0000a156       0x9d ./out/lib/rtos.a(GetTaskID.o)
- .debug_macro   0x0000a1f3       0x9d ./out/lib/rtos.a(ClearEvent.o)
- .debug_macro   0x0000a290       0x9d ./out/lib/rtos.a(WaitEvent.o)
- .debug_macro   0x0000a32d      0x12d ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_macro   0x0000492e       0x77 ./out/obj/main.o
+ .debug_macro   0x000049a5       0x28 ./out/obj/main.o
+ .debug_macro   0x000049cd      0x155 ./out/obj/main.o
+ .debug_macro   0x00004b22       0x84 ./out/obj/main.o
+ .debug_macro   0x00004ba6      0x166 ./out/obj/main.o
+ .debug_macro   0x00004d0c       0x58 ./out/obj/main.o
+ .debug_macro   0x00004d64       0x35 ./out/obj/main.o
+ .debug_macro   0x00004d99       0xa2 ./out/obj/main.o
+ .debug_macro   0x00004e3b       0x52 ./out/obj/main.o
+ .debug_macro   0x00004e8d       0x16 ./out/obj/main.o
+ .debug_macro   0x00004ea3       0x43 ./out/obj/main.o
+ .debug_macro   0x00004ee6       0x22 ./out/obj/main.o
+ .debug_macro   0x00004f08       0xbd ./out/obj/main.o
+ .debug_macro   0x00004fc5       0x1c ./out/obj/main.o
+ .debug_macro   0x00004fe1       0xc8 ./out/obj/main.o
+ .debug_macro   0x000050a9       0x16 ./out/obj/main.o
+ .debug_macro   0x000050bf       0x84 ./out/obj/main.o
+ .debug_macro   0x00005143       0x62 ./out/obj/main.o
+ .debug_macro   0x000051a5       0x11 ./out/obj/main.o
+ .debug_macro   0x000051b6       0xb8 ./out/obj/main.o
+ .debug_macro   0x0000526e       0x2e ./out/obj/main.o
+ .debug_macro   0x0000529c      0x2ea ./out/obj/DRIVER_GPIO.o
+ .debug_macro   0x00005586      0x2fd ./out/obj/HW_leds.o
+ .debug_macro   0x00005883       0x17 ./out/obj/crp.o
+ .debug_macro   0x0000589a      0x1c6 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_macro   0x00005a60       0x22 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_macro   0x00005a82       0x16 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_macro   0x00005a98       0x11 ./out/lib/posix.a(ciaaPOSIX_assert.o)
+ .debug_macro   0x00005aa9      0x111 ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_macro   0x00005bba      0x14f ./out/lib/posix.a(ciaaDevices.o)
+ .debug_macro   0x00005d09      0x19d ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_macro   0x00005ea6       0x10 ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_macro   0x00005eb6       0x10 ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_macro   0x00005ec6      0x459 ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_macro   0x0000631f       0x6e ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_macro   0x0000638d       0x2e ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_macro   0x000063bb      0x3ee ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_macro   0x000067a9      0x113 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_macro   0x000068bc      0x463 ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_macro   0x00006d1f      0x2e0 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_macro   0x00006fff      0x2e0 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_macro   0x000072df       0x23 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_macro   0x00007302      0x2e0 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_macro   0x000075e2      0x2e0 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_macro   0x000078c2      0x2e0 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_macro   0x00007ba2      0x2e6 ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_macro   0x00007e88      0x2e0 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_macro   0x00008168       0xc6 ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_macro   0x0000822e      0x2e0 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_macro   0x0000850e       0x9d ./out/lib/rtos.a(StartOS.o)
+ .debug_macro   0x000085ab       0x82 ./out/lib/rtos.a(StartOS.o)
+ .debug_macro   0x0000862d       0x9c ./out/lib/rtos.a(StartOS.o)
+ .debug_macro   0x000086c9       0x90 ./out/lib/rtos.a(StartOS.o)
+ .debug_macro   0x00008759       0x9d ./out/lib/rtos.a(Os_Internal.o)
+ .debug_macro   0x000087f6       0x9d ./out/lib/rtos.a(Schedule.o)
+ .debug_macro   0x00008893       0x9d ./out/lib/rtos.a(ActivateTask.o)
+ .debug_macro   0x00008930       0x9d ./out/lib/rtos.a(Os.o)
+ .debug_macro   0x000089cd       0x9d ./out/lib/rtos.a(TerminateTask.o)
+ .debug_macro   0x00008a6a       0x9d ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_macro   0x00008b07       0x9d ./out/lib/rtos.a(GetResource.o)
+ .debug_macro   0x00008ba4       0x9d ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_macro   0x00008c41       0x9d ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_macro   0x00008cde       0xa1 ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_macro   0x00008d7f       0x9d ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_macro   0x00008e1c       0x9d ./out/lib/rtos.a(Os_Cfg.o)
+ .debug_macro   0x00008eb9       0x9d ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ .debug_macro   0x00008f56      0x378 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_macro   0x000092ce       0x9d ./out/lib/rtos.a(SetEvent.o)
+ .debug_macro   0x0000936b      0x2f3 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_macro   0x0000965e      0x1ff ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_macro   0x0000985d       0x16 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_macro   0x00009873       0x28 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_macro   0x0000989b       0x4d ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_macro   0x000098e8      0x1f3 ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_macro   0x00009adb      0x119 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_macro   0x00009bf4       0x5f ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_macro   0x00009c53      0x1bb ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_macro   0x00009e0e       0x64 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_macro   0x00009e72       0x10 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_macro   0x00009e82      0x2e0 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_macro   0x0000a162       0x9d ./out/lib/rtos.a(GetTaskID.o)
+ .debug_macro   0x0000a1ff       0x9d ./out/lib/rtos.a(ClearEvent.o)
+ .debug_macro   0x0000a29c       0x9d ./out/lib/rtos.a(WaitEvent.o)
+ .debug_macro   0x0000a339      0x12d ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_line     0x00000000     0xea02
+.debug_line     0x00000000     0xea18
  .debug_line    0x00000000      0x749 ./out/obj/HW_buttons.o
- .debug_line    0x00000749      0x92d ./out/obj/main.o
- .debug_line    0x00001076      0x77b ./out/obj/DRIVER_GPIO.o
- .debug_line    0x000017f1      0x6e3 ./out/obj/HW_leds.o
- .debug_line    0x00001ed4       0x4a ./out/obj/crp.o
- .debug_line    0x00001f1e      0x52c ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_line    0x0000244a       0x45 ./out/lib/posix.a(ciaaPOSIX_assert.o)
- .debug_line    0x0000248f      0x3e3 ./out/lib/posix.a(ciaaPOSIX_string.o)
- .debug_line    0x00002872      0x363 ./out/lib/posix.a(ciaaDevices.o)
- .debug_line    0x00002bd5      0x403 ./out/lib/ciaak.a(ciaak_main.o)
- .debug_line    0x00002fd8      0xb94 ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_line    0x00003b6c      0x9dd ./out/lib/drivers.a(ciaaDriverDio.o)
- .debug_line    0x00004549      0x329 ./out/lib/drivers.a(ciaaDriverFlash.o)
- .debug_line    0x00004872      0xb90 ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_line    0x00005402      0x70e ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
- .debug_line    0x00005b10      0x998 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
- .debug_line    0x000064a8       0xe9 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
- .debug_line    0x00006591      0x7a5 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
- .debug_line    0x00006d36      0x889 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
- .debug_line    0x000075bf      0x691 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
- .debug_line    0x00007c50      0xaaf ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .debug_line    0x000086ff      0x655 ./out/lib/ext_drivers.a(sysinit.o)
- .debug_line    0x00008d54      0x26d ./out/lib/ext_drivers.a(fpu_init.o)
- .debug_line    0x00008fc1      0x72f ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
- .debug_line    0x000096f0      0x1df ./out/lib/rtos.a(StartOS.o)
- .debug_line    0x000098cf      0x2a9 ./out/lib/rtos.a(Os_Internal.o)
- .debug_line    0x00009b78      0x22c ./out/lib/rtos.a(Schedule.o)
- .debug_line    0x00009da4      0x1d6 ./out/lib/rtos.a(ActivateTask.o)
- .debug_line    0x00009f7a      0x18e ./out/lib/rtos.a(Os.o)
- .debug_line    0x0000a108      0x1d5 ./out/lib/rtos.a(TerminateTask.o)
- .debug_line    0x0000a2dd      0x1ad ./out/lib/rtos.a(ShutdownOS.o)
- .debug_line    0x0000a48a      0x1d4 ./out/lib/rtos.a(GetResource.o)
- .debug_line    0x0000a65e      0x1e4 ./out/lib/rtos.a(ReleaseResource.o)
- .debug_line    0x0000a842      0x1d6 ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_line    0x0000aa18      0x1f2 ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_line    0x0000ac0a      0x206 ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_line    0x0000ae10      0x18d ./out/lib/rtos.a(Os_Cfg.o)
- .debug_line    0x0000af9d      0x196 ./out/lib/rtos.a(Os_Internal_Cfg.o)
- .debug_line    0x0000b133      0x7ff ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_line    0x0000b932      0x205 ./out/lib/rtos.a(SetEvent.o)
- .debug_line    0x0000bb37      0x6ee ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_line    0x0000c225       0x7b ./out/lib/rtos.a(PendSV.o)
- .debug_line    0x0000c2a0      0x650 ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_line    0x0000c8f0      0x5ab ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_line    0x0000ce9b      0x32f ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_line    0x0000d1ca      0x217 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_line    0x0000d3e1      0x486 ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_line    0x0000d867      0x1d9 ./out/lib/posix.a(ciaaPOSIX_errno.o)
- .debug_line    0x0000da40      0x6bd ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_line    0x0000e0fd      0x1a8 ./out/lib/rtos.a(GetTaskID.o)
- .debug_line    0x0000e2a5      0x1c7 ./out/lib/rtos.a(ClearEvent.o)
- .debug_line    0x0000e46c      0x1fb ./out/lib/rtos.a(WaitEvent.o)
- .debug_line    0x0000e667      0x39b ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_line    0x00000749      0x943 ./out/obj/main.o
+ .debug_line    0x0000108c      0x77b ./out/obj/DRIVER_GPIO.o
+ .debug_line    0x00001807      0x6e3 ./out/obj/HW_leds.o
+ .debug_line    0x00001eea       0x4a ./out/obj/crp.o
+ .debug_line    0x00001f34      0x52c ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_line    0x00002460       0x45 ./out/lib/posix.a(ciaaPOSIX_assert.o)
+ .debug_line    0x000024a5      0x3e3 ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_line    0x00002888      0x363 ./out/lib/posix.a(ciaaDevices.o)
+ .debug_line    0x00002beb      0x403 ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_line    0x00002fee      0xb94 ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_line    0x00003b82      0x9dd ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_line    0x0000455f      0x329 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_line    0x00004888      0xb90 ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_line    0x00005418      0x70e ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_line    0x00005b26      0x998 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_line    0x000064be       0xe9 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_line    0x000065a7      0x7a5 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_line    0x00006d4c      0x889 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_line    0x000075d5      0x691 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_line    0x00007c66      0xaaf ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_line    0x00008715      0x655 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_line    0x00008d6a      0x26d ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_line    0x00008fd7      0x72f ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_line    0x00009706      0x1df ./out/lib/rtos.a(StartOS.o)
+ .debug_line    0x000098e5      0x2a9 ./out/lib/rtos.a(Os_Internal.o)
+ .debug_line    0x00009b8e      0x22c ./out/lib/rtos.a(Schedule.o)
+ .debug_line    0x00009dba      0x1d6 ./out/lib/rtos.a(ActivateTask.o)
+ .debug_line    0x00009f90      0x18e ./out/lib/rtos.a(Os.o)
+ .debug_line    0x0000a11e      0x1d5 ./out/lib/rtos.a(TerminateTask.o)
+ .debug_line    0x0000a2f3      0x1ad ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_line    0x0000a4a0      0x1d4 ./out/lib/rtos.a(GetResource.o)
+ .debug_line    0x0000a674      0x1e4 ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_line    0x0000a858      0x1d6 ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_line    0x0000aa2e      0x1f2 ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_line    0x0000ac20      0x206 ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_line    0x0000ae26      0x18d ./out/lib/rtos.a(Os_Cfg.o)
+ .debug_line    0x0000afb3      0x196 ./out/lib/rtos.a(Os_Internal_Cfg.o)
+ .debug_line    0x0000b149      0x7ff ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_line    0x0000b948      0x205 ./out/lib/rtos.a(SetEvent.o)
+ .debug_line    0x0000bb4d      0x6ee ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_line    0x0000c23b       0x7b ./out/lib/rtos.a(PendSV.o)
+ .debug_line    0x0000c2b6      0x650 ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_line    0x0000c906      0x5ab ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_line    0x0000ceb1      0x32f ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_line    0x0000d1e0      0x217 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_line    0x0000d3f7      0x486 ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_line    0x0000d87d      0x1d9 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_line    0x0000da56      0x6bd ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_line    0x0000e113      0x1a8 ./out/lib/rtos.a(GetTaskID.o)
+ .debug_line    0x0000e2bb      0x1c7 ./out/lib/rtos.a(ClearEvent.o)
+ .debug_line    0x0000e482      0x1fb ./out/lib/rtos.a(WaitEvent.o)
+ .debug_line    0x0000e67d      0x39b ./out/lib/libs.a(ciaaLibs_CircBuf.o)
 
-.debug_str      0x00000000    0x1cae2
+.debug_str      0x00000000    0x1cb2a
  .debug_str     0x00000000    0x142bb ./out/obj/HW_buttons.o
                               0x1448e (size before relaxing)
- .debug_str     0x000142bb     0x2e0b ./out/obj/main.o
-                              0x171f4 (size before relaxing)
- .debug_str     0x000170c6      0x1c5 ./out/obj/DRIVER_GPIO.o
+ .debug_str     0x000142bb     0x2e3e ./out/obj/main.o
+                              0x17235 (size before relaxing)
+ .debug_str     0x000170f9      0x1ba ./out/obj/DRIVER_GPIO.o
                               0x144c7 (size before relaxing)
- .debug_str     0x0001728b       0x74 ./out/obj/HW_leds.o
+ .debug_str     0x000172b3       0x74 ./out/obj/HW_leds.o
                               0x14f44 (size before relaxing)
- .debug_str     0x000172ff       0x49 ./out/obj/crp.o
+ .debug_str     0x00017327       0x49 ./out/obj/crp.o
                                0x2446 (size before relaxing)
- .debug_str     0x00017348      0x34a ./out/lib/posix.a(ciaaPOSIX_stdio.o)
-                               0x54c0 (size before relaxing)
- .debug_str     0x00017692       0x25 ./out/lib/posix.a(ciaaPOSIX_assert.o)
+ .debug_str     0x00017370      0x34a ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+                               0x54d8 (size before relaxing)
+ .debug_str     0x000176ba       0x25 ./out/lib/posix.a(ciaaPOSIX_assert.o)
                                0x242f (size before relaxing)
- .debug_str     0x000176b7       0xba ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_str     0x000176df       0xba ./out/lib/posix.a(ciaaPOSIX_string.o)
                                0x3f06 (size before relaxing)
- .debug_str     0x00017771       0x90 ./out/lib/posix.a(ciaaDevices.o)
+ .debug_str     0x00017799       0x90 ./out/lib/posix.a(ciaaDevices.o)
                                0x45e4 (size before relaxing)
- .debug_str     0x00017801       0xdf ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_str     0x00017829       0xdf ./out/lib/ciaak.a(ciaak_main.o)
                                0x4519 (size before relaxing)
- .debug_str     0x000178e0      0x38d ./out/lib/drivers.a(ciaaDriverUart.o)
-                              0x1743e (size before relaxing)
- .debug_str     0x00017c6d      0x2ee ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_str     0x00017908      0x38d ./out/lib/drivers.a(ciaaDriverUart.o)
+                              0x17456 (size before relaxing)
+ .debug_str     0x00017c95      0x2ee ./out/lib/drivers.a(ciaaDriverDio.o)
                               0x16155 (size before relaxing)
- .debug_str     0x00017f5b       0xc0 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_str     0x00017f83       0xc0 ./out/lib/drivers.a(ciaaDriverFlash.o)
                                0x4007 (size before relaxing)
- .debug_str     0x0001801b      0xb3f ./out/lib/drivers.a(ciaaDriverAio.o)
-                              0x17cba (size before relaxing)
- .debug_str     0x00018b5a       0xf3 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_str     0x00018043      0xb3f ./out/lib/drivers.a(ciaaDriverAio.o)
+                              0x17cd2 (size before relaxing)
+ .debug_str     0x00018b82       0xf3 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
                               0x1442d (size before relaxing)
- .debug_str     0x00018c4d      0x356 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_str     0x00018c75      0x356 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
                               0x15169 (size before relaxing)
- .debug_str     0x00018fa3      0x173 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_str     0x00018fcb      0x173 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
                                0x257b (size before relaxing)
- .debug_str     0x00019116      0x228 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_str     0x0001913e      0x228 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
                               0x14b4e (size before relaxing)
- .debug_str     0x0001933e      0x59f ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_str     0x00019366      0x59f ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
                               0x155c4 (size before relaxing)
- .debug_str     0x000198dd       0x8a ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_str     0x00019905       0x8a ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
                               0x14779 (size before relaxing)
- .debug_str     0x00019967      0x75d ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_str     0x0001998f      0x75d ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
                               0x155ae (size before relaxing)
- .debug_str     0x0001a0c4       0x31 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_str     0x0001a0ec       0x31 ./out/lib/ext_drivers.a(sysinit.o)
                               0x14d2a (size before relaxing)
- .debug_str     0x0001a0f5       0xd5 ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_str     0x0001a11d       0xd5 ./out/lib/ext_drivers.a(fpu_init.o)
                                0x8bc0 (size before relaxing)
- .debug_str     0x0001a1ca      0x101 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_str     0x0001a1f2      0x101 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
                               0x14ff0 (size before relaxing)
- .debug_str     0x0001a2cb     0x1010 ./out/lib/rtos.a(StartOS.o)
-                               0x429e (size before relaxing)
- .debug_str     0x0001b2db      0x455 ./out/lib/rtos.a(Os_Internal.o)
-                               0x4679 (size before relaxing)
- .debug_str     0x0001b730       0xa0 ./out/lib/rtos.a(Schedule.o)
-                               0x43ef (size before relaxing)
- .debug_str     0x0001b7d0       0x2d ./out/lib/rtos.a(ActivateTask.o)
-                               0x4377 (size before relaxing)
- .debug_str     0x0001b7fd       0x4f ./out/lib/rtos.a(Os.o)
-                               0x418d (size before relaxing)
- .debug_str     0x0001b84c       0x2f ./out/lib/rtos.a(TerminateTask.o)
-                               0x42c6 (size before relaxing)
- .debug_str     0x0001b87b       0x2f ./out/lib/rtos.a(ShutdownOS.o)
-                               0x4146 (size before relaxing)
- .debug_str     0x0001b8aa       0x43 ./out/lib/rtos.a(GetResource.o)
-                               0x439f (size before relaxing)
- .debug_str     0x0001b8ed       0x33 ./out/lib/rtos.a(ReleaseResource.o)
-                               0x43b6 (size before relaxing)
- .debug_str     0x0001b920       0x2b ./out/lib/rtos.a(SetRelAlarm.o)
-                               0x43b9 (size before relaxing)
- .debug_str     0x0001b94b       0x47 ./out/lib/rtos.a(StartOs_Arch.o)
-                               0x4160 (size before relaxing)
- .debug_str     0x0001b992       0x93 ./out/lib/rtos.a(Os_Internal_Arch.o)
-                               0x43d9 (size before relaxing)
- .debug_str     0x0001ba25       0x15 ./out/lib/rtos.a(Os_Cfg.o)
-                               0x4170 (size before relaxing)
- .debug_str     0x0001ba3a       0xbc ./out/lib/rtos.a(Os_Internal_Cfg.o)
-                               0x4668 (size before relaxing)
- .debug_str     0x0001baf6       0xdc ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
-                              0x16a40 (size before relaxing)
- .debug_str     0x0001bbd2       0x25 ./out/lib/rtos.a(SetEvent.o)
-                               0x4393 (size before relaxing)
- .debug_str     0x0001bbf7       0x83 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_str     0x0001a2f3     0x1010 ./out/lib/rtos.a(StartOS.o)
+                               0x42b6 (size before relaxing)
+ .debug_str     0x0001b303      0x455 ./out/lib/rtos.a(Os_Internal.o)
+                               0x4691 (size before relaxing)
+ .debug_str     0x0001b758       0xa0 ./out/lib/rtos.a(Schedule.o)
+                               0x4407 (size before relaxing)
+ .debug_str     0x0001b7f8       0x2d ./out/lib/rtos.a(ActivateTask.o)
+                               0x438f (size before relaxing)
+ .debug_str     0x0001b825       0x4f ./out/lib/rtos.a(Os.o)
+                               0x41a5 (size before relaxing)
+ .debug_str     0x0001b874       0x2f ./out/lib/rtos.a(TerminateTask.o)
+                               0x42de (size before relaxing)
+ .debug_str     0x0001b8a3       0x2f ./out/lib/rtos.a(ShutdownOS.o)
+                               0x415e (size before relaxing)
+ .debug_str     0x0001b8d2       0x43 ./out/lib/rtos.a(GetResource.o)
+                               0x43b7 (size before relaxing)
+ .debug_str     0x0001b915       0x33 ./out/lib/rtos.a(ReleaseResource.o)
+                               0x43ce (size before relaxing)
+ .debug_str     0x0001b948       0x2b ./out/lib/rtos.a(SetRelAlarm.o)
+                               0x43d1 (size before relaxing)
+ .debug_str     0x0001b973       0x47 ./out/lib/rtos.a(StartOs_Arch.o)
+                               0x4178 (size before relaxing)
+ .debug_str     0x0001b9ba       0x93 ./out/lib/rtos.a(Os_Internal_Arch.o)
+                               0x43f1 (size before relaxing)
+ .debug_str     0x0001ba4d       0x15 ./out/lib/rtos.a(Os_Cfg.o)
+                               0x4188 (size before relaxing)
+ .debug_str     0x0001ba62       0xdc ./out/lib/rtos.a(Os_Internal_Cfg.o)
+                               0x46a0 (size before relaxing)
+ .debug_str     0x0001bb3e       0xdc ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+                              0x16a58 (size before relaxing)
+ .debug_str     0x0001bc1a       0x25 ./out/lib/rtos.a(SetEvent.o)
+                               0x43ab (size before relaxing)
+ .debug_str     0x0001bc3f       0x83 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
                               0x1486e (size before relaxing)
- .debug_str     0x0001bc7a      0x7e8 ./out/lib/posix.a(ciaaSerialDevices.o)
-                               0x5bf1 (size before relaxing)
- .debug_str     0x0001c462      0x1cb ./out/lib/posix.a(ciaaBlockDevices.o)
-                               0x5b36 (size before relaxing)
- .debug_str     0x0001c62d      0x177 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_str     0x0001bcc2      0x7e8 ./out/lib/posix.a(ciaaSerialDevices.o)
+                               0x5c09 (size before relaxing)
+ .debug_str     0x0001c4aa      0x1cb ./out/lib/posix.a(ciaaBlockDevices.o)
+                               0x5b4e (size before relaxing)
+ .debug_str     0x0001c675      0x177 ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
                                0x3fa5 (size before relaxing)
- .debug_str     0x0001c7a4       0x61 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_str     0x0001c7ec       0x61 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
                                0x308c (size before relaxing)
- .debug_str     0x0001c805      0x11f ./out/lib/posix.a(ciaaDioDevices.o)
-                               0x548e (size before relaxing)
- .debug_str     0x0001c924       0x24 ./out/lib/posix.a(ciaaPOSIX_errno.o)
+ .debug_str     0x0001c84d      0x11f ./out/lib/posix.a(ciaaDioDevices.o)
+                               0x54a6 (size before relaxing)
+ .debug_str     0x0001c96c       0x24 ./out/lib/posix.a(ciaaPOSIX_errno.o)
                                0x305e (size before relaxing)
- .debug_str     0x0001c948       0x93 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_str     0x0001c990       0x93 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
                               0x15021 (size before relaxing)
- .debug_str     0x0001c9db       0x27 ./out/lib/rtos.a(GetTaskID.o)
-                               0x4166 (size before relaxing)
- .debug_str     0x0001ca02       0x29 ./out/lib/rtos.a(ClearEvent.o)
-                               0x43a5 (size before relaxing)
- .debug_str     0x0001ca2b       0x27 ./out/lib/rtos.a(WaitEvent.o)
-                               0x43bc (size before relaxing)
- .debug_str     0x0001ca52       0x90 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_str     0x0001ca23       0x27 ./out/lib/rtos.a(GetTaskID.o)
+                               0x417e (size before relaxing)
+ .debug_str     0x0001ca4a       0x29 ./out/lib/rtos.a(ClearEvent.o)
+                               0x43bd (size before relaxing)
+ .debug_str     0x0001ca73       0x27 ./out/lib/rtos.a(WaitEvent.o)
+                               0x43d4 (size before relaxing)
+ .debug_str     0x0001ca9a       0x90 ./out/lib/libs.a(ciaaLibs_CircBuf.o)
                                0x4445 (size before relaxing)
 
 .comment        0x00000000       0x70
@@ -5160,51 +5171,51 @@ OUTPUT(./out/bin/1_3.axf elf32-littlearm)
  .ARM.attributes
                 0x00000b51       0x32 c:/ciaa/cygwin/usr/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7e-m/softfp\libc.a(lib_a-memset.o)
 
-.debug_frame    0x00000000     0x2860
+.debug_frame    0x00000000     0x287c
  .debug_frame   0x00000000      0x114 ./out/obj/HW_buttons.o
- .debug_frame   0x00000114       0x84 ./out/obj/main.o
- .debug_frame   0x00000198      0x1b8 ./out/obj/DRIVER_GPIO.o
- .debug_frame   0x00000350       0xa8 ./out/obj/HW_leds.o
- .debug_frame   0x000003f8      0x114 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
- .debug_frame   0x0000050c       0xf4 ./out/lib/posix.a(ciaaPOSIX_string.o)
- .debug_frame   0x00000600       0x64 ./out/lib/posix.a(ciaaDevices.o)
- .debug_frame   0x00000664       0x4c ./out/lib/ciaak.a(ciaak_main.o)
- .debug_frame   0x000006b0      0x2c0 ./out/lib/drivers.a(ciaaDriverUart.o)
- .debug_frame   0x00000970      0x1f4 ./out/lib/drivers.a(ciaaDriverDio.o)
- .debug_frame   0x00000b64       0xb4 ./out/lib/drivers.a(ciaaDriverFlash.o)
- .debug_frame   0x00000c18      0x260 ./out/lib/drivers.a(ciaaDriverAio.o)
- .debug_frame   0x00000e78      0x130 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
- .debug_frame   0x00000fa8      0x3d4 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
- .debug_frame   0x0000137c       0x68 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
- .debug_frame   0x000013e4      0x1f0 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
- .debug_frame   0x000015d4      0x1d4 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
- .debug_frame   0x000017a8       0x88 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
- .debug_frame   0x00001830      0x41c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
- .debug_frame   0x00001c4c       0x30 ./out/lib/ext_drivers.a(sysinit.o)
- .debug_frame   0x00001c7c       0x2c ./out/lib/ext_drivers.a(fpu_init.o)
- .debug_frame   0x00001ca8       0xd0 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
- .debug_frame   0x00001d78       0x30 ./out/lib/rtos.a(StartOS.o)
- .debug_frame   0x00001da8       0xbc ./out/lib/rtos.a(Os_Internal.o)
- .debug_frame   0x00001e64       0x30 ./out/lib/rtos.a(Schedule.o)
- .debug_frame   0x00001e94       0x30 ./out/lib/rtos.a(ActivateTask.o)
- .debug_frame   0x00001ec4       0x30 ./out/lib/rtos.a(TerminateTask.o)
- .debug_frame   0x00001ef4       0x2c ./out/lib/rtos.a(ShutdownOS.o)
- .debug_frame   0x00001f20       0x30 ./out/lib/rtos.a(GetResource.o)
- .debug_frame   0x00001f50       0x30 ./out/lib/rtos.a(ReleaseResource.o)
- .debug_frame   0x00001f80       0x30 ./out/lib/rtos.a(SetRelAlarm.o)
- .debug_frame   0x00001fb0       0x4c ./out/lib/rtos.a(StartOs_Arch.o)
- .debug_frame   0x00001ffc       0x80 ./out/lib/rtos.a(Os_Internal_Arch.o)
- .debug_frame   0x0000207c      0x100 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
- .debug_frame   0x0000217c       0x30 ./out/lib/rtos.a(SetEvent.o)
- .debug_frame   0x000021ac       0x68 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
- .debug_frame   0x00002214      0x12c ./out/lib/posix.a(ciaaSerialDevices.o)
- .debug_frame   0x00002340      0x14c ./out/lib/posix.a(ciaaBlockDevices.o)
- .debug_frame   0x0000248c       0x8c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
- .debug_frame   0x00002518       0x64 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
- .debug_frame   0x0000257c       0xe8 ./out/lib/posix.a(ciaaDioDevices.o)
- .debug_frame   0x00002664       0x98 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
- .debug_frame   0x000026fc       0x2c ./out/lib/rtos.a(GetTaskID.o)
- .debug_frame   0x00002728       0x30 ./out/lib/rtos.a(ClearEvent.o)
- .debug_frame   0x00002758       0x30 ./out/lib/rtos.a(WaitEvent.o)
- .debug_frame   0x00002788       0xac ./out/lib/libs.a(ciaaLibs_CircBuf.o)
- .debug_frame   0x00002834       0x2c c:/ciaa/cygwin/usr/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7e-m/softfp\libc.a(lib_a-memset.o)
+ .debug_frame   0x00000114       0xa0 ./out/obj/main.o
+ .debug_frame   0x000001b4      0x1b8 ./out/obj/DRIVER_GPIO.o
+ .debug_frame   0x0000036c       0xa8 ./out/obj/HW_leds.o
+ .debug_frame   0x00000414      0x114 ./out/lib/posix.a(ciaaPOSIX_stdio.o)
+ .debug_frame   0x00000528       0xf4 ./out/lib/posix.a(ciaaPOSIX_string.o)
+ .debug_frame   0x0000061c       0x64 ./out/lib/posix.a(ciaaDevices.o)
+ .debug_frame   0x00000680       0x4c ./out/lib/ciaak.a(ciaak_main.o)
+ .debug_frame   0x000006cc      0x2c0 ./out/lib/drivers.a(ciaaDriverUart.o)
+ .debug_frame   0x0000098c      0x1f4 ./out/lib/drivers.a(ciaaDriverDio.o)
+ .debug_frame   0x00000b80       0xb4 ./out/lib/drivers.a(ciaaDriverFlash.o)
+ .debug_frame   0x00000c34      0x260 ./out/lib/drivers.a(ciaaDriverAio.o)
+ .debug_frame   0x00000e94      0x130 ./out/lib/ext_drivers.a(gpio_18xx_43xx.o)
+ .debug_frame   0x00000fc4      0x3d4 ./out/lib/ext_drivers.a(uart_18xx_43xx.o)
+ .debug_frame   0x00001398       0x68 ./out/lib/ext_drivers.a(cr_startup_lpc43xx.o)
+ .debug_frame   0x00001400      0x1f0 ./out/lib/ext_drivers.a(adc_18xx_43xx.o)
+ .debug_frame   0x000015f0      0x1d4 ./out/lib/ext_drivers.a(gpdma_18xx_43xx.o)
+ .debug_frame   0x000017c4       0x88 ./out/lib/ext_drivers.a(dac_18xx_43xx.o)
+ .debug_frame   0x0000184c      0x41c ./out/lib/ext_drivers.a(clock_18xx_43xx.o)
+ .debug_frame   0x00001c68       0x30 ./out/lib/ext_drivers.a(sysinit.o)
+ .debug_frame   0x00001c98       0x2c ./out/lib/ext_drivers.a(fpu_init.o)
+ .debug_frame   0x00001cc4       0xd0 ./out/lib/ext_drivers.a(sysinit_18xx_43xx.o)
+ .debug_frame   0x00001d94       0x30 ./out/lib/rtos.a(StartOS.o)
+ .debug_frame   0x00001dc4       0xbc ./out/lib/rtos.a(Os_Internal.o)
+ .debug_frame   0x00001e80       0x30 ./out/lib/rtos.a(Schedule.o)
+ .debug_frame   0x00001eb0       0x30 ./out/lib/rtos.a(ActivateTask.o)
+ .debug_frame   0x00001ee0       0x30 ./out/lib/rtos.a(TerminateTask.o)
+ .debug_frame   0x00001f10       0x2c ./out/lib/rtos.a(ShutdownOS.o)
+ .debug_frame   0x00001f3c       0x30 ./out/lib/rtos.a(GetResource.o)
+ .debug_frame   0x00001f6c       0x30 ./out/lib/rtos.a(ReleaseResource.o)
+ .debug_frame   0x00001f9c       0x30 ./out/lib/rtos.a(SetRelAlarm.o)
+ .debug_frame   0x00001fcc       0x4c ./out/lib/rtos.a(StartOs_Arch.o)
+ .debug_frame   0x00002018       0x80 ./out/lib/rtos.a(Os_Internal_Arch.o)
+ .debug_frame   0x00002098      0x100 ./out/lib/rtos.a(Os_Internal_Arch_Cfg.o)
+ .debug_frame   0x00002198       0x30 ./out/lib/rtos.a(SetEvent.o)
+ .debug_frame   0x000021c8       0x68 ./out/lib/rtos.a(StartOs_Arch_SysTick.o)
+ .debug_frame   0x00002230      0x12c ./out/lib/posix.a(ciaaSerialDevices.o)
+ .debug_frame   0x0000235c      0x14c ./out/lib/posix.a(ciaaBlockDevices.o)
+ .debug_frame   0x000024a8       0x8c ./out/lib/posix.a(ciaaPOSIX_stdlib.o)
+ .debug_frame   0x00002534       0x64 ./out/lib/posix.a(ciaaPOSIX_semaphore.o)
+ .debug_frame   0x00002598       0xe8 ./out/lib/posix.a(ciaaDioDevices.o)
+ .debug_frame   0x00002680       0x98 ./out/lib/ext_drivers.a(chip_18xx_43xx.o)
+ .debug_frame   0x00002718       0x2c ./out/lib/rtos.a(GetTaskID.o)
+ .debug_frame   0x00002744       0x30 ./out/lib/rtos.a(ClearEvent.o)
+ .debug_frame   0x00002774       0x30 ./out/lib/rtos.a(WaitEvent.o)
+ .debug_frame   0x000027a4       0xac ./out/lib/libs.a(ciaaLibs_CircBuf.o)
+ .debug_frame   0x00002850       0x2c c:/ciaa/cygwin/usr/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7e-m/softfp\libc.a(lib_a-memset.o)

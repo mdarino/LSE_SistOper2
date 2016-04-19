@@ -2,7 +2,7 @@
 
   @file     main.c
 
-  @brief    EJERCICIO 1.3 - RTOS 2 OSEK
+  @brief    EJERCICIO 1.4 - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
@@ -11,18 +11,27 @@
 
 /**
 
- EJERCICIO 1.3    (Spanish)
+ EJERCICIO 1.4    (Spanish)
 
-    Medir   el   tiempo   de   pulsación   de   un   botón   utilizando   
-    un   algoritmos   anti­rebote.   Luego  destellar un led durante 
-    el tiempo medido. 
+ Escribir un programa con dos tareas: 
+ 
+  ∙ Una tarea medirá el tiempo de pulsación de un botón, aplicando anti­rebote. 
+  ∙ La   otra   destellará   un   led   con   un   período   fijo   de   1   seg,   
+  y tomando   como   tiempo   de   activación  
+    el último tiempo medido. 
+ 
+ El   tiempo   medido   se   puede   comunicar   entre   
+ tareas   a   través   de   una   variable   global,   protegiendo   sus  
+ operaciones dentro de una sección crítica. 
+
 
  **/
 
 
 
 
-/** \addtogroup OSEK_RTOS Ejer1.3
+
+/** \addtogroup OSEK_RTOS Ejer1.4
  ** @{ */
 
 /*==================[inclusions]=============================================*/
@@ -128,24 +137,24 @@ TASK(InitTask)
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every TIME_UPDATE_BUTTON ticks (10 ms)
     */
-   SetRelAlarm(ActivatePeriodicTask, 350, TIME_UPDATE_BUTTON);
+   SetRelAlarm(ActivateButtonTask, 350, TIME_UPDATE_BUTTON);
 
    /* terminate task */
    TerminateTask();
 }
 
-/** \brief Periodic Task
+/** \brief button Task
  *
  * This task is started automatically every time that the alarm
- * ActivatePeriodicTask expires.
+ * ActivateButtonTask expires.
  *
  */
-TASK(PeriodicTask)
+TASK(ButtonTask)
 {
   
    static uint32_t timeButton;
    static uint32_t lastTimeButton;
-
+   static uint32_t flag=0;
    buttonUpdate(&button1);
 
 
@@ -174,6 +183,11 @@ TASK(PeriodicTask)
          lastTimeButton=timeButton;
          //turn on the led 3
          led_SetON(LED_3);
+         //Activate the LedTask
+         
+         if (flag==0)
+          SetRelAlarm(ActivateLedTask, 10, (uint16_t)timeButton);
+         flag=1; 
       }
       else
       {
@@ -196,6 +210,22 @@ TASK(PeriodicTask)
    /* terminate task */
    TerminateTask();
 }
+
+
+/** \brief button Task
+ *
+ * This task is started automatically every time that the alarm
+ * ActivateLedTask expires.
+ *
+ */
+TASK(LedTask)
+{
+
+   led_SetToggle(LED_1);
+   /* terminate task */
+   TerminateTask();
+}
+
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

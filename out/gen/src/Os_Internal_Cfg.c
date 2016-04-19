@@ -83,26 +83,35 @@ uint8 StackTaskInitTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
 uint8 StackTaskInitTask[512];
 #endif
-/** \brief PeriodicTask stack */
+/** \brief ButtonTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskPeriodicTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskButtonTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskPeriodicTask[512];
+uint8 StackTaskButtonTask[512];
+#endif
+/** \brief LedTask stack */
+#if ( x86 == ARCH )
+uint8 StackTaskLedTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+#else
+uint8 StackTaskLedTask[512];
 #endif
 
 /** \brief InitTask context */
 TaskContextType ContextTaskInitTask;
-/** \brief PeriodicTask context */
-TaskContextType ContextTaskPeriodicTask;
+/** \brief ButtonTask context */
+TaskContextType ContextTaskButtonTask;
+/** \brief LedTask context */
+TaskContextType ContextTaskLedTask;
 
 /** \brief Ready List for Priority 1 */
-TaskType ReadyList1[1];
+TaskType ReadyList1[2];
 
 /** \brief Ready List for Priority 0 */
 TaskType ReadyList0[1];
 
-const AlarmType OSEK_ALARMLIST_HardwareCounter[1] = {
-   ActivatePeriodicTask, /* this alarm has to be incremented with this counter */
+const AlarmType OSEK_ALARMLIST_HardwareCounter[2] = {
+   ActivateButtonTask, /* this alarm has to be incremented with this counter */
+   ActivateLedTask, /* this alarm has to be incremented with this counter */
 };
 
 
@@ -134,12 +143,28 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
       0 | POSIXE , /* events mask */
       0 | ( 1 << POSIXR ) /* resources mask */
    },
-   /* Task PeriodicTask */
+   /* Task ButtonTask */
    {
-       OSEK_TASK_PeriodicTask,   /* task entry point */
-       &ContextTaskPeriodicTask, /* pointer to task context */
-       StackTaskPeriodicTask, /* pointer stack memory */
-       sizeof(StackTaskPeriodicTask), /* stack size */
+       OSEK_TASK_ButtonTask,   /* task entry point */
+       &ContextTaskButtonTask, /* pointer to task context */
+       StackTaskButtonTask, /* pointer stack memory */
+       sizeof(StackTaskButtonTask), /* stack size */
+       1, /* task priority */
+       1, /* task max activations */
+       {
+         1, /* extended task */
+         0, /* non preemtive task */
+         0
+      }, /* task const flags */
+      0 | POSIXE , /* events mask */
+      0 | ( 1 << POSIXR ) /* resources mask */
+   },
+   /* Task LedTask */
+   {
+       OSEK_TASK_LedTask,   /* task entry point */
+       &ContextTaskLedTask, /* pointer to task context */
+       StackTaskLedTask, /* pointer stack memory */
+       sizeof(StackTaskLedTask), /* stack size */
        1, /* task priority */
        1, /* task max activations */
        {
@@ -170,7 +195,7 @@ const AutoStartType AutoStart[1]  = {
 
 const ReadyConstType ReadyConst[2] = { 
    {
-      1, /* Length of this ready list */
+      2, /* Length of this ready list */
       ReadyList1 /* Pointer to the Ready List */
    },
    {
@@ -188,16 +213,26 @@ const TaskPriorityType ResourcesPriority[1]  = {
    1
 };
 /** TODO replace next line with: 
- ** AlarmVarType AlarmsVar[1]; */
-AlarmVarType AlarmsVar[1];
+ ** AlarmVarType AlarmsVar[2]; */
+AlarmVarType AlarmsVar[2];
 
-const AlarmConstType AlarmsConst[1]  = {
+const AlarmConstType AlarmsConst[2]  = {
    {
       OSEK_COUNTER_HardwareCounter, /* Counter */
       ACTIVATETASK, /* Alarm action */
       {
          NULL, /* no callback */
-         PeriodicTask, /* TaskID */
+         ButtonTask, /* TaskID */
+         0, /* no event */
+         0 /* no counter */
+      },
+   },
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      ACTIVATETASK, /* Alarm action */
+      {
+         NULL, /* no callback */
+         LedTask, /* TaskID */
          0, /* no event */
          0 /* no counter */
       },
@@ -212,7 +247,7 @@ CounterVarType CountersVar[1];
 
 const CounterConstType CountersConst[1] = {
    {
-      1, /* quantity of alarms for this counter */
+      2, /* quantity of alarms for this counter */
       (AlarmType*)OSEK_ALARMLIST_HardwareCounter, /* alarms list */
       1000, /* max allowed value */
       1, /* min cycle */

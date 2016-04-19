@@ -1,6 +1,6 @@
-HW_buttons.o: projects\ejercicios\1_3\src\HW_buttons.c \
- projects\ejercicios\1_3\inc/HW_buttons.h \
- projects\ejercicios\1_3\inc/DRIVER_GPIO.h \
+HW_buttons.o: projects\ejercicios\1_4\src\HW_buttons.c \
+ projects\ejercicios\1_4\inc/HW_buttons.h \
+ projects\ejercicios\1_4\inc/DRIVER_GPIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \
