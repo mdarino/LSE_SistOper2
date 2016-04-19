@@ -99,4 +99,12 @@ BOARD          ?= edu_ciaa_nxp
 
 #PROJECT_PATH  ?= projects$(DS)1_1
 #PROJECT_PATH  ?= projects$(DS)1_2
-PROJECT_PATH  ?= projects$(DS)1_3
+#PROJECT_PATH  ?= projects$(DS)1_3
+#PROJECT_PATH  ?= projects$(DS)TestUART
+#PROJECT_PATH  ?= projects$(DS)TestButtons
+#PROJECT_PATH  ?= projects$(DS)exampleWithciaa
+
+#PROJECT_PATH  ?= projects/templace/$(DS)example
+#PROJECT_PATH  ?= projects/poxis/$(DS)blinking3
+
+PROJECT_PATH  ?= projects/ejercicios/$(DS)1_3

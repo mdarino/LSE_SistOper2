@@ -1,5 +1,5 @@
-HW_leds.o: projects\osekExample\src\HW_leds.c \
- projects\osekExample\inc/DRIVER_GPIO.h \
+HW_leds.o: projects\ejercicios\1_3\src\HW_leds.c \
+ projects\ejercicios\1_3\inc/DRIVER_GPIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \
@@ -61,5 +61,5 @@ HW_leds.o: projects\osekExample\src\HW_leds.c \
  externals/drivers/cortexM4/lpc43xx/inc/error.h \
  externals/drivers/cortexM4/lpc43xx/inc/i2cm_18xx_43xx.h \
  externals/drivers/cortexM4/lpc43xx/inc/fpu_init.h \
- projects\osekExample\inc/HW_leds.h \
- projects\osekExample\inc/DRIVER_GPIO.h
+ projects\ejercicios\1_3\inc/HW_leds.h \
+ projects\ejercicios\1_3\inc/DRIVER_GPIO.h

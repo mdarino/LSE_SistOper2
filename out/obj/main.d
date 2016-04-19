@@ -1,9 +1,18 @@
-main.o: projects\1_3\src\main.c projects\1_3\inc/main.h \
- modules/rtos/inc/os.h modules/rtos/inc/Types.h \
- modules/rtos/inc/Compiler.h modules/rtos/inc/Types_Arch.h \
- out/gen/inc/Os_Cfg.h modules/rtos/inc/cortexM4/Os_Arch.h \
- out/gen/inc/cortexM4/Os_Internal_Arch_Cfg.h projects\1_3\inc/HW_leds.h \
- projects\1_3\inc/DRIVER_GPIO.h \
+main.o: projects\ejercicios\1_3\src\main.c modules/rtos/inc/os.h \
+ modules/rtos/inc/Types.h modules/rtos/inc/Compiler.h \
+ modules/rtos/inc/Types_Arch.h out/gen/inc/Os_Cfg.h \
+ modules/rtos/inc/cortexM4/Os_Arch.h \
+ out/gen/inc/cortexM4/Os_Internal_Arch_Cfg.h \
+ modules/posix/inc/ciaaPOSIX_stdio.h modules/posix/inc/ciaaDevices.h \
+ modules/base/inc/ciaaPOSIX_stdint.h modules/base/inc/ciaaPlatforms.h \
+ modules/base/inc/ciaaPOSIX_stddef.h modules/base/inc/ciaaPOSIX_stdint.h \
+ modules/posix/inc/ciaaMemory.h \
+ modules/posix/inc/ciaaPOSIX_ioctl_serial.h \
+ modules/posix/inc/ciaaPOSIX_ioctl_block.h \
+ modules/posix/inc/ciaaPOSIX_string.h modules/ciaak/inc/ciaak.h \
+ modules/ciaak/inc/ciaak_main.h projects\ejercicios\1_3\inc/main.h \
+ projects\ejercicios\1_3\inc/HW_leds.h \
+ projects\ejercicios\1_3\inc/DRIVER_GPIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \
@@ -65,4 +74,4 @@ main.o: projects\1_3\src\main.c projects\1_3\inc/main.h \
  externals/drivers/cortexM4/lpc43xx/inc/error.h \
  externals/drivers/cortexM4/lpc43xx/inc/i2cm_18xx_43xx.h \
  externals/drivers/cortexM4/lpc43xx/inc/fpu_init.h \
- projects\1_3\inc/HW_buttons.h
+ projects\ejercicios\1_3\inc/HW_buttons.h
