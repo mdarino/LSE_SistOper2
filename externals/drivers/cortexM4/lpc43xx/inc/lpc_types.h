@@ -47,25 +47,9 @@
 /**
  * @brief Boolean Type definition
  */
-//typedef enum {FALSE = 0, TRUE = !FALSE} Bool;
+typedef enum {FALSE = 0, TRUE = !FALSE} Bool;
 
-/** \brief Definition of FALSE */
-#if !defined(FALSE)
-#if defined(C99_COMPILER) || defined(CPP_COMPILER)
-#define FALSE false
-#else
-#define FALSE 0
-#endif
-#endif
 
-/** \brief Definiton of TRUE */
-#if !defined(TRUE)
-#if defined(C99_COMPILER) || defined(CPP_COMPILER)
-#define TRUE true
-#else
-#define TRUE ((boolean)1)
-#endif
-#endif
 
 /**
  * @brief Boolean Type definition

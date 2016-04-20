@@ -82,7 +82,7 @@
 #define ERROR_CHECKING_EXTENDED   2
 
 /** \brief Count of task */
-#define TASKS_COUNT 3U
+#define TASKS_COUNT 2U
 
 /** \brief Count of resources */
 #define RESOURCES_COUNT 1
@@ -115,7 +115,7 @@
       ErrorHookRunning = (uint8)0U;   \
    }
 
-#define ALARM_AUTOSTART_COUNT 0
+#define ALARM_AUTOSTART_COUNT 1
 
 #define OSEK_COUNTER_HardwareCounter 0
 /** \brief ALARMS_COUNT define */
@@ -333,7 +333,7 @@ extern uint8 ApplicationMode;
 /** \brief List of Auto Start Tasks in Application Mode AppMode1 */
 extern const TaskType TasksAppModeAppMode1[1];
 /** \brief AutoStart Array */
-extern const AutoStartType AutoStart[1];
+extern const AutoStartType AutoStart[3];
 
 /** \brief Resources Priorities */
 extern const TaskPriorityType ResourcesPriority[1];

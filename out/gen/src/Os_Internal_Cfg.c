@@ -83,35 +83,27 @@ uint8 StackTaskInitTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
 uint8 StackTaskInitTask[512];
 #endif
-/** \brief ButtonTask stack */
+/** \brief PeriodicTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskButtonTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskPeriodicTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskButtonTask[512];
-#endif
-/** \brief LedTask stack */
-#if ( x86 == ARCH )
-uint8 StackTaskLedTask[512 + TASK_STACK_ADDITIONAL_SIZE];
-#else
-uint8 StackTaskLedTask[512];
+uint8 StackTaskPeriodicTask[512];
 #endif
 
 /** \brief InitTask context */
 TaskContextType ContextTaskInitTask;
-/** \brief ButtonTask context */
-TaskContextType ContextTaskButtonTask;
-/** \brief LedTask context */
-TaskContextType ContextTaskLedTask;
+/** \brief PeriodicTask context */
+TaskContextType ContextTaskPeriodicTask;
 
 /** \brief Ready List for Priority 1 */
-TaskType ReadyList1[2];
+TaskType ReadyList1[1];
 
 /** \brief Ready List for Priority 0 */
 TaskType ReadyList0[1];
 
 const AlarmType OSEK_ALARMLIST_HardwareCounter[2] = {
-   ActivateButtonTask, /* this alarm has to be incremented with this counter */
-   ActivateLedTask, /* this alarm has to be incremented with this counter */
+   ActivatePeriodicTask, /* this alarm has to be incremented with this counter */
+   AlarmTickHook, /* this alarm has to be incremented with this counter */
 };
 
 
@@ -143,28 +135,12 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
       0 | POSIXE , /* events mask */
       0 | ( 1 << POSIXR ) /* resources mask */
    },
-   /* Task ButtonTask */
+   /* Task PeriodicTask */
    {
-       OSEK_TASK_ButtonTask,   /* task entry point */
-       &ContextTaskButtonTask, /* pointer to task context */
-       StackTaskButtonTask, /* pointer stack memory */
-       sizeof(StackTaskButtonTask), /* stack size */
-       1, /* task priority */
-       1, /* task max activations */
-       {
-         1, /* extended task */
-         0, /* non preemtive task */
-         0
-      }, /* task const flags */
-      0 | POSIXE , /* events mask */
-      0 | ( 1 << POSIXR ) /* resources mask */
-   },
-   /* Task LedTask */
-   {
-       OSEK_TASK_LedTask,   /* task entry point */
-       &ContextTaskLedTask, /* pointer to task context */
-       StackTaskLedTask, /* pointer stack memory */
-       sizeof(StackTaskLedTask), /* stack size */
+       OSEK_TASK_PeriodicTask,   /* task entry point */
+       &ContextTaskPeriodicTask, /* pointer to task context */
+       StackTaskPeriodicTask, /* pointer stack memory */
+       sizeof(StackTaskPeriodicTask), /* stack size */
        1, /* task priority */
        1, /* task max activations */
        {
@@ -185,17 +161,27 @@ const TaskType TasksAppModeAppMode1[1]  = {
    InitTask
 };
 /** \brief AutoStart Array */
-const AutoStartType AutoStart[1]  = {
+const AutoStartType AutoStart[3]  = {
    /* Application Mode AppMode1 */
    {
       1, /* Total Auto Start Tasks in this Application Mode */
       (TaskRefType)TasksAppModeAppMode1 /* Pointer to the list of Auto Start Stacks on this Application Mode */
+   },
+   /* Application Mode AppModeDebug */
+   {
+      0, /* Total Auto Start Tasks in this Application Mode */
+      NULL /* no tasks on this mode */
+   },
+   /* Application Mode AppModeRelease */
+   {
+      0, /* Total Auto Start Tasks in this Application Mode */
+      NULL /* no tasks on this mode */
    }
 };
 
 const ReadyConstType ReadyConst[2] = { 
    {
-      2, /* Length of this ready list */
+      1, /* Length of this ready list */
       ReadyList1 /* Pointer to the Ready List */
    },
    {
@@ -222,17 +208,17 @@ const AlarmConstType AlarmsConst[2]  = {
       ACTIVATETASK, /* Alarm action */
       {
          NULL, /* no callback */
-         ButtonTask, /* TaskID */
+         PeriodicTask, /* TaskID */
          0, /* no event */
          0 /* no counter */
       },
    },
    {
       OSEK_COUNTER_HardwareCounter, /* Counter */
-      ACTIVATETASK, /* Alarm action */
+      ALARMCALLBACK, /* Alarm action */
       {
-         NULL, /* no callback */
-         LedTask, /* TaskID */
+         OSEK_CALLBACK_tickHook, /* callback */
+         0, /* no taskid */
          0, /* no event */
          0 /* no counter */
       },
@@ -240,7 +226,12 @@ const AlarmConstType AlarmsConst[2]  = {
 };
 
 const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT] = {
-
+  {
+      AppMode1, /* Application Mode */
+      AlarmTickHook, /* Alarms */
+      0, /* Alarm Time */
+      1 /* Alarm Time */
+   }
 };
 
 CounterVarType CountersVar[1];

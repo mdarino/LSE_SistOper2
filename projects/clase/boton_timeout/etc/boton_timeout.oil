@@ -1,0 +1,58 @@
+OSEK OSEK {
+
+   OS ExampleOS {
+      STATUS = EXTENDED;
+      ERRORHOOK = TRUE;
+      PRETASKHOOK = FALSE;
+      POSTTASKHOOK = FALSE;
+      STARTUPHOOK = FALSE;
+      SHUTDOWNHOOK = FALSE;
+      USERESSCHEDULER = FALSE;
+      MEMMAP = FALSE;
+   };
+   
+   EVENT = evBoton;
+   EVENT = evTimeout;
+   APPMODE = AppMode1;
+  
+   TASK BotonTask {
+      PRIORITY = 1;
+      ACTIVATION = 1;
+      AUTOSTART = TRUE {
+         APPMODE = AppMode1;
+      }
+      STACK = 512;
+      TYPE = BASIC;
+      SCHEDULE = NON;
+   }
+   
+   TASK LEDTask {
+      PRIORITY = 1;
+      ACTIVATION = 1;
+      AUTOSTART = TRUE {
+         APPMODE = AppMode1;
+      }
+      STACK = 512;
+      TYPE = EXTENDED;
+      SCHEDULE = NON;
+      EVENT = evBoton;
+      EVENT = evTimeout;
+   }
+
+   ALARM AlarmTimeout {
+      COUNTER = HardwareCounter;
+      ACTION = SETEVENT {
+         TASK = LEDTask;
+         EVENT = evTimeout;
+      }
+   }
+   
+   COUNTER HardwareCounter {
+      MAXALLOWEDVALUE = 10000;
+      TICKSPERBASE = 1;
+      MINCYCLE = 1;
+      TYPE = HARDWARE;
+      COUNTER = HWCOUNTER0;
+   };
+
+};

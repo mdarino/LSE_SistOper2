@@ -46,9 +46,5 @@ SRC_FILES            += $(wildcard $($(PROJECT_NAME)_SRC_PATH)$(DS)*.c)
 # configuration for OSEK-OS
 OIL_FILES            += $(PROJECT_PATH)$(DS)etc$(DS)$(PROJECT_NAME).oil
 # Modules needed for this example
-MODS ?= modules$(DS)posix           \
-        modules$(DS)ciaak           \
-        modules$(DS)drivers         \
-        modules$(DS)rtos            \
-        modules$(DS)libs
-
+MODS ?= modules$(DS)rtos            \
+        projects$(DS)ciaa_driver		

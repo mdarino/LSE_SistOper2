@@ -82,12 +82,14 @@
 /** \brief Task Definition */
 #define InitTask 0
 /** \brief Task Definition */
-#define ButtonTask 1
-/** \brief Task Definition */
-#define LedTask 2
+#define PeriodicTask 1
 
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
+/** \brief Definition of the Application Mode AppModeDebug */
+#define AppModeDebug 1
+/** \brief Definition of the Application Mode AppModeRelease */
+#define AppModeRelease 2
 
 /** \brief Definition of the Event POSIXE */
 #define POSIXE 0x1U
@@ -95,10 +97,10 @@
 /** \brief Definition of the resource POSIXR */
 #define POSIXR ((ResourceType)0)
 
-/** \brief Definition of the Alarm ActivateButtonTask */
-#define ActivateButtonTask 0
-/** \brief Definition of the Alarm ActivateLedTask */
-#define ActivateLedTask 1
+/** \brief Definition of the Alarm ActivatePeriodicTask */
+#define ActivatePeriodicTask 0
+/** \brief Definition of the Alarm AlarmTickHook */
+#define AlarmTickHook 1
 
 /** \brief Definition of the Counter HardwareCounter */
 #define HardwareCounter 0
@@ -189,12 +191,12 @@ extern void ErrorHook(void);
 
 /** \brief Task Declaration of Task InitTask */
 DeclareTask(InitTask);
-/** \brief Task Declaration of Task ButtonTask */
-DeclareTask(ButtonTask);
-/** \brief Task Declaration of Task LedTask */
-DeclareTask(LedTask);
+/** \brief Task Declaration of Task PeriodicTask */
+DeclareTask(PeriodicTask);
 
 
+/** \brief Alarm Callback declaration */
+extern void OSEK_CALLBACK_tickHook(void);
 
 /** \brief Schedule this Task if higher priority Task are Active
  **

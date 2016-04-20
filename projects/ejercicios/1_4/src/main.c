@@ -35,13 +35,13 @@
  ** @{ */
 
 /*==================[inclusions]=============================================*/
-#include "os.h"               /* <= operating system header */
-#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
-#include "ciaaPOSIX_string.h" /* <= string header */
-#include "ciaak.h"            /* <= ciaa kernel header */
+//#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
+//#include "ciaaPOSIX_string.h" /* <= string header */
+//#include "ciaak.h"            /* <= ciaa kernel header */
 #include "main.h"         /* <= own header */
 #include "HW_leds.h"
 #include "HW_buttons.h"
+#include "os.h"               /* <= operating system header */
 
 /*==================[macros and definitions]=================================*/
 
@@ -57,7 +57,7 @@
  *
  * Device path /dev/dio/out/0
  */
-static int32_t fd_out;
+//static int32_t fd_out;
 
 static button_t button1;
 
@@ -106,8 +106,8 @@ int main(void)
  */
 void ErrorHook(void)
 {
-   ciaaPOSIX_printf("ErrorHook was called\n");
-   ciaaPOSIX_printf("Service: %d, P1: %d, P2: %d, P3: %d, RET: %d\n", OSErrorGetServiceId(), OSErrorGetParam1(), OSErrorGetParam2(), OSErrorGetParam3(), OSErrorGetRet());
+   //ciaaPOSIX_printf("ErrorHook was called\n");
+   //ciaaPOSIX_printf("Service: %d, P1: %d, P2: %d, P3: %d, RET: %d\n", OSErrorGetServiceId(), OSErrorGetParam1(), OSErrorGetParam2(), OSErrorGetParam3(), OSErrorGetRet());
    ShutdownOS(0);
 }
 
@@ -120,7 +120,8 @@ TASK(InitTask)
    /* init CIAA kernel and devices */
    
    
-   ciaak_start();
+   //ciaak_start();
+   ciaaIOInit();
    led_Init();
    
    //button1 CIAA
@@ -131,14 +132,17 @@ TASK(InitTask)
    //ciaaPOSIX_printf("Init Task...\n");
 
    /* open CIAA digital outputs */
-   fd_out = ciaaPOSIX_open("/dev/dio/out/0", ciaaPOSIX_O_RDWR);
+   //fd_out = ciaaPOSIX_open("/dev/dio/out/0", ciaaPOSIX_O_RDWR);
 
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every TIME_UPDATE_BUTTON ticks (10 ms)
     */
+   
+   //Start the Button task
    SetRelAlarm(ActivateButtonTask, 350, TIME_UPDATE_BUTTON);
-
+   //Set defaul time
+   SetRelAlarm(ActivateLedTask,500, 500); 
    /* terminate task */
    TerminateTask();
 }
@@ -156,7 +160,8 @@ TASK(ButtonTask)
    static uint32_t lastTimeButton;
    static uint32_t flag=0;
    buttonUpdate(&button1);
-
+   TickType Ticks;
+   StatusType ret;
 
    //Only to check if the button is press
    //If it is press turn on the led 2
@@ -185,9 +190,24 @@ TASK(ButtonTask)
          led_SetON(LED_3);
          //Activate the LedTask
          
-         if (flag==0)
-          SetRelAlarm(ActivateLedTask, 10, (uint16_t)timeButton);
-         flag=1; 
+         //Check the state of the alarm
+        ret = GetAlarm(ActivateLedTask,&Ticks); 
+        if (E_OK == ret)
+        {
+            //if it is ok, update the time
+            //to do this, first stop and then update
+            CancelAlarm(ActivateLedTask);
+            SetRelAlarm(ActivateLedTask,10, (uint16_t)timeButton); 
+        }
+        else if (E_OS_NOFUNC == ret)
+        {
+          //set defaul time
+          SetRelAlarm(ActivateLedTask,500, 500); 
+        }
+
+
+
+
       }
       else
       {
