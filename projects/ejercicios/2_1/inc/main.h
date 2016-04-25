@@ -1,7 +1,7 @@
-/* Copyright 2008, 2009 Mariano Cerdeiro
- * Copyright 2014, ACSE & CADIEEL
- *      ACSE: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/
- *      CADIEEL: http://www.cadieel.org.ar
+/* Copyright 2014, Mariano Cerdeiro
+ * Copyright 2014, Pablo Ridolfi
+ * Copyright 2014, Juan Cecconi
+ * Copyright 2014, Gustavo Muro
  *
  * This file is part of CIAA Firmware.
  *
@@ -33,67 +33,36 @@
  *
  */
 
-#ifndef _COMPILER_H_
-#define _COMPILER_H_
-/** \brief FreeOSEK Gen Compiler Header File
+#ifndef _BLINKING_H_
+#define _BLINKING_H_
+/** \brief Blinking example header file
  **
- ** Compiler Header File
- **
- ** \file Compiler.h
+ ** This is a mini example of the CIAA Firmware
  **
  **/
 
-/** \addtogroup FreeOSEK
+/** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
-/** \addtogroup FreeOSEK_Gen
+/** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup FreeOSEK_Gen_Global
+/** \addtogroup Blinking Blinking example header file
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- * MaCe         Mariano Cerdeiro
+ *
  */
 
 /*
  * modification history (new versions first)
  * -----------------------------------------------------------
- * 20090130 v0.1.1 MaCe add OpenGEN_MEMMAP check
- * 20081201 v0.1.0 MaCe initial version
+ * yyyymmdd v0.0.1 initials initial version
  */
 
 /*==================[inclusions]=============================================*/
 
 /*==================[macros]=================================================*/
-/* check for C99 compiler */
-#if ( ( defined __STDC_VERSION__ ) &&    \
-      ( __STDC_VERSION__ >= 199901L ) )
-#define C99_COMPILER
-#else
-#undef  C99_COMPILER
-#endif
-
-/* check for C++-Compiler */
-#if defined(__cplusplus)
-#define CPP_COMPILER
-#else
-#undef  CPP_COMPILER
-#endif
-
-/* define INLINE and RESTRICT depending on _OS_CPP_COMPILER and
- * _OS_C99_COMPILER
- */
-#if (defined C99_COMPILER)
-#define INLINE inline
-#define RESTRICT restrict
-#elif (defined OS_CPP_COMPILER)
-#define INLINE inline
-#define RESTRICT
-#else
-#define INLINE inline
-#define RESTRICT
-#endif
 
 /*==================[typedef]================================================*/
 
@@ -105,5 +74,5 @@
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef _COMPILER_H_ */
+#endif /* #ifndef _BLINKING_H_ */
 

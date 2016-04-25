@@ -1,3 +1,7 @@
+/********************************************************
+ * DO NOT CHANGE THIS FILE, IT IS GENERATED AUTOMATICALY*
+ ********************************************************/
+
 /* Copyright 2008, 2009 Mariano Cerdeiro
  * Copyright 2014, ACSE & CADIEEL
  *      ACSE: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/
@@ -33,21 +37,16 @@
  *
  */
 
-#ifndef _COMPILER_H_
-#define _COMPILER_H_
-/** \brief FreeOSEK Gen Compiler Header File
+/** \brief FreeOSEK Os Generated Configuration Implementation File
  **
- ** Compiler Header File
- **
- ** \file Compiler.h
- **
+ ** \file Os_Cfg.c
  **/
 
 /** \addtogroup FreeOSEK
  ** @{ */
-/** \addtogroup FreeOSEK_Gen
+/** \addtogroup FreeOSEK_Os
  ** @{ */
-/** \addtogroup FreeOSEK_Gen_Global
+/** \addtogroup FreeOSEK_Os_Global
  ** @{ */
 
 /*
@@ -59,51 +58,39 @@
 /*
  * modification history (new versions first)
  * -----------------------------------------------------------
- * 20090130 v0.1.1 MaCe add OpenGEN_MEMMAP check
- * 20081201 v0.1.0 MaCe initial version
+ * 20090719 v0.1.1 MaCe rename file to Os_
+ * 20080909 v0.1.0 MaCe initial version
  */
 
 /*==================[inclusions]=============================================*/
+#include "Os_Internal.h"
 
-/*==================[macros]=================================================*/
-/* check for C99 compiler */
-#if ( ( defined __STDC_VERSION__ ) &&    \
-      ( __STDC_VERSION__ >= 199901L ) )
-#define C99_COMPILER
-#else
-#undef  C99_COMPILER
-#endif
+/*==================[macros and definitions]=================================*/
 
-/* check for C++-Compiler */
-#if defined(__cplusplus)
-#define CPP_COMPILER
-#else
-#undef  CPP_COMPILER
-#endif
+/*==================[internal data declaration]==============================*/
 
-/* define INLINE and RESTRICT depending on _OS_CPP_COMPILER and
- * _OS_C99_COMPILER
- */
-#if (defined C99_COMPILER)
-#define INLINE inline
-#define RESTRICT restrict
-#elif (defined OS_CPP_COMPILER)
-#define INLINE inline
-#define RESTRICT
-#else
-#define INLINE inline
-#define RESTRICT
-#endif
+/*==================[internal functions declaration]=========================*/
 
-/*==================[typedef]================================================*/
+/*==================[internal data definition]===============================*/
+unsigned int Osek_ErrorApi;
 
-/*==================[external data declaration]==============================*/
+unsigned int Osek_ErrorParam1;
 
-/*==================[external functions declaration]=========================*/
+unsigned int Osek_ErrorParam2;
+
+unsigned int Osek_ErrorParam3;
+
+unsigned int Osek_ErrorRet;
+
+
+/*==================[external data definition]===============================*/
+
+/*==================[internal functions definition]==========================*/
+
+/*==================[external functions definition]==========================*/
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef _COMPILER_H_ */
 

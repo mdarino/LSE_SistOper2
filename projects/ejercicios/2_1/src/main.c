@@ -1,8 +1,10 @@
+
+
 /*************************************************************************//**
 
   @file     main.c
 
-  @brief    EJERCICIO 1.4 - RTOS 2 OSEK
+  @brief    EJERCICIO 2.1 - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
@@ -11,29 +13,27 @@
 
 /**
 
- EJERCICIO 1.4    (Spanish)
+ EJERCICIO 2.1    (Spanish)
 
- Escribir un programa con dos tareas: 
+Caso   de   uso​
+:   Una   tarea   consumidora   está   bloqueada   esperando   
+recibir   un   semáforo,   mientras   que  
+una tarea generadora lo liberara cuando genere o descubra un dato. 
  
-  ∙ Una tarea medirá el tiempo de pulsación de un botón, aplicando anti­rebote. 
-  ∙ La   otra   destellará   un   led   con   un   período   fijo   de   1   seg,   
-  y tomando   como   tiempo   de   activación  
-    el último tiempo medido. 
- 
- El   tiempo   medido   se   puede   comunicar   entre   
- tareas   a   través   de   una   variable   global,   protegiendo   sus  
- operaciones dentro de una sección crítica. 
-
+Ejercicio​
+:   Implementar   una   tarea   que   mida   un   pulsador,   
+y   libere   un   semáforo   cuando   confirme   el   fin  
+de   la   pulsación.   Implementar   otra   tarea   que   
+destelle   un   leds   cuando   recibe   el   semáforo.   
+Esta   última  esperará al semáforo indefinidamente. 
 
  **/
 
 
 
 
-
 /** \addtogroup OSEK_RTOS Ejer1.4
  ** @{ */
-
 /*==================[inclusions]=============================================*/
 //#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
 //#include "ciaaPOSIX_string.h" /* <= string header */
@@ -41,6 +41,7 @@
 #include "main.h"         /* <= own header */
 #include "HW_leds.h"
 #include "HW_buttons.h"
+#include "ciaaIO.h"
 #include "os.h"               /* <= operating system header */
 
 /*==================[macros and definitions]=================================*/
@@ -131,7 +132,7 @@ TASK(InitTask)
    //Start the Button task
    SetRelAlarm(ActivateButtonTask, 350, TIME_UPDATE_BUTTON);
    //Set defaul time
-   SetRelAlarm(ActivateLedTask,500, 500); 
+   SetRelAlarm(ActivateLedTask,100, 0); 
    /* terminate task */
    TerminateTask();
 }
@@ -145,12 +146,8 @@ TASK(InitTask)
 TASK(ButtonTask)
 {
   
-   static uint32_t timeButton;
-   static uint32_t lastTimeButton;
-   static uint32_t flag=0;
+
    buttonUpdate(&button1);
-   TickType Ticks;
-   StatusType ret;
 
    //Only to check if the button is press
    //If it is press turn on the led 2
@@ -167,53 +164,14 @@ TASK(ButtonTask)
    //Check the last state
    if (buttonGetLastState(&button1)==PRESS)
    {
-      //if the last state is press, check the time
-      if (buttonGetLastTime(&button1)>0 && buttonGetLastTime(&button1)!=lastTimeButton)
-      {
-         //if the time is >0 and diferent (only will be diferent if press again)
-         //get the time
-         timeButton=buttonGetLastTime(&button1);
-         //Save this time
-         lastTimeButton=timeButton;
-         //turn on the led 3
-         led_SetON(LED_3);
-         //Activate the LedTask
-         
-         //Check the state of the alarm
-        ret = GetAlarm(ActivateLedTask,&Ticks); 
-        if (E_OK == ret)
-        {
-            //if it is ok, update the time
-            //to do this, first stop and then update
-            CancelAlarm(ActivateLedTask);
-            SetRelAlarm(ActivateLedTask,10, (uint16_t)timeButton); 
-        }
-        else if (E_OS_NOFUNC == ret)
-        {
-          //set defaul time
-          SetRelAlarm(ActivateLedTask,500, 500); 
-        }
-
-
-
-
-      }
-      else
-      {
-         //check if timebutton is >0
-         if (timeButton<=0)
-         {
-            //if it is <=0 turn off the led, the blick time has passed
-            led_SetOFF(LED_3);
-         }
-         else
-         {
-            //subtract one block of time
-            timeButton-=TIME_UPDATE_BUTTON;   
-         }   
-      }    
+      //if the button was pressed and release
+      //send the event
+      
+      SetEvent(LedTask,evBoton);
 
    }
+   
+
 
 
    /* terminate task */
@@ -229,15 +187,55 @@ TASK(ButtonTask)
  */
 TASK(LedTask)
 {
+   TickType Ticks;
+   StatusType ret;
 
-   led_SetToggle(LED_1);
-   /* terminate task */
+   led_SetOFF(LED_1);  //waiting
+   //SetEvent(LedTask,evBoton);
+   WaitEvent(evBoton);
+   ClearEvent(evBoton);
+
+   //CancelAlarm(ActivateLedTask);
+   //SetRelAlarm(ActivateLedTask, 250, 0); //led blick one time (250mseg ON)
+        
+         //Check the state of the alarm
+        // ret = GetAlarm(ActivateLedTask,&Ticks); 
+        // if (E_OK == ret)
+        // {
+        //     //if it is ok, update the time
+        //     //to do this, first stop and then update
+        //     CancelAlarm(ActivateLedTask);
+        //     SetRelAlarm(ActivateLedTask,0, 250); 
+        // }  
+        // 
+
+        //  //Check the state of the alarm
+
+
+   led_SetON(LED_1);
+   /* Chain task */
+        // ret = GetAlarm(ActivateLedTask,&Ticks); 
+        // if (E_OK == ret)
+        // {
+        //     //if it is ok, update the time
+        //     //to do this, first stop and then update
+        //     CancelAlarm(ActivateLedTask);
+        //     SetRelAlarm(ActivateLedTask,1000, 0); 
+        // }
+        // else if (E_OS_NOFUNC == ret)
+        // {
+        //   //set defaul time
+        //   SetRelAlarm(ActivateLedTask,1000, 0); 
+        // }
+
+
+   SetRelAlarm(ActivateLedTask,1000, 0);     
    TerminateTask();
+   //ChainTask(LedTask);
 }
 
 
 /** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
+
 /*==================[end of file]============================================*/
 

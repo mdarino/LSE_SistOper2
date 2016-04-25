@@ -1,16 +1,5 @@
-ciaaDriverAio.o: \
- modules\drivers\cortexM4\lpc43xx\lpc4337\src\ciaaDriverAio.c \
- modules/drivers/inc/ciaaDriverAio.h modules/base/inc/ciaaPOSIX_stdint.h \
- modules/base/inc/ciaaPlatforms.h modules/posix/inc/ciaaSerialDevices.h \
- modules/posix/inc/ciaaDevices.h modules/base/inc/ciaaPOSIX_stddef.h \
- modules/base/inc/ciaaPOSIX_stdint.h modules/posix/inc/ciaaPOSIX_stdio.h \
- modules/posix/inc/ciaaMemory.h \
- modules/posix/inc/ciaaPOSIX_ioctl_serial.h \
- modules/posix/inc/ciaaPOSIX_ioctl_block.h \
- modules/posix/inc/ciaaPOSIX_stdlib.h \
- modules/base/inc/ciaaPOSIX_stdbool.h \
- modules/posix/inc/ciaaPOSIX_semaphore.h \
- modules/posix/inc/ciaaPOSIX_string.h \
+ciaaIO.o: projects\ciaa_driver\src\ciaaIO.c \
+ projects/ciaa_driver/inc/ciaaIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \
@@ -71,8 +60,4 @@ ciaaDriverAio.o: \
  externals/drivers/cortexM4/lpc43xx/inc/iap_18xx_43xx.h \
  externals/drivers/cortexM4/lpc43xx/inc/error.h \
  externals/drivers/cortexM4/lpc43xx/inc/i2cm_18xx_43xx.h \
- externals/drivers/cortexM4/lpc43xx/inc/fpu_init.h modules/rtos/inc/os.h \
- modules/rtos/inc/Types.h modules/rtos/inc/Compiler.h \
- modules/rtos/inc/Types_Arch.h out/gen/inc/Os_Cfg.h \
- modules/rtos/inc/cortexM4/Os_Arch.h \
- out/gen/inc/cortexM4/Os_Internal_Arch_Cfg.h
+ externals/drivers/cortexM4/lpc43xx/inc/fpu_init.h

@@ -202,9 +202,13 @@ typedef bool BOOL_8;
 #endif
 
 #ifdef __CC_ARM
-#define INLINE  __inline
+   #ifndef INLINE
+      #define INLINE __inline
+   #endif 
 #else
-#define INLINE inline
+   #ifndef INLINE
+      #define INLINE inline
+   #endif 
 #endif
 
 /**
