@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 #
 # Copyright 2014, ACSE & CADIEEL
 #    ACSE   : http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/
@@ -108,7 +108,8 @@ BOARD          ?= edu_ciaa_nxp
 #PROJECT_PATH  ?= projects/poxis/$(DS)blinking3
 
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)1_4
-PROJECT_PATH  ?= projects/ejercicios/$(DS)2_1
-
+#PROJECT_PATH  ?= projects/ejercicios/$(DS)2_1
+PROJECT_PATH  ?= projects/ejercicios/$(DS)2_2
+#PROJECT_PATH  ?= projects/ejercicios/$(DS)2_3
 
 #PROJECT_PATH  ?= projects/clase/$(DS)blinkingHook

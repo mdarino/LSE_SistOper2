@@ -1,5 +1,5 @@
-DRIVER_GPIO.o: projects\ejercicios\2_1\src\DRIVER_GPIO.c \
- projects\ejercicios\2_1\inc/DRIVER_GPIO.h \
+DRIVER_GPIO.o: projects\ejercicios\2_2\src\DRIVER_GPIO.c \
+ projects\ejercicios\2_2\inc/DRIVER_GPIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \

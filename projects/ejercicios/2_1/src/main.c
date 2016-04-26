@@ -102,8 +102,6 @@ int main(void)
  */
 void ErrorHook(void)
 {
-   //ciaaPOSIX_printf("ErrorHook was called\n");
-   //ciaaPOSIX_printf("Service: %d, P1: %d, P2: %d, P3: %d, RET: %d\n", OSErrorGetServiceId(), OSErrorGetParam1(), OSErrorGetParam2(), OSErrorGetParam3(), OSErrorGetRet());
    ShutdownOS(0);
 }
 
@@ -131,8 +129,6 @@ TASK(InitTask)
    
    //Start the Button task
    SetRelAlarm(ActivateButtonTask, 350, TIME_UPDATE_BUTTON);
-   //Set defaul time
-   SetRelAlarm(ActivateLedTask,100, 0); 
    /* terminate task */
    TerminateTask();
 }
@@ -147,8 +143,10 @@ TASK(ButtonTask)
 {
   
 
+   //Update the button struct
    buttonUpdate(&button1);
 
+   
    //Only to check if the button is press
    //If it is press turn on the led 2
    if (buttonGetState(&button1)==PRESS)
@@ -161,81 +159,55 @@ TASK(ButtonTask)
    }
 
 
-   //Check the last state
-   if (buttonGetLastState(&button1)==PRESS)
+   //Check the last state -- and ask the time in the new state
+   // if the time is less or equal to zero -> the button change his state
+   //the next time, the time in the new state is bigger than zero
+
+   if (buttonGetLastState(&button1)==PRESS && buttonGetTime(&button1)<=0)
    {
       //if the button was pressed and release
-      //send the event
-      
+      //send the event to unblock the blink task
       SetEvent(LedTask,evBoton);
-
    }
-   
 
 
-
-   /* terminate task */
+  /* terminate task */
    TerminateTask();
 }
 
 
 /** \brief button Task
  *
- * This task is started automatically every time that the alarm
- * ActivateLedTask expires.
- *
+ * This task is started only when receive an event of the button realese
  */
+ 
 TASK(LedTask)
 {
-   TickType Ticks;
-   StatusType ret;
 
-   led_SetOFF(LED_1);  //waiting
-   //SetEvent(LedTask,evBoton);
+   //turn off the led and wait
+   led_SetOFF(LED_1);  
+   //waiting
    WaitEvent(evBoton);
+   //clean the event
    ClearEvent(evBoton);
-
-   //CancelAlarm(ActivateLedTask);
-   //SetRelAlarm(ActivateLedTask, 250, 0); //led blick one time (250mseg ON)
-        
-         //Check the state of the alarm
-        // ret = GetAlarm(ActivateLedTask,&Ticks); 
-        // if (E_OK == ret)
-        // {
-        //     //if it is ok, update the time
-        //     //to do this, first stop and then update
-        //     CancelAlarm(ActivateLedTask);
-        //     SetRelAlarm(ActivateLedTask,0, 250); 
-        // }  
-        // 
-
-        //  //Check the state of the alarm
-
-
+   //turn on the led to make a blink
    led_SetON(LED_1);
-   /* Chain task */
-        // ret = GetAlarm(ActivateLedTask,&Ticks); 
-        // if (E_OK == ret)
-        // {
-        //     //if it is ok, update the time
-        //     //to do this, first stop and then update
-        //     CancelAlarm(ActivateLedTask);
-        //     SetRelAlarm(ActivateLedTask,1000, 0); 
-        // }
-        // else if (E_OS_NOFUNC == ret)
-        // {
-        //   //set defaul time
-        //   SetRelAlarm(ActivateLedTask,1000, 0); 
-        // }
-
-
-   SetRelAlarm(ActivateLedTask,1000, 0);     
-   TerminateTask();
-   //ChainTask(LedTask);
+   //set a delay with other event - the time is fixed to one second
+   // if you want the button time, we can use a global variable
+   SetRelAlarm(AlarmTimeButton, 1000, 0);
+   //waiting the time...
+   WaitEvent(evTimeButton);
+   //clean the event
+   ClearEvent(evTimeButton);
+   //Start again the task
+   ChainTask(LedTask);
 }
 
 
 /** @} doxygen end group definition */
 
 /*==================[end of file]============================================*/
+
+
+  
 

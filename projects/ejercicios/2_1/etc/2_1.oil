@@ -55,7 +55,7 @@ OSEK OSEK {
    };
 
    EVENT = evBoton;
-   
+   EVENT = evTimeButton;
 
    APPMODE = AppMode1;
 
@@ -83,11 +83,16 @@ OSEK OSEK {
    TASK LedTask {
       PRIORITY = 2;
       ACTIVATION = 1;
+      AUTOSTART = TRUE {
+         APPMODE = AppMode1;
+      }
       STACK = 512;
       TYPE = EXTENDED;
       SCHEDULE = NON;
       EVENT = evBoton;
+      EVENT = evTimeButton;
    }
+
 
    ALARM ActivateButtonTask {
       COUNTER = HardwareCounter;
@@ -97,13 +102,14 @@ OSEK OSEK {
       AUTOSTART = FALSE;
    }
 
-   ALARM ActivateLedTask {
+
+   ALARM AlarmTimeButton {
       COUNTER = HardwareCounter;
-      ACTION = ACTIVATETASK {
+      ACTION = SETEVENT {
          TASK = LedTask;
+         EVENT = evTimeButton;
       }
-      AUTOSTART = FALSE;
-   }
+   }   
 
    COUNTER HardwareCounter {
       MAXALLOWEDVALUE = 100000;
