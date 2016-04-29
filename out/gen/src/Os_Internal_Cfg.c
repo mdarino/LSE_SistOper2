@@ -51,13 +51,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- * JuCe         Juan Cecconi
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * 20150619 v0.1.4 MaCe fix issue #279
@@ -89,47 +82,29 @@ uint8 StackTaskButtonTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
 uint8 StackTaskButtonTask[512];
 #endif
-/** \brief LedRedTask stack */
+/** \brief LedTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskLedRedTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskLedTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskLedRedTask[512];
-#endif
-/** \brief LedBlueTask stack */
-#if ( x86 == ARCH )
-uint8 StackTaskLedBlueTask[512 + TASK_STACK_ADDITIONAL_SIZE];
-#else
-uint8 StackTaskLedBlueTask[512];
-#endif
-/** \brief LedGreenTask stack */
-#if ( x86 == ARCH )
-uint8 StackTaskLedGreenTask[512 + TASK_STACK_ADDITIONAL_SIZE];
-#else
-uint8 StackTaskLedGreenTask[512];
+uint8 StackTaskLedTask[512];
 #endif
 
 /** \brief InitTask context */
 TaskContextType ContextTaskInitTask;
 /** \brief ButtonTask context */
 TaskContextType ContextTaskButtonTask;
-/** \brief LedRedTask context */
-TaskContextType ContextTaskLedRedTask;
-/** \brief LedBlueTask context */
-TaskContextType ContextTaskLedBlueTask;
-/** \brief LedGreenTask context */
-TaskContextType ContextTaskLedGreenTask;
+/** \brief LedTask context */
+TaskContextType ContextTaskLedTask;
 
 /** \brief Ready List for Priority 1 */
-TaskType ReadyList1[4];
+TaskType ReadyList1[2];
 
 /** \brief Ready List for Priority 0 */
 TaskType ReadyList0[1];
 
-const AlarmType OSEK_ALARMLIST_HardwareCounter[4] = {
+const AlarmType OSEK_ALARMLIST_HardwareCounter[2] = {
    ActivateButtonTask, /* this alarm has to be incremented with this counter */
-   AlarmLedRedTask, /* this alarm has to be incremented with this counter */
-   AlarmLedBlueTask, /* this alarm has to be incremented with this counter */
-   AlarmLedGreenTask, /* this alarm has to be incremented with this counter */
+   ActivateLedTask, /* this alarm has to be incremented with this counter */
 };
 
 
@@ -159,7 +134,8 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0
       }, /* task const flags */
       0 , /* events mask */
-      0 /* resources mask */
+      0 ,/* resources mask */
+      0 /* core */
    },
    /* Task ButtonTask */
    {
@@ -175,14 +151,15 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0
       }, /* task const flags */
       0 , /* events mask */
-      0 /* resources mask */
+      0 ,/* resources mask */
+      0 /* core */
    },
-   /* Task LedRedTask */
+   /* Task LedTask */
    {
-       OSEK_TASK_LedRedTask,   /* task entry point */
-       &ContextTaskLedRedTask, /* pointer to task context */
-       StackTaskLedRedTask, /* pointer stack memory */
-       sizeof(StackTaskLedRedTask), /* stack size */
+       OSEK_TASK_LedTask,   /* task entry point */
+       &ContextTaskLedTask, /* pointer to task context */
+       StackTaskLedTask, /* pointer stack memory */
+       sizeof(StackTaskLedTask), /* stack size */
        1, /* task priority */
        1, /* task max activations */
        {
@@ -190,65 +167,34 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | evBoton | evTimeRed , /* events mask */
-      0 /* resources mask */
-   },
-   /* Task LedBlueTask */
-   {
-       OSEK_TASK_LedBlueTask,   /* task entry point */
-       &ContextTaskLedBlueTask, /* pointer to task context */
-       StackTaskLedBlueTask, /* pointer stack memory */
-       sizeof(StackTaskLedBlueTask), /* stack size */
-       1, /* task priority */
-       1, /* task max activations */
-       {
-         1, /* extended task */
-         0, /* non preemtive task */
-         0
-      }, /* task const flags */
-      0 | evBoton | evTimeBlue , /* events mask */
-      0 /* resources mask */
-   },
-   /* Task LedGreenTask */
-   {
-       OSEK_TASK_LedGreenTask,   /* task entry point */
-       &ContextTaskLedGreenTask, /* pointer to task context */
-       StackTaskLedGreenTask, /* pointer stack memory */
-       sizeof(StackTaskLedGreenTask), /* stack size */
-       1, /* task priority */
-       1, /* task max activations */
-       {
-         1, /* extended task */
-         0, /* non preemtive task */
-         0
-      }, /* task const flags */
-      0 | evBoton | evTimeGreen , /* events mask */
-      0 /* resources mask */
+      0 | evBoton | evCola , /* events mask */
+      0 ,/* resources mask */
+      0 /* core */
    }
 };
+
+/** \brief RemoteTaskCore Array */
+const TaskCoreType RemoteTasksCore[REMOTE_TASKS_COUNT] = {};
 
 /** \brief TaskVar Array */
 TaskVariableType TasksVar[TASKS_COUNT];
 
 /** \brief List of Auto Start Tasks in Application Mode AppMode1 */
-const TaskType TasksAppModeAppMode1[4]  = {
-   InitTask,
-   LedRedTask,
-   LedBlueTask,
-   LedGreenTask
+const TaskType TasksAppModeAppMode1[1]  = {
+   InitTask
 };
 /** \brief AutoStart Array */
 const AutoStartType AutoStart[1]  = {
    /* Application Mode AppMode1 */
    {
-      4, /* Total Auto Start Tasks in this Application Mode */
+      1, /* Total Auto Start Tasks in this Application Mode */
       (TaskRefType)TasksAppModeAppMode1 /* Pointer to the list of Auto Start Stacks on this Application Mode */
    }
 };
 
 const ReadyConstType ReadyConst[2] = { 
    {
-      4, /* Length of this ready list */
+      2, /* Length of this ready list */
       ReadyList1 /* Pointer to the Ready List */
    },
    {
@@ -266,10 +212,10 @@ const TaskPriorityType ResourcesPriority[0]  = {
 
 };
 /** TODO replace next line with: 
- ** AlarmVarType AlarmsVar[4]; */
-AlarmVarType AlarmsVar[4];
+ ** AlarmVarType AlarmsVar[2]; */
+AlarmVarType AlarmsVar[2];
 
-const AlarmConstType AlarmsConst[4]  = {
+const AlarmConstType AlarmsConst[2]  = {
    {
       OSEK_COUNTER_HardwareCounter, /* Counter */
       ACTIVATETASK, /* Alarm action */
@@ -282,31 +228,11 @@ const AlarmConstType AlarmsConst[4]  = {
    },
    {
       OSEK_COUNTER_HardwareCounter, /* Counter */
-      SETEVENT, /* Alarm action */
+      ACTIVATETASK, /* Alarm action */
       {
          NULL, /* no callback */
-         LedRedTask, /* TaskID */
-         evTimeRed, /* no event */
-         0 /* no counter */
-      },
-   },
-   {
-      OSEK_COUNTER_HardwareCounter, /* Counter */
-      SETEVENT, /* Alarm action */
-      {
-         NULL, /* no callback */
-         LedBlueTask, /* TaskID */
-         evTimeBlue, /* no event */
-         0 /* no counter */
-      },
-   },
-   {
-      OSEK_COUNTER_HardwareCounter, /* Counter */
-      SETEVENT, /* Alarm action */
-      {
-         NULL, /* no callback */
-         LedGreenTask, /* TaskID */
-         evTimeGreen, /* no event */
+         LedTask, /* TaskID */
+         0, /* no event */
          0 /* no counter */
       },
    }
@@ -320,7 +246,7 @@ CounterVarType CountersVar[1];
 
 const CounterConstType CountersConst[1] = {
    {
-      4, /* quantity of alarms for this counter */
+      2, /* quantity of alarms for this counter */
       (AlarmType*)OSEK_ALARMLIST_HardwareCounter, /* alarms list */
       100000, /* max allowed value */
       1, /* min cycle */

@@ -1,4 +1,4 @@
-ccan_18xx_43xx.o: externals\drivers\cortexM4\lpc43xx\src\ccan_18xx_43xx.c \
+ccan_18xx_43xx.o: externals/drivers/cortexM4/lpc43xx/src/ccan_18xx_43xx.c \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \

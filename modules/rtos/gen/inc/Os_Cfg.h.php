@@ -63,12 +63,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * 20150619 v0.1.4 MaCe fix issue #279
@@ -88,7 +82,9 @@
 
 <?php
 /* Definitions of Tasks */
-$tasks = $config->getList("/OSEK","TASK");
+$tasks = getLocalList("/OSEK", "TASK");
+$remote_tasks = getRemoteList("/OSEK", "TASK");
+
 $count = 0;
 foreach ($tasks as $task)
 {
@@ -98,53 +94,64 @@ foreach ($tasks as $task)
 }
 print "\n";
 
+if (count($remote_tasks) > 0)
+{
+   foreach ($remote_tasks as $task)
+   {
+      print "/** \brief Remote Task Definition */\n";
+      print "#define $task $count\n";
+      $count++;
+   }
+   print "\n";
+}
+
 /* Define the Applications Modes */
 $appmodes = $config->getList("/OSEK","APPMODE");
-$count = 0;
-foreach ($appmodes as $appmode)
+
+foreach ($appmodes as $count=>$appmode)
 {
    print "/** \brief Definition of the Application Mode $appmode */\n";
-   print "#define " . $appmode . " " . $count++ . "\n";
+   print "#define " . $appmode . " " . $count . "\n";
 }
 print "\n";
 
 /* Define the Events */
 $events = $config->getList("/OSEK","EVENT");
-$count = 0;
-foreach ($events as $event)
+
+foreach ($events as $count=>$event)
 {
    print "/** \brief Definition of the Event $event */\n";
-   print "#define " . $event . " 0x" . sprintf ("%xU", (1<<$count++)) . "\n";
+   print "#define " . $event . " 0x" . sprintf ("%xU", (1<<$count)) . "\n";
 }
 print "\n";
 
 /* Define the Resources */
 $resources = $config->getList("/OSEK","RESOURCE");
-$count = 0;
-foreach ($resources as $resource)
+
+foreach ($resources as $count=>$resource)
 {
    print "/** \brief Definition of the resource $resource */\n";
-   print "#define " . $resource . " ((ResourceType)" . $count++ . ")\n";
+   print "#define " . $resource . " ((ResourceType)" . $count . ")\n";
 }
 print "\n";
 
 /* Define the Alarms */
-$alarms = $config->getList("/OSEK","ALARM");
-$count = 0;
-foreach ($alarms as $alarm)
+$alarms = getLocalList("/OSEK", "ALARM");
+
+foreach ($alarms as $count=>$alarm)
 {
    print "/** \brief Definition of the Alarm $alarm */\n";
-   print "#define " . $alarm . " " . $count++ . "\n";
+   print "#define " . $alarm . " " . $count . "\n";
 }
 print "\n";
 
 /* Define the Counters */
-$counters = $config->getList("/OSEK","COUNTER");
-$count = 0;
-foreach ($counters as $counter)
+$counters = getLocalList("/OSEK", "COUNTER");
+
+foreach ($counters as $count=>$counter)
 {
    print "/** \brief Definition of the Counter $counter */\n";
-   print "#define " . $counter . " " . $count++ . "\n";
+   print "#define " . $counter . " " . $count . "\n";
 }
 print "\n";
 
@@ -183,7 +190,7 @@ elseif ($memmap == "FALSE")
 }
 else
 {
-   warning("MEMMAP configuration not found in FreeOSEK configuration, disabling as default");
+   $this->log->warning("MEMMAP configuration not found in FreeOSEK configuration, disabling as default");
    print "#define OSEK_MEMMAP OSEK_DISABLE\n";
 }
 
@@ -295,24 +302,26 @@ if ($errorhook == "TRUE")
 }
 
 /* Declare Tasks */
-$count = 0;
-foreach ($tasks as $task)
+
+foreach ($tasks as $count=>$task)
 {
    print "/** \brief Task Declaration of Task $task */\n";
    print "DeclareTask($task);\n";
 }
 print "\n";
 
-$intnames = $config->getList("/OSEK","ISR");
-foreach ($intnames as $int)
+$intnames = getLocalList("/OSEK", "ISR");
+
+foreach ($intnames as $count=>$int)
 {
    print "/** \brief ISR Declaration */\n";
    print "extern void OSEK_ISR_$int(void); /* Interrupt Handler $int */\n";
 }
 print "\n";
 
-$alarms = $config->getList("/OSEK","ALARM");
-foreach ($alarms as $alarm)
+$alarms = getLocalList("/OSEK", "ALARM");
+
+foreach ($alarms as $count=>$alarm)
 {
    $action = $config->getValue("/OSEK/" . $alarm, "ACTION");
    if ($action == "ALARMCALLBACK")

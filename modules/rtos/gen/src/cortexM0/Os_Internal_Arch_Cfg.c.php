@@ -51,14 +51,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- * PR           Pablo Ridolfi
- * Apermingeat  Alejandro Permingeat
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * v0.1.5 20150831 PR   cortexM0 first version
@@ -101,7 +93,7 @@ extern void _vStackTop(void);
 extern void PendSV_Handler(void);
 
 <?php
-if ($definition["ARCH"] == "cortexM0")
+if ($definitions["ARCH"] == "cortexM0")
 {
    echo "extern void RIT_IRQHandler(void);\n";
 }
@@ -132,7 +124,7 @@ void DebugMon_Handler(void) {
 
 /*==================[external functions definition]==========================*/
 <?php
-switch ($definition["CPU"])
+switch ($definitions["CPU"])
 {
    case "lpc4337":
       /* Interrupt sources for LPC43xx (Cortex-M0 core).
@@ -175,13 +167,13 @@ switch ($definition["CPU"])
       break;
 
    default:
-      error("the CPU " . $definition["CPU"] . " is not supported.");
+      error("the CPU " . $definitions["CPU"] . " is not supported.");
       break;
 }
 
 $MAX_INT_COUNT = max(array_keys($intList))+1;
 
-if ($definition["CPU"] == "lpc4337") : ?>
+if ($definitions["CPU"] == "lpc4337") : ?>
 /** \brief LPC4337 Interrupt vector */
 __attribute__ ((section(".isr_vector")))
 void (* const g_pfnVectors[])(void) = {
@@ -203,19 +195,19 @@ void (* const g_pfnVectors[])(void) = {
    PendSV_Handler,                 /* The PendSV handler         */
    0,                              /* The SysTick handler        */
 <?php else :
-      error("Not supported CPU: " . $definition["CPU"]);
+      error("Not supported CPU: " . $definitions["CPU"]);
    endif;
 ?>
    /*** User Interrupts ***/
 <?php
 
 /* get ISRs defined by user application */
-$intnames = $config->getList("/OSEK","ISR");
+$intnames = getLocalList("/OSEK", "ISR");
 
 for($i=0; $i < $MAX_INT_COUNT; $i++)
 {
    /* LPC4337-CortexM0 core uses RIT timer for OSEK periodic interrupt */
-   if( ($i==11) && ($definition["ARCH"] == "cortexM0") )
+   if( ($i==11) && ($definitions["ARCH"] == "cortexM0") )
    {
       print "   RIT_IRQHandler,\n";
    }
@@ -257,7 +249,7 @@ void Enable_User_ISRs(void)
 {
 <?php
 /* get ISRs defined by user application */
-$intnames = $config->getList("/OSEK","ISR");
+$intnames = getLocalList("/OSEK", "ISR");
 foreach ($intnames as $int)
 {
    $source = $config->getValue("/OSEK/" . $int,"INTERRUPT");
@@ -275,7 +267,7 @@ void Enable_ISR2_Arch(void)
 {
 <?php
 /* get ISRs defined by user application */
-$intnames = $config->getList("/OSEK","ISR");
+$intnames = getLocalList("/OSEK", "ISR");
 foreach ($intnames as $int)
 {
    $source = $config->getValue("/OSEK/" . $int,"INTERRUPT");
@@ -295,7 +287,7 @@ void Disable_ISR2_Arch(void)
 {
 <?php
 /* get ISRs defined by user application */
-$intnames = $config->getList("/OSEK","ISR");
+$intnames = getLocalList("/OSEK", "ISR");
 foreach ($intnames as $int)
 {
    $source = $config->getValue("/OSEK/" . $int,"INTERRUPT");

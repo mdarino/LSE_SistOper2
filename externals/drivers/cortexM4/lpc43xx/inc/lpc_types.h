@@ -49,8 +49,6 @@
  */
 typedef enum {FALSE = 0, TRUE = !FALSE} Bool;
 
-
-
 /**
  * @brief Boolean Type definition
  */
@@ -202,13 +200,9 @@ typedef bool BOOL_8;
 #endif
 
 #ifdef __CC_ARM
-   #ifndef INLINE
-      #define INLINE __inline
-   #endif 
+#define INLINE  __inline
 #else
-   #ifndef INLINE
-      #define INLINE inline
-   #endif 
+#define INLINE inline
 #endif
 
 /**

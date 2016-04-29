@@ -1,4 +1,5 @@
-/* Copyright 2014, Mariano Cerdeiro
+/* Copyright 2014, 2016 Mariano Cerdeiro
+ * All righst reserved.
  *
  * This file is part of CIAA Firmware.
  *
@@ -30,8 +31,8 @@
  *
  */
 
-#ifndef _CIAALIBS_MATHS_H_
-#define _CIAALIBS_MATHS_H_
+#ifndef CIAALIBS_MATHS_H
+#define CIAALIBS_MATHS_H
 /** \brief Math Library header
  **
  ** This library provides a Maths functionalities
@@ -43,20 +44,8 @@
 /** \addtogroup Libs CIAA Libraries
  ** @{ */
 
-/*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- */
-
-/*
- * modification history (new versions first)
- * -----------------------------------------------------------
- * 20140613 v0.0.2 MaCe implement min, max, setBit and clearBit
- * 20140611 v0.0.1 initials initial version
- */
-
 /*==================[inclusions]=============================================*/
+#include "ciaaPOSIX_stdint.h"
 
 /*==================[cplusplus]==============================================*/
 #ifdef __cplusplus
@@ -114,6 +103,18 @@ extern "C" {
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
+/** \brief get the first not set bit in a uint32
+ **
+ ** Finds the first not set bit in a uint32_t. It start searching in the LSB.
+ **
+ ** \param[in] value value to find out the bit
+ ** \return -1 if all bits are set and a value between 0 and 31 if a not set
+ **         bit is found.
+ **
+ ** \remarks this function does not call any other service and returns in a
+ **          defined time so it can be called while in a critical section.
+ **/
+extern int8_t ciaaLibs_getFirstNotSetBit(uint32_t value);
 
 /*==================[cplusplus]==============================================*/
 #ifdef __cplusplus
@@ -122,5 +123,5 @@ extern "C" {
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef _CIAALIBS_MATHS_H_ */
+#endif /* #ifndef CIAALIBS_MATHS_H */
 

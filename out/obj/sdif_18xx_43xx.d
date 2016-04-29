@@ -1,4 +1,4 @@
-sdif_18xx_43xx.o: externals\drivers\cortexM4\lpc43xx\src\sdif_18xx_43xx.c \
+sdif_18xx_43xx.o: externals/drivers/cortexM4/lpc43xx/src/sdif_18xx_43xx.c \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \

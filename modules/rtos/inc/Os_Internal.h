@@ -51,13 +51,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- * KLi          Kang Li
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * 20150619 v0.1.5 MaCe fix issue #279
@@ -80,6 +73,9 @@
 #include "Os_Internal_Arch_Cfg.h"
 #include "Os_Internal_Cfg.h"
 #include "ciaaPlatforms.h"
+#if (OSEK_MULTICORE == OSEK_ENABLE)
+#include "ciaaMulticore.h"
+#endif
 
 /*==================[macros]=================================================*/
 /** \brief Invalid Task */

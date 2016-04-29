@@ -1,4 +1,4 @@
-ciaaNVM.o: projects\ciaa_driver\src\ciaaNVM.c \
+ciaaNVM.o: projects/ciaa_driver/src/ciaaNVM.c \
  projects/ciaa_driver/inc/ciaaNVM.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \

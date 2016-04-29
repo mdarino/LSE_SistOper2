@@ -55,12 +55,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * 20090719 v0.1.7 MaCe rename file to Os_
@@ -73,56 +67,56 @@
  * 20080713 v0.1.0 MaCe initial version
  */
 <?php
+require_once("modules/rtos/gen/ginc/multicore.php");
 
 function remove($a,$index)
 {
-if ($index < count($a))
-{
-for ($i = $index; $i < count($a)-1; $i++)
-{
- $a[$i] = $a[$i+1];
-}
-array_pop($a);
-}
-return $a;
+   if ($index < count($a))
+   {
+      for ($i = $index; $i < count($a)-1; $i++)
+      {
+         $a[$i] = $a[$i+1];
+      }
+      array_pop($a);
+   }
+   return $a;
 }
 
 function remove_doubles($a)
 {
-sort($a);
-$old = NULL;
-for($loopi = 0; $loopi < count($a); $loopi++)
-{
-if ($old == $a[$loopi])
-{
- /* if equal remove this element */
- $a = remove($a,$loopi);
- $loopi--;
-}
-else
-{
- $old = $a[$loopi];
-}
-}
-
-return $a;
+   sort($a);
+   $old = NULL;
+   for($loopi = 0; $loopi < count($a); $loopi++)
+   {
+      if ($old == $a[$loopi])
+      {
+         /* if equal remove this element */
+         $a = remove($a,$loopi);
+         $loopi--;
+      }
+      else
+      {
+         $old = $a[$loopi];
+      }
+   }
+   return $a;
 }
 
 /* get tasks */
-$tasks = $config->getList("/OSEK","TASK");
+$tasks = getLocalList("/OSEK", "TASK");
 
 /* convert config priority to real osek priority */
 $priorities = array();
 foreach ($tasks as $task)
 {
-$priorities[] = $config->getValue("/OSEK/" . $task, "PRIORITY");
+   $priorities[] = $config->getValue("/OSEK/" . $task, "PRIORITY");
 }
 $priorities = remove_doubles($priorities);
-$count = 0;
+
 $priority = array();
-foreach ($priorities as $prio)
+foreach ($priorities as $count=>$prio)
 {
-$priority[$prio] = $count++;
+   $priority[$prio] = $count;
 }
 arsort($priority);
 
@@ -138,19 +132,23 @@ arsort($priority);
 
 /** \brief Count of task */
 <?php
-$taskscount = $config->getCount("/OSEK","TASK");
+$taskscount = count(getLocalList("/OSEK", "TASK"));
+$remotetaskscount = count(getRemoteList("/OSEK", "TASK"));
+
 if ($taskscount<=0)
 {
-   error("No tasks found in the configuration.\n");
+   $this->log->error("No tasks found in the configuration.\n");
 }
 print "#define TASKS_COUNT $taskscount" . "U\n\n";
 
+print "/** \brief Remote tasks count */\n";
+print "#define REMOTE_TASKS_COUNT $remotetaskscount" . "U\n\n";
 
 /* Define the Resources */
 $resources = $config->getList("/OSEK","RESOURCE");
 if(count($resources)>31)
 {
-   error("more than 31 resources were defined");
+   $this->log->error("more than 31 resources were defined");
 }
 else
 {
@@ -161,7 +159,7 @@ else
 $os = $config->getList("/OSEK","OS");
 if (count($os)>1)
 {
-   error("More than one OS defined on the configuration");
+   $this->log->error("More than one OS defined on the configuration");
 }
 $osattr = $config->getValue("/OSEK/" . $os[0],"STATUS");
 print "/** \brief Error Checking Type */\n";
@@ -175,7 +173,7 @@ elseif ( $osattr == "STANDARD" )
 }
 else
 {
-   error("Wrong OS Status configuration");
+   $this->log->error("Wrong OS Status configuration");
 }
 
 /* PRETASKHOOK */
@@ -183,7 +181,7 @@ $pretaskhook=$config->getValue("/OSEK/" . $os[0],"PRETASKHOOK");
 print "/** \brief pre task hook enable-disable macro */\n";
 if($pretaskhook == "")
 {
-   warning("PRETASKHOOK isn't defined on the configuration, set disable as default");
+   $this->log->warning("PRETASKHOOK isn't defined on the configuration, set disable as default");
    print "#define HOOK_PRETASKHOOK OSEK_DISABLE\n";
 }
 elseif($pretaskhook == "TRUE")
@@ -196,14 +194,14 @@ elseif($pretaskhook == "FALSE")
 }
 else
 {
-   error("PRETASKHOOK set to an invalid value \"$pretaskhook\"");
+   $this->log->error("PRETASKHOOK set to an invalid value \"$pretaskhook\"");
 }
 /* POSTTAKHOOK */
 $posttaskhook=$config->getValue("/OSEK/" . $os[0],"POSTTASKHOOK");
 print "/** \brief post task hook enable-disable macro */\n";
 if($posttaskhook == "")
 {
-   warning("POSTTASKHOOK isn't defined on the configuration, set disable as default");
+   $this->log->warning("POSTTASKHOOK isn't defined on the configuration, set disable as default");
    print "#define HOOK_POSTTASKHOOK OSEK_DISABLE\n";
 }
 elseif($posttaskhook == "TRUE")
@@ -216,14 +214,14 @@ elseif($posttaskhook == "FALSE")
 }
 else
 {
-   error("POSTTASKHOOK set to an invalid value \"$pretaskhook\"");
+   $this->log->error("POSTTASKHOOK set to an invalid value \"$pretaskhook\"");
 }
 /* ERRORHOOK */
 $errorhook=$config->getValue("/OSEK/" . $os[0],"ERRORHOOK");
 print "/** \brief error hook enable-disable macro */\n";
 if($errorhook == "")
 {
-   warning("ERRORHOOK isn't defined on the configuration, set disable as default");
+   $this->log->warning("ERRORHOOK isn't defined on the configuration, set disable as default");
    print "#define HOOK_ERRORHOOK OSEK_DISABLE\n";
 }
 elseif($errorhook == "TRUE")
@@ -236,14 +234,14 @@ elseif($errorhook == "FALSE")
 }
 else
 {
-   error("ERRORHOOK set to an invalid value \"$pretaskhook\"");
+   $this->log->error("ERRORHOOK set to an invalid value \"$pretaskhook\"");
 }
 /* STARTUPHOOK */
 $startuphook=$config->getValue("/OSEK/" . $os[0],"STARTUPHOOK");
 print "/** \brief startup hook enable-disable macro */\n";
 if($startuphook == "")
 {
-   warning("STARTUPHOOK isn't defined on the configuration, set disable as default");
+   $this->log->warning("STARTUPHOOK isn't defined on the configuration, set disable as default");
    print "#define HOOK_STARTUPHOOK OSEK_DISABLE\n";
 }
 elseif($startuphook == "TRUE")
@@ -256,14 +254,14 @@ elseif($startuphook == "FALSE")
 }
 else
 {
-   error("STARTUPHOOK set to an invalid value \"$pretaskhook\"");
+   $this->log->error("STARTUPHOOK set to an invalid value \"$pretaskhook\"");
 }
 /* SHUTDOWNHOOK */
 $shutdownhook=$config->getValue("/OSEK/" . $os[0],"SHUTDOWNHOOK");
 print "/** \brief shutdown hook enable-disable macro */\n";
 if($shutdownhook == "")
 {
-   warning("SHUTDOWNHOOK isn't defined on the configuration, set disable as default");
+   $this->log->warning("SHUTDOWNHOOK isn't defined on the configuration, set disable as default");
    print "#define HOOK_SHUTDOWNHOOK OSEK_DISABLE\n";
 }
 elseif($shutdownhook == "TRUE")
@@ -276,9 +274,16 @@ elseif($shutdownhook == "FALSE")
 }
 else
 {
-   error("SHUTDOWNHOOK set to an invalid value \"$pretaskhook\"");
+   $this->log->error("SHUTDOWNHOOK set to an invalid value \"$pretaskhook\"");
 }
 
+/* MULTICORE */
+$multicore = $config->getValue("/OSEK/" . $os[0], "MULTICORE");
+if ($multicore == "TRUE")
+{
+   print "/** \brief multicore API */\n";
+   print "#define OSEK_MULTICORE OSEK_ENABLE\n";
+}
 
 ?>
 
@@ -299,7 +304,7 @@ else
    }
 
 <?php
-$alarms = $config->getList("/OSEK","ALARM");
+$alarms = getLocalList("/OSEK", "ALARM");
 $count = 0;
 foreach ($alarms as $alarm)
 {
@@ -313,15 +318,14 @@ foreach ($alarms as $alarm)
 
 
 <?php
-$counters = $config->getList("/OSEK","COUNTER");
-$count = 0;
-foreach ($counters as $counter)
+$counters = getLocalList("/OSEK", "COUNTER");
+
+foreach ($counters as $count => $counter)
 {
    print "#define OSEK_COUNTER_" . $counter . " " . $count . "\n";
-   $count++;
 }
 
-$alarms = $config->getList("/OSEK","ALARM");
+$alarms = getLocalList("/OSEK", "ALARM");
 print "/** \brief ALARMS_COUNT define */\n";
 print "#define ALARMS_COUNT " . count($alarms) . "\n\n";
 
@@ -367,7 +371,7 @@ switch($schedulerpolicy)
       print "#define NO_RES_SCHEDULER OSEK_DISABLE\n\n";
       break;
    default :
-      warning("USERESSCHEDULER not defined on the configuration, using FALSE as default");
+      $this->log->warning("USERESSCHEDULER not defined on the configuration, using FALSE as default");
       print "#define NO_RES_SCHEDULER OSEK_ENABLE\n\n";
       break;
 }
@@ -400,6 +404,8 @@ typedef void (* CallbackType)(void);
 
 typedef uint8 TaskTotalType;
 
+typedef uint8 TaskCoreType;
+
 /** \brief Task Constant type definition
  **
  ** This structure defines all constants and constant pointers
@@ -419,6 +425,7 @@ typedef struct {
    TaskFlagsType ConstFlags;
    TaskEventsType EventsMask;
    TaskResourcesType ResourcesMask;
+   TaskCoreType TaskCore;
 } TaskConstType;
 
 /** \brief Task Variable type definition
@@ -562,6 +569,12 @@ extern uint8 ErrorHookRunning;
  **/
 extern const TaskConstType TasksConst[TASKS_COUNT];
 
+/** \brief Remote Tasks Core Number
+ **
+ ** Contents the core number for each remote task.
+ **/
+extern const TaskCoreType RemoteTasksCore[REMOTE_TASKS_COUNT];
+
 /** \brief Tasks Variable
  **
  ** Contents all variables needed to manage all FreeOSEK tasks
@@ -617,7 +630,8 @@ $resources = $config->getList("/OSEK","RESOURCE");
 print "/** \brief Resources Priorities */\n";
 print "extern const TaskPriorityType ResourcesPriority[" . count($resources) . "];\n\n";
 
-$alarms = $config->getList("/OSEK","ALARM");
+$alarms = getLocalList("/OSEK", "ALARM");
+
 print "/** \brief Alarms Variable Structure */\n";
 print "extern AlarmVarType AlarmsVar[" . count($alarms) . "];\n\n";
 
@@ -627,7 +641,8 @@ print "extern const AlarmConstType AlarmsConst[" . count($alarms) . "];\n\n";
 print "/** \brief Alarms Constant Structure */\n";
 print "extern const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT];\n\n";
 
-$counters = $config->getList("/OSEK","COUNTER");
+$counters = getLocalList("/OSEK", "COUNTER");
+
 print "/** \brief Counter Var Structure */\n";
 print "extern CounterVarType CountersVar[" . count($counters) . "];\n\n";
 
@@ -637,7 +652,7 @@ print "extern const CounterConstType CountersConst[" . count($counters) . "];\n"
 ?>
 /*==================[external functions declaration]=========================*/
 <?php
-$intnames = $config->getList("/OSEK","ISR");
+$intnames = getLocalList("/OSEK", "ISR");
 foreach ($intnames as $int)
 {
    $inttype = $config->getValue("/OSEK/" . $int,"INTERRUPT");

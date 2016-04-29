@@ -1,6 +1,7 @@
 ###############################################################################
 #
-# Copyright 2014, Mariano Cerdeiro
+# Copyright 2014, 2016, Mariano Cerdeiro
+# All rights reserved.
 #
 # This file is part of CIAA Firmware.
 #
@@ -34,12 +35,14 @@
 # library
 LIBS 				  += libs
 # version
-libs_VERSION      = 0.1.0
+libs_VERSION      = 0.2.0
 # library path
 libs_PATH 			= $(ROOT_DIR)$(DS)modules$(DS)libs
 # library source path
 libs_SRC_PATH 	= $(libs_PATH)$(DS)src
 # library include path
-libs_INC_PATH 	= $(libs_PATH)$(DS)inc
+libs_INC_PATH 	= $(libs_PATH)$(DS)inc                             \
+                 $(libs_PATH)$(DS)inc$(DS)$(ARCH)                 \
+                 $(libs_PATH)$(DS)inc$(DS)$(ARCH)$(DS)$(CPUTYPE)  \
 # library source files
 libs_SRC_FILES 	= $(wildcard $(libs_SRC_PATH)$(DS)*.c)

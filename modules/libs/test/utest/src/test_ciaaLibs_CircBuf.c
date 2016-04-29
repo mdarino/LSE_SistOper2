@@ -36,23 +36,10 @@
 
 /** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
-/** \addtogroup POSIX POSIX Implementation
+/** \addtogroup Libs CIAA Libraries
  ** @{ */
 /** \addtogroup UnitTests Unit Tests
  ** @{ */
-
-/*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- */
-
-/*
- * modification history (new versions first)
- * -----------------------------------------------------------
- * 20140612 v0.0.2 implement ciaaLibs_circBufFull and ciaaLibs_circBufEmpty
- * 20140611 v0.0.1 MaCe implement circular buffer
- */
 
 /*==================[inclusions]=============================================*/
 #include "unity.h"

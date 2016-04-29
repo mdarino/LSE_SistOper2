@@ -93,10 +93,6 @@ static void ISR_NoHandler(void);
 
 /*==================[external data definition]===============================*/
 #ifndef CPU
-#define CPU lpc4337
-#endif
-
-#ifndef CPU
 #error CPU shall be defined.
 #endif
 

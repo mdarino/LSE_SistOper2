@@ -49,12 +49,6 @@
  ** @{ */
 
 /*
- * Initials     Name
- * ---------------------------
- * MaCe         Mariano Cerdeiro
- */
-
-/*
  * modification history (new versions first)
  * -----------------------------------------------------------
  * v0.1.2 20090330 MaCe improve Types.h (many changes)
@@ -117,7 +111,7 @@
 #if defined(C99_COMPILER) || defined(CPP_COMPILER)
 #define FALSE false
 #else
-#define FALSE 0
+#define FALSE ((boolean)0)
 #endif
 #endif
 
