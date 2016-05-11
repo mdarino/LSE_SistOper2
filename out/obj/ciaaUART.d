@@ -1,4 +1,4 @@
-ciaaUART.o: projects/ciaa_driver/src/ciaaUART.c \
+ciaaUART.o: projects\ciaa_driver\src\ciaaUART.c \
  projects/ciaa_driver/inc/ciaaUART.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \

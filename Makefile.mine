@@ -92,36 +92,31 @@ BOARD          ?= edu_ciaa_nxp
 # examples/rtos_example              (example using rtos)
 #
 
+PROJECT_PATH  ?= projects/clase/$(DS)queueStruct
+#PROJECT_PATH  ?= projects/ejercicios/$(DS)3_1
+LFLAGS += -lc -lrdimon
+
+
+
 #PROJECT_PATH ?= examples$(DS)blinking
 #PROJECT_PATH ?= project$(DS)blinking
 #PROJECT_PATH ?= projects$(DS)ejercicio1
-
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)3_1
-
-
-PROJECT_PATH  ?= projects/ejercicios/$(DS)3_3
-
-
-
+#PROJECT_PATH  ?= projects/ejercicios/$(DS)3_3
 #PROJECT_PATH ?= projects$(DS)baremetal
 #PROJECT_PATH  ?= projects$(DS)osekExample
 #PROJECT_PATH ?= examples$(DS)blinking
-
-
 #PROJECT_PATH  ?= projects$(DS)1_1
 #PROJECT_PATH  ?= projects$(DS)1_2
 #PROJECT_PATH  ?= projects$(DS)1_3
 #PROJECT_PATH  ?= projects$(DS)TestUART
 #PROJECT_PATH  ?= projects$(DS)TestButtons
 #PROJECT_PATH  ?= projects$(DS)exampleWithciaa
-
 #PROJECT_PATH  ?= projects/templace/$(DS)example
 #PROJECT_PATH  ?= projects/poxis/$(DS)blinking3
-
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)1_4
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)2_1
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)2_2
 #PROJECT_PATH  ?= projects/ejercicios/$(DS)2_3
-
 #PROJECT_PATH  ?= projects/clase/$(DS)blinkingHook
 
