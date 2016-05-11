@@ -150,7 +150,7 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 , /* events mask */
+      0 | evCola , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    },
@@ -167,7 +167,7 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | evBoton | evCola , /* events mask */
+      0 | evCola , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    }

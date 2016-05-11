@@ -4,30 +4,28 @@
 
   @file     main.c
 
-  @brief    EJERCICIO 3.3 - RTOS 2 OSEK
+  @brief    EJERCICIO 3.1 - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
  ******************************************************************************/
 
 
-
-
 /**
 
- EJERCICIO 3.3  (Spanish)
+ EJERCICIO 3.1    (Spanish)
 
-Caso de uso: Los mensajes a enviar por cola son demasiado grandes para pasar por copia (por
-ejemplo, un buffer a ser transmitido por puerto serie). Se pasa entonces por cola la dirección de los
-datos a procesar, pero en este caso debe asegurar el programador que los mismos se mantienen
-válidos hasta que el destinatario los recibe. Para esto se usa memoria global, y según el caso debe
-señalizarse la validez del mensaje (p. ej., mediante flags o variables de estado).
+Este   es   el   uso   más   simple   de   las   colas   del   RTOS:   Los   mensajes   se   pasan   por   copia   dentro   de   la  
+cola, dándole persistencia a los mismos una vez que la tarea productora sale de contexto. 
+ 
+Caso de uso​
+: Una tarea manejadora de evento bloquea hasta recibir el mismo. 
+ 
+Ejercicio​
+:   Una   tarea   mide   el   tiempo   de   opresión   de   un   pulsador.   Cuando   lo   obtiene   lo   envía   par   cola   a  
+otra tarea que destella un led durante el tiempo recibido. 
 
-Ejercicio: Repetir la tarea del ejemplo anterior, pero en vez de pasar el data por cola, pasar la
-dirección del mismo. Recuerde usar variables globales para mantener válido el dato cuando la tarea
-sale de contexto.
  **/
-
 
 
 
@@ -60,7 +58,7 @@ sale de contexto.
 static button_t button1;
 static queue_t cola;
 
-static uint32_t timeButtonGlobal;
+uint32_t  timeGlobal;
 
 /*==================[external data definition]===============================*/
 
@@ -130,7 +128,7 @@ TASK(InitTask)
     */
    
    //Start the Button task
-   SetRelAlarm(ActivateButtonTask, 100, TIME_UPDATE_BUTTON);
+   SetRelAlarm(ActivateButtonTask, 100,0);
    //Start the LED task
    SetRelAlarm(ActivateLedTask, 150,0);
    /* terminate task */
@@ -145,11 +143,14 @@ TASK(InitTask)
  */
 TASK(ButtonTask)
 {
-  
+  //queueItem_t
    static uint32_t timeButton;
+   queueItem_t punteroEnviado;
+   punteroEnviado=&timeGlobal;
+
+
    buttonUpdate(&button1);
-   static int *timePointer;
-   static timePointer=&timeButtonGlobal;
+   
    //Only to check if the button is press
    //If it is press turn on the led 2
    if (buttonGetState(&button1)==PRESS)
@@ -170,13 +171,15 @@ TASK(ButtonTask)
       {
          //if the time is >0 and diferent (only will be diferent if press again)
          //get the time
-         timeButtonGlobal=buttonGetLastTime(&button1);
-         
+         timeButton=buttonGetLastTime(&button1);
+         timeGlobal=timeButton;
+
          //Send the data to queue
-         queuePut(&cola, &timePointer);
+         queuePut(&cola, punteroEnviado);
       }
     }  
 
+   SetRelAlarm(ActivateButtonTask, TIME_UPDATE_BUTTON,0);
    /* terminate task */
    TerminateTask();
 }
@@ -191,21 +194,23 @@ TASK(ButtonTask)
 TASK(LedTask)
 {
   //local variable to receive the timebutton
-  int *timeButtonPress;
-  uint32_t test;
+  static uint32_t timeButtonPress=0;
+  queueItem_t punteroRecibido;
+
+
   // //set off the led
   led_SetOFF(LED_3);
 
   // //Wainting the data from the queue
-  timeButtonPress = queueGet(&cola);
-  test=*timeButtonPress;
+  punteroRecibido = queueGet(&cola);
+  timeButtonPress=*punteroRecibido;
   // //Set on the led and wait the time
   led_SetON(LED_3);
 
   if(timeButtonPress<10)
     timeButtonPress=10;
   //Start the Button task
-  SetRelAlarm(ActivateLedTask, *timeButtonPress,0);
+  SetRelAlarm(ActivateLedTask, timeButtonPress,0);
 
   /* terminate task */
    TerminateTask();

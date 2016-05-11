@@ -13,7 +13,7 @@
 /* queue definition */
 #define QUEUE_LEN	    1
 
-typedef int queueItem_t;
+typedef int * queueItem_t;
 
 typedef struct
 {
