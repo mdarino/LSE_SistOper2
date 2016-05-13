@@ -76,35 +76,37 @@ uint8 StackTaskInitTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
 uint8 StackTaskInitTask[512];
 #endif
-/** \brief LEDTask stack */
+/** \brief ButtonTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskLEDTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskButtonTask[1024 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskLEDTask[512];
+uint8 StackTaskButtonTask[1024];
 #endif
-/** \brief TimeLedTask stack */
+/** \brief LedTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskTimeLedTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskLedTask[1024 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskTimeLedTask[512];
+uint8 StackTaskLedTask[1024];
 #endif
 
 /** \brief InitTask context */
 TaskContextType ContextTaskInitTask;
-/** \brief LEDTask context */
-TaskContextType ContextTaskLEDTask;
-/** \brief TimeLedTask context */
-TaskContextType ContextTaskTimeLedTask;
+/** \brief ButtonTask context */
+TaskContextType ContextTaskButtonTask;
+/** \brief LedTask context */
+TaskContextType ContextTaskLedTask;
 
 /** \brief Ready List for Priority 1 */
-TaskType ReadyList1[1];
+TaskType ReadyList1[2];
 
 /** \brief Ready List for Priority 0 */
-TaskType ReadyList0[2];
+TaskType ReadyList0[1];
 
-const AlarmType OSEK_ALARMLIST_HardwareCounter[2] = {
-   AlarmSeteQueue, /* this alarm has to be incremented with this counter */
-   ActivateTimeLedTask, /* this alarm has to be incremented with this counter */
+const AlarmType OSEK_ALARMLIST_HardwareCounter[4] = {
+   ActivateButtonTask, /* this alarm has to be incremented with this counter */
+   ActivateLedTask, /* this alarm has to be incremented with this counter */
+   AlarmQueueTimeoutPut, /* this alarm has to be incremented with this counter */
+   AlarmQueueTimeoutGet, /* this alarm has to be incremented with this counter */
 };
 
 
@@ -126,10 +128,10 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
        &ContextTaskInitTask, /* pointer to task context */
        StackTaskInitTask, /* pointer stack memory */
        sizeof(StackTaskInitTask), /* stack size */
-       1, /* task priority */
+       0, /* task priority */
        1, /* task max activations */
        {
-         0, /* basic task */
+         1, /* extended task */
          0, /* non preemtive task */
          0
       }, /* task const flags */
@@ -137,37 +139,37 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
       0 ,/* resources mask */
       0 /* core */
    },
-   /* Task LEDTask */
+   /* Task ButtonTask */
    {
-       OSEK_TASK_LEDTask,   /* task entry point */
-       &ContextTaskLEDTask, /* pointer to task context */
-       StackTaskLEDTask, /* pointer stack memory */
-       sizeof(StackTaskLEDTask), /* stack size */
-       0, /* task priority */
+       OSEK_TASK_ButtonTask,   /* task entry point */
+       &ContextTaskButtonTask, /* pointer to task context */
+       StackTaskButtonTask, /* pointer stack memory */
+       sizeof(StackTaskButtonTask), /* stack size */
+       1, /* task priority */
        1, /* task max activations */
        {
          1, /* extended task */
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | eQueue | eDelay , /* events mask */
+      0 | evQueueTimeOutPut | evQueueTimeOutGet | evQueueSpace , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    },
-   /* Task TimeLedTask */
+   /* Task LedTask */
    {
-       OSEK_TASK_TimeLedTask,   /* task entry point */
-       &ContextTaskTimeLedTask, /* pointer to task context */
-       StackTaskTimeLedTask, /* pointer stack memory */
-       sizeof(StackTaskTimeLedTask), /* stack size */
-       0, /* task priority */
+       OSEK_TASK_LedTask,   /* task entry point */
+       &ContextTaskLedTask, /* pointer to task context */
+       StackTaskLedTask, /* pointer stack memory */
+       sizeof(StackTaskLedTask), /* stack size */
+       1, /* task priority */
        1, /* task max activations */
        {
          1, /* extended task */
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | eQueue , /* events mask */
+      0 | evQueueTimeOutPut | evQueueTimeOutGet | evQueueSpace , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    }
@@ -180,27 +182,25 @@ const TaskCoreType RemoteTasksCore[REMOTE_TASKS_COUNT] = {};
 TaskVariableType TasksVar[TASKS_COUNT];
 
 /** \brief List of Auto Start Tasks in Application Mode AppMode1 */
-const TaskType TasksAppModeAppMode1[3]  = {
-   InitTask,
-   LEDTask,
-   TimeLedTask
+const TaskType TasksAppModeAppMode1[1]  = {
+   InitTask
 };
 /** \brief AutoStart Array */
 const AutoStartType AutoStart[1]  = {
    /* Application Mode AppMode1 */
    {
-      3, /* Total Auto Start Tasks in this Application Mode */
+      1, /* Total Auto Start Tasks in this Application Mode */
       (TaskRefType)TasksAppModeAppMode1 /* Pointer to the list of Auto Start Stacks on this Application Mode */
    }
 };
 
 const ReadyConstType ReadyConst[2] = { 
    {
-      1, /* Length of this ready list */
+      2, /* Length of this ready list */
       ReadyList1 /* Pointer to the Ready List */
    },
    {
-      2, /* Length of this ready list */
+      1, /* Length of this ready list */
       ReadyList0 /* Pointer to the Ready List */
    }
 };
@@ -214,17 +214,17 @@ const TaskPriorityType ResourcesPriority[0]  = {
 
 };
 /** TODO replace next line with: 
- ** AlarmVarType AlarmsVar[2]; */
-AlarmVarType AlarmsVar[2];
+ ** AlarmVarType AlarmsVar[4]; */
+AlarmVarType AlarmsVar[4];
 
-const AlarmConstType AlarmsConst[2]  = {
+const AlarmConstType AlarmsConst[4]  = {
    {
       OSEK_COUNTER_HardwareCounter, /* Counter */
-      SETEVENT, /* Alarm action */
+      ACTIVATETASK, /* Alarm action */
       {
          NULL, /* no callback */
-         LEDTask, /* TaskID */
-         eDelay, /* no event */
+         ButtonTask, /* TaskID */
+         0, /* no event */
          0 /* no counter */
       },
    },
@@ -233,8 +233,28 @@ const AlarmConstType AlarmsConst[2]  = {
       ACTIVATETASK, /* Alarm action */
       {
          NULL, /* no callback */
-         TimeLedTask, /* TaskID */
+         LedTask, /* TaskID */
          0, /* no event */
+         0 /* no counter */
+      },
+   },
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      SETEVENT, /* Alarm action */
+      {
+         NULL, /* no callback */
+         ButtonTask, /* TaskID */
+         evQueueTimeOutPut, /* no event */
+         0 /* no counter */
+      },
+   },
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      SETEVENT, /* Alarm action */
+      {
+         NULL, /* no callback */
+         LedTask, /* TaskID */
+         evQueueTimeOutGet, /* no event */
          0 /* no counter */
       },
    }
@@ -248,7 +268,7 @@ CounterVarType CountersVar[1];
 
 const CounterConstType CountersConst[1] = {
    {
-      2, /* quantity of alarms for this counter */
+      4, /* quantity of alarms for this counter */
       (AlarmType*)OSEK_ALARMLIST_HardwareCounter, /* alarms list */
       100000, /* max allowed value */
       1, /* min cycle */

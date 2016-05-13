@@ -54,11 +54,13 @@ OSEK OSEK {
       MEMMAP = FALSE;
    };
 
-   EVENT = evBoton;
-   EVENT = evCola;
-   
    APPMODE = AppMode1;
 
+
+   EVENT = evQueueTimeOutPut;
+   EVENT = evQueueTimeOutGet;
+   EVENT = evQueueSpace;
+ 
    TASK InitTask {
       PRIORITY = 1;
       ACTIVATION = 1;
@@ -68,26 +70,29 @@ OSEK OSEK {
       STACK = 512;
       TYPE = EXTENDED;
       SCHEDULE = NON;
-
    }
 
    TASK ButtonTask {
       PRIORITY = 2;
       ACTIVATION = 1;
-      STACK = 512;
+      STACK = 1024;
       TYPE = EXTENDED;
       SCHEDULE = NON;
+      EVENT = evQueueTimeOutPut;
+      EVENT = evQueueTimeOutGet;
+      EVENT = evQueueSpace;      
 
    }
 
    TASK LedTask {
       PRIORITY = 2;
       ACTIVATION = 1;
-      STACK = 512;
+      STACK = 1024;
       TYPE = EXTENDED;
       SCHEDULE = NON;
-      EVENT = evBoton;
-      EVENT = evCola;
+      EVENT = evQueueTimeOutPut;
+      EVENT = evQueueTimeOutGet;
+      EVENT = evQueueSpace;
    }
 
 
@@ -106,6 +111,23 @@ OSEK OSEK {
          TASK = LedTask;
       }
       AUTOSTART = FALSE;
+   }
+
+
+   ALARM AlarmQueueTimeoutPut {
+      COUNTER = HardwareCounter;
+      ACTION = SETEVENT {
+         TASK = ButtonTask;
+         EVENT = evQueueTimeOutPut;
+      }
+   }
+
+   ALARM AlarmQueueTimeoutGet {
+      COUNTER = HardwareCounter;
+      ACTION = SETEVENT {
+         TASK = LedTask;
+         EVENT = evQueueTimeOutGet;
+      }
    }
 
 

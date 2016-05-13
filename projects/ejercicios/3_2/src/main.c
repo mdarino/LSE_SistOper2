@@ -4,7 +4,7 @@
 
   @file     main.c
 
-  @brief    EJERCICIO 3.1 - RTOS 2 OSEK
+  @brief    EJERCICIO 3.2 - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
@@ -13,25 +13,20 @@
 
 /**
 
- EJERCICIO 3.1    (Spanish)
+ EJERCICIO 3.2  (Spanish)
 
-Este   es   el   uso   más   simple   de   las   colas   del   RTOS:   Los   mensajes   se   pasan   por   copia   dentro   de   la  
-cola, dándole persistencia a los mismos una vez que la tarea productora sale de contexto. 
- 
-Caso de uso​
-: Una tarea manejadora de evento bloquea hasta recibir el mismo. 
- 
-Ejercicio​
-:   Una   tarea   mide   el   tiempo   de   opresión   de   un   pulsador.   Cuando   lo   obtiene   lo   envía   par   cola   a  
-otra tarea que destella un led durante el tiempo recibido. 
+Caso de uso: El mensaje recibido por cola modifica de alguna manera el comportamiento de la tarea
+receptora, pero la misma debe seguir trabajando (no bloquear) aunque no reciba mensajes
+Ejercicio: Una tarea destella continuamente un led, con una frecuencia constante y un ciclo de
+actividad que recibe de otras tareas mediante una cola. La tarea no debe bloquearse, ya que
+mientras no reciba mensajes debe mantener el led titilando.
 
  **/
 
 
 
 
-
-/** \addtogroup OSEK_RTOS Ejer1.4
+/** \addtogroup OSEK_RTOS Ejer3.2
  ** @{ */
 /*==================[inclusions]=============================================*/
 //#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
@@ -98,6 +93,9 @@ int main(void)
  */
 void ErrorHook(void)
 {
+   led_SetON(LED_1);
+   led_SetON(LED_2);
+   led_SetON(LED_3);
    ShutdownOS(0);
 }
 
@@ -114,7 +112,7 @@ TASK(InitTask)
    ciaaIOInit();
    led_Init();
 
-   queueInit(&cola, evCola);
+   queueInit(&cola);
 
    //button1 CIAA
    buttonConstructor(&button1,0,4);
@@ -126,7 +124,7 @@ TASK(InitTask)
     */
    
    //Start the Button task
-   SetRelAlarm(ActivateButtonTask, 100, TIME_UPDATE_BUTTON);
+   SetRelAlarm(ActivateButtonTask, 100, 0);
    //Start the LED task
    SetRelAlarm(ActivateLedTask, 150,0);
    /* terminate task */
@@ -144,6 +142,9 @@ TASK(ButtonTask)
   
    static uint32_t timeButton;
    buttonUpdate(&button1);
+   
+   queueItem_t dataTest;
+   //dataTest.data=100;
    
    //Only to check if the button is press
    //If it is press turn on the led 2
@@ -166,11 +167,13 @@ TASK(ButtonTask)
          //if the time is >0 and diferent (only will be diferent if press again)
          //get the time
          timeButton=buttonGetLastTime(&button1);
+         dataTest.data=timeButton;
          //Send the data to queue
-         queuePut(&cola, timeButton);
+         queuePut(&cola, &dataTest,1000);
       }
     }  
 
+   SetRelAlarm(ActivateButtonTask, TIME_UPDATE_BUTTON,0);
    /* terminate task */
    TerminateTask();
 }
@@ -185,24 +188,27 @@ TASK(ButtonTask)
 TASK(LedTask)
 {
   //local variable to receive the timebutton
-  static uint32_t timeButtonPress=0;
-
+  //static uint32_t timeButtonPress=0;
+  queueItem_t dataRXTest;
   // //set off the led
   led_SetOFF(LED_3);
 
   // //Wainting the data from the queue
-  timeButtonPress = queueGet(&cola);
+  if(QUEUE_TIMEOUT==queueGet(&cola,&dataRXTest,100))
+  {
+    dataRXTest.data=100;
+  }
 
   // //Set on the led and wait the time
   led_SetON(LED_3);
 
-  if(timeButtonPress<10)
-    timeButtonPress=10;
+  if(dataRXTest.data<10)
+    dataRXTest.data=10;
   //Start the Button task
-  SetRelAlarm(ActivateLedTask, timeButtonPress,0);
+  SetRelAlarm(ActivateLedTask, dataRXTest.data,0);
 
   /* terminate task */
-   TerminateTask();
+ TerminateTask();
    
 }
 

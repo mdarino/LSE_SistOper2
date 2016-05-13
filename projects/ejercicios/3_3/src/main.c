@@ -4,7 +4,7 @@
 
   @file     main.c
 
-  @brief    EJERCICIO 3.1 - RTOS 2 OSEK
+  @brief    EJERCICIO 3.3 - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
@@ -13,7 +13,7 @@
 
 /**
 
- EJERCICIO 3.1    (Spanish)
+ EJERCICIO 3.3    (Spanish)
 
 Este   es   el   uso   más   simple   de   las   colas   del   RTOS:   Los   mensajes   se   pasan   por   copia   dentro   de   la  
 cola, dándole persistencia a los mismos una vez que la tarea productora sale de contexto. 
@@ -31,7 +31,7 @@ otra tarea que destella un led durante el tiempo recibido.
 
 
 
-/** \addtogroup OSEK_RTOS Ejer1.4
+/** \addtogroup OSEK_RTOS Ejer3.3
  ** @{ */
 /*==================[inclusions]=============================================*/
 //#include "ciaaPOSIX_stdio.h"  /* <= device handler header */

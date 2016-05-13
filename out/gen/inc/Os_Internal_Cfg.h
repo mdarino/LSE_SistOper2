@@ -116,7 +116,7 @@
 
 #define OSEK_COUNTER_HardwareCounter 0
 /** \brief ALARMS_COUNT define */
-#define ALARMS_COUNT 2
+#define ALARMS_COUNT 4
 
 /** \brief NON_PREEMPTIVE macro definition */
 #define NON_PREEMPTIVE OSEK_ENABLE
@@ -337,7 +337,7 @@ extern TaskVariableType TasksVar[TASKS_COUNT];
 extern uint8 ApplicationMode;
 
 /** \brief List of Auto Start Tasks in Application Mode AppMode1 */
-extern const TaskType TasksAppModeAppMode1[3];
+extern const TaskType TasksAppModeAppMode1[1];
 /** \brief AutoStart Array */
 extern const AutoStartType AutoStart[1];
 
@@ -354,10 +354,10 @@ extern ReadyVarType ReadyVar[2];
 extern const TaskPriorityType ResourcesPriority[0];
 
 /** \brief Alarms Variable Structure */
-extern AlarmVarType AlarmsVar[2];
+extern AlarmVarType AlarmsVar[4];
 
 /** \brief Alarms Constant Structure */
-extern const AlarmConstType AlarmsConst[2];
+extern const AlarmConstType AlarmsConst[4];
 
 /** \brief Alarms Constant Structure */
 extern const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT];

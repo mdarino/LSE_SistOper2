@@ -43,21 +43,47 @@
 /*==================[macros]=================================================*/
 
 /** queue length */
-#define QUEUE_LEN	      10
+#define QUEUE_LEN	      3
+
+//Events  - MUST BE THE SAME in the .OIL
+#define EVENT_SPACE        evQueueSpace
+#define EVENT_TIMEOUT_GET  evQueueTimeOutGet
+#define EVENT_TIMEOUT_PUT  evQueueTimeOutPut
+//ALARM  - MUST BE THE SAME in the .OIL
+#define ALARM_TIMEOUT_GET  AlarmQueueTimeoutGet
+#define ALARM_TIMEOUT_PUT  AlarmQueueTimeoutPut
+
+//RETURN VALUES - 
+#define QUEUE_ERROR     2
+#define QUEUE_TIMEOUT   1
+#define QUEUE_OK        0
+
+//queue block forever - if you send it, i will be block forever
+#define QUEUE_BLOCK_FOREVER     0
 
 /*==================[typedef]================================================*/
 
 /** data type to be stored in the queue */
-typedef int queueItem_t;
+typedef struct 
+{
+  int data; 
+}queueItem_t;
+
+/** return types */
+typedef int returnType_t;
 
 /** queue definition */
 typedef struct
 {
-	queueItem_t data[QUEUE_LEN];    /**< queue buffer */
-	int head;						/**< last item queued */
-	int tail;						/**< first item queued */
-	EventMaskType ev;				/**< event associated to this queue */
-	TaskType task;					/**< waiting task */
+	queueItem_t data[QUEUE_LEN];     /**< queue buffer */
+	int            head;					/**< last item queued */
+	int            tail;					/**< first item queued */
+	EventMaskType  evSpace;          /**< event associated to this queue */
+   EventMaskType  evTimeOutGet;     /**< event associated to when you try to get info */
+   EventMaskType  evTimeOutPut;     /**< event associated to when you try to put info */
+	TaskType       task;					/**< waiting task */
+   AlarmType      alarmTimeoutGet;  /**< Set the max time to wait when you try to get info */
+   AlarmType      alarmTimeoutPut;  /**< Set the max time to wait when you try to put info */
 }queue_t;
 
 /*==================[external data declaration]==============================*/
@@ -66,23 +92,39 @@ typedef struct
 
 /** initialize queue
  * @param q queue to be initialized
- * @param e osek event defined for this queue
  */
-void queueInit(queue_t * q, EventMaskType e);
+void queueInit(queue_t * q);
 
 /** put item in queue. this function should block if the queue is full.
  *
  * @param q queue to be used
  * @param d item to queue
  */
-void queuePut(queue_t * q, queueItem_t d);
 
-/** get item from queue. this function should block if the queue is empty.
- *
- * @param q queue to be used
- * @return retrieved item
+
+/**
+ * @brief Put item in queue
+ * @param q   Struct of the queue
+ * @param d   data pointer
+ * @param t   How many tick we will wait if the  queue is full (0 for infinite)
+ * @return    "QUEUE_TIMEOUT" if can not put the data in the queue in time- 
+ *            "QUEUE_OK" if can put the data in the queue
  */
-queueItem_t queueGet(queue_t * q);
+
+returnType_t queuePut(queue_t * q, queueItem_t * d, TickType t);
+
+/**
+ * @brief Get item in queue
+ * @param q   Struct of the queue
+ * @param d   data pointer
+ * @param t   How many tick we will wait if the  queue is full (0 for infinite)
+ * @return    "QUEUE_TIMEOUT" if can not put the data in the queue in time- 
+ *            "QUEUE_OK" if can put the data in the queue
+ */
+returnType_t queueGet(queue_t * q, queueItem_t *d, TickType t);
+
+
+
 
 /*==================[end of file]============================================*/
 #endif /* #ifndef _QUEUE_H_ */

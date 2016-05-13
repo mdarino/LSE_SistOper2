@@ -54,73 +54,211 @@
 
 /*==================[external functions definition]==========================*/
 
-void queueInit(queue_t * q, EventMaskType e)
+/**
+ * @brief Init the struct of the queue
+ */
+void queueInit(queue_t * q)
 {
 	DisableAllInterrupts();
 	q->tail = 0;
 	q->head = 0;
-	q->ev = e;
+	q->evSpace = EVENT_SPACE;
+	q->evTimeOutGet = EVENT_TIMEOUT_GET;
+	q->evTimeOutPut = EVENT_TIMEOUT_PUT;
+	q->alarmTimeoutGet = ALARM_TIMEOUT_GET;
+	q->alarmTimeoutPut = ALARM_TIMEOUT_PUT;
 	q->task = (TaskType)~0;
 	EnableAllInterrupts();
 }
 
-void queuePut(queue_t * q, queueItem_t d)
+/**
+ * @brief Send a new data to the queue
+ */
+returnType_t queuePut(queue_t *q, queueItem_t *d, TickType t)
 {
+	
+   //----------------------------------
+	//----Local variables
+	//----------------------------------
+
+	EventMaskType events;  //save the events...to check
+	int flagState=0;  //1 timeout, 0 unblock in time
+	int returnState=QUEUE_OK; //Return variable
+   TickType Ticks;	//sabe the current tick of the alarm (not used)
+
+   //----------------------------------
+	//----Check if the queue is full...
+	//----------------------------------
 	while(((q->head+1)%QUEUE_LEN) == q->tail)
 	{
+		//Check the task to aboid the block 
 		if(q->task != ((TaskType)~0))
 		{
 			/* interbloqueo */
 			ErrorHook();
 		}
+
+		//If the time != 0 => activate the alarm 
+		if (t != 0)
+		{
+			SetRelAlarm(q->alarmTimeoutPut, t, 0);
+		}
+		
+		//Set the task...to know how is block
 		GetTaskID(&(q->task));
-		WaitEvent(q->ev);
-		ClearEvent(q->ev);
+		//Waiting space or timeout in que queue
+   	WaitEvent(q->evTimeOutPut | q->evSpace);
+   	//Get the event
+   	GetEvent(q->task, &events);
+
+	   if (events & q->evSpace) {
+		   //If we have space...
+		   ClearEvent(q->evSpace);
+		   flagState=0; //unblock in time
+		   //Check if the alarm is on. If it is on, we turn off
+		   if (E_OK == GetAlarm(q->alarmTimeoutPut,&Ticks))
+        	{
+          	CancelAlarm(q->alarmTimeoutPut);
+         }
+	   }
+	   else if (events & q->evTimeOutPut) {
+		   //If timeout...
+		   ClearEvent(q->evTimeOutPut);
+		   flagState=1;  //Timeout
+	   }
+		
+		//Clean the task waiting
 		q->task = (TaskType)~0;
 	}
 
-	DisableAllInterrupts();
+   //----------------------------------
+	//----Data.....
+	//----------------------------------
+	
+	if (flagState==0)
+	{	
+		//If unblock in time.... 
+	   DisableAllInterrupts();
+		//Copy the new data in the queue
+		q->data[q->head] = *d;
+		//Update the head of the queue
+		q->head = (q->head+1)%QUEUE_LEN;
+		EnableAllInterrupts();
+		//return OK - new data is in the queue
+		returnState= QUEUE_OK;
+	}
+	else
+	{
+		//return TimeOut - we were unlocked by alarm
+		returnState= QUEUE_TIMEOUT;
+	}
 
-	q->data[q->head] = d;
 
-	q->head = (q->head+1)%QUEUE_LEN;
-
-	EnableAllInterrupts();
-
+	//if some task is blocking -> set the event 
 	if(q->task != ((TaskType)~0))
 	{
-		SetEvent(q->task, q->ev);
+		SetEvent(q->task, q->evSpace);
 	}
+
+	return returnState;
 }
 
-queueItem_t queueGet(queue_t * q)
+
+
+/**
+ * @brief Receive a new data to the queue
+ */
+
+returnType_t queueGet(queue_t * q, queueItem_t *d, TickType t)
 {
-	while(q->head == q->tail)
-	{
-		if(q->task != ((TaskType)~0))
-		{
-			/* interbloqueo */
-			ErrorHook();
-		}
-		GetTaskID(&(q->task));
-		WaitEvent(q->ev);
-		ClearEvent(q->ev);
-		q->task = (TaskType)~0;
-	}
+   
+   //----------------------------------
+   //----Local variables
+   //----------------------------------
 
-	DisableAllInterrupts();
+   EventMaskType events;  //save the events...to check
+   int flagState=0;  //1 timeout, 0 unblock in time
+   int returnState=QUEUE_OK; //Return variable
+   TickType Ticks;   //sabe the current tick of the alarm (not used)
+   StatusType ret;
 
-	queueItem_t d = q->data[q->tail];
-	q->tail = (q->tail+1)%QUEUE_LEN;
+   //----------------------------------
+   //----Check if the queue is ...
+   //----------------------------------
+   if(q->head == q->tail)
+   {
+      //Check the task to aboid the block 
+      if(q->task != ((TaskType)~0))
+      {
+         /* interbloqueo */
+         ErrorHook();
+      } 
+      
+      //If the time != 0 => activate the alarm 
+      if (t != 0)
+      {
+         SetRelAlarm(q->alarmTimeoutGet, t, 0);
+      }    
 
-	EnableAllInterrupts();
+      //Set the task...to know how is block
+      GetTaskID(&(q->task));
+      //Waiting space or timeout in que queue
+      WaitEvent(q->evTimeOutGet | q->evSpace);
+      //Get the event
+      GetEvent(q->task, &events);
 
-	if(q->task != ((TaskType)~0))
-	{
-		SetEvent(q->task, q->ev);
-	}
+      if (events & q->evSpace) {
+         //If we have space...
+         ClearEvent(q->evSpace);
+         flagState=0; //unblock in time
+         //Check if the alarm is on. If it is on, we turn off
+         if (t != 0)
+         {
+            CancelAlarm(q->alarmTimeoutGet);
+         }
 
-	return d;
+      }
+      else if (events & q->evTimeOutGet) {
+         //If timeout...
+         ClearEvent(q->evTimeOutGet);
+         flagState=1;  //Timeout
+      }
+      
+      //Clean the task waiting
+      q->task = (TaskType)~0;
+   }
+
+   
+   //----------------------------------
+   //----Data.....
+   //----------------------------------
+   
+   if (flagState==0)
+   {  
+      //If unblock in time.... 
+      DisableAllInterrupts();
+      //Copy the new data in the queue
+      *d = q->data[q->tail];
+      //Update the head of the queue
+      q->tail = (q->tail+1)%QUEUE_LEN;
+      EnableAllInterrupts();
+      //return OK - new data is in the queue
+      returnState= QUEUE_OK;
+   }
+   else
+   {
+      //return TimeOut - we were unlocked by alarm
+      returnState= QUEUE_TIMEOUT;
+   }
+
+   //if some task is blocking -> set the event 
+   if(q->task != ((TaskType)~0))
+   {
+      SetEvent(q->task, q->evSpace);
+   }
+
+   return returnState;
+
 }
 
 /*==================[end of file]============================================*/

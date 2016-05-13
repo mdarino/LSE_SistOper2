@@ -76,23 +76,29 @@
 /** \brief Task Definition */
 #define InitTask 0
 /** \brief Task Definition */
-#define LEDTask 1
+#define ButtonTask 1
 /** \brief Task Definition */
-#define TimeLedTask 2
+#define LedTask 2
 
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
-/** \brief Definition of the Event eDelay */
-#define eDelay 0x1U
-/** \brief Definition of the Event eQueue */
-#define eQueue 0x2U
+/** \brief Definition of the Event evQueueTimeOutPut */
+#define evQueueTimeOutPut 0x1U
+/** \brief Definition of the Event evQueueTimeOutGet */
+#define evQueueTimeOutGet 0x2U
+/** \brief Definition of the Event evQueueSpace */
+#define evQueueSpace 0x4U
 
 
-/** \brief Definition of the Alarm AlarmSeteQueue */
-#define AlarmSeteQueue 0
-/** \brief Definition of the Alarm ActivateTimeLedTask */
-#define ActivateTimeLedTask 1
+/** \brief Definition of the Alarm ActivateButtonTask */
+#define ActivateButtonTask 0
+/** \brief Definition of the Alarm ActivateLedTask */
+#define ActivateLedTask 1
+/** \brief Definition of the Alarm AlarmQueueTimeoutPut */
+#define AlarmQueueTimeoutPut 2
+/** \brief Definition of the Alarm AlarmQueueTimeoutGet */
+#define AlarmQueueTimeoutGet 3
 
 /** \brief Definition of the Counter HardwareCounter */
 #define HardwareCounter 0
@@ -183,10 +189,10 @@ extern void ErrorHook(void);
 
 /** \brief Task Declaration of Task InitTask */
 DeclareTask(InitTask);
-/** \brief Task Declaration of Task LEDTask */
-DeclareTask(LEDTask);
-/** \brief Task Declaration of Task TimeLedTask */
-DeclareTask(TimeLedTask);
+/** \brief Task Declaration of Task ButtonTask */
+DeclareTask(ButtonTask);
+/** \brief Task Declaration of Task LedTask */
+DeclareTask(LedTask);
 
 
 
