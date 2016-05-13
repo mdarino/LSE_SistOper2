@@ -131,7 +131,7 @@ TASK(InitTask)
    //Start the Button task
    SetRelAlarm(ActivateButtonTask, 350, TIME_UPDATE_BUTTON);
    //Set defaul time
-   SetRelAlarm(ActivateLedTask,500, 500); 
+   SetRelAlarm(ActivateLedTask,500, 500);
    /* terminate task */
    TerminateTask();
 }
