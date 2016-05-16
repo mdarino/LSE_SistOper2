@@ -76,13 +76,13 @@
 #define ERROR_CHECKING_EXTENDED   2
 
 /** \brief Count of task */
-#define TASKS_COUNT 3U
+#define TASKS_COUNT 4U
 
 /** \brief Remote tasks count */
 #define REMOTE_TASKS_COUNT 0U
 
 /** \brief Count of resources */
-#define RESOURCES_COUNT 0
+#define RESOURCES_COUNT 1
 
 /** \brief Error Checking Type */
 #define ERROR_CHECKING_TYPE ERROR_CHECKING_EXTENDED
@@ -116,7 +116,7 @@
 
 #define OSEK_COUNTER_HardwareCounter 0
 /** \brief ALARMS_COUNT define */
-#define ALARMS_COUNT 5
+#define ALARMS_COUNT 6
 
 /** \brief NON_PREEMPTIVE macro definition */
 #define NON_PREEMPTIVE OSEK_ENABLE
@@ -342,7 +342,7 @@ extern const TaskType TasksAppModeAppMode1[1];
 extern const AutoStartType AutoStart[1];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[0];
+extern const TaskPriorityType ResourcesPriority[1];
 
 /** \brief Ready Const List */
 extern const ReadyConstType ReadyConst[2];
@@ -351,13 +351,13 @@ extern const ReadyConstType ReadyConst[2];
 extern ReadyVarType ReadyVar[2];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[0];
+extern const TaskPriorityType ResourcesPriority[1];
 
 /** \brief Alarms Variable Structure */
-extern AlarmVarType AlarmsVar[5];
+extern AlarmVarType AlarmsVar[6];
 
 /** \brief Alarms Constant Structure */
-extern const AlarmConstType AlarmsConst[5];
+extern const AlarmConstType AlarmsConst[6];
 
 /** \brief Alarms Constant Structure */
 extern const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT];

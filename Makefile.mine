@@ -92,7 +92,7 @@ BOARD          ?= edu_ciaa_nxp
 # examples/rtos_example              (example using rtos)
 #
 
-PROJECT_PATH  ?= projects/ejercicios/$(DS)4_1
+PROJECT_PATH  ?= projects/ejercicios/$(DS)4_2
 
 #PROJECT_PATH  ?= projects/tests/getAlarm
 
