@@ -82,7 +82,7 @@
 #define REMOTE_TASKS_COUNT 0U
 
 /** \brief Count of resources */
-#define RESOURCES_COUNT 1
+#define RESOURCES_COUNT 0
 
 /** \brief Error Checking Type */
 #define ERROR_CHECKING_TYPE ERROR_CHECKING_EXTENDED
@@ -97,7 +97,7 @@
 /** \brief shutdown hook enable-disable macro */
 #define HOOK_SHUTDOWNHOOK OSEK_DISABLE
 
-#define READYLISTS_COUNT 3
+#define READYLISTS_COUNT 2
 #define SetError_Api(api)   ( Osek_ErrorApi = (api) )
 #define SetError_Param1(param1) ( Osek_ErrorParam1 = (param1) )
 #define SetError_Param2(param2) ( Osek_ErrorParam2 = (param2) )
@@ -116,7 +116,7 @@
 
 #define OSEK_COUNTER_HardwareCounter 0
 /** \brief ALARMS_COUNT define */
-#define ALARMS_COUNT 2
+#define ALARMS_COUNT 5
 
 /** \brief NON_PREEMPTIVE macro definition */
 #define NON_PREEMPTIVE OSEK_ENABLE
@@ -342,22 +342,22 @@ extern const TaskType TasksAppModeAppMode1[1];
 extern const AutoStartType AutoStart[1];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[1];
+extern const TaskPriorityType ResourcesPriority[0];
 
 /** \brief Ready Const List */
-extern const ReadyConstType ReadyConst[3];
+extern const ReadyConstType ReadyConst[2];
 
 /** \brief Ready Variable List */
-extern ReadyVarType ReadyVar[3];
+extern ReadyVarType ReadyVar[2];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[1];
+extern const TaskPriorityType ResourcesPriority[0];
 
 /** \brief Alarms Variable Structure */
-extern AlarmVarType AlarmsVar[2];
+extern AlarmVarType AlarmsVar[5];
 
 /** \brief Alarms Constant Structure */
-extern const AlarmConstType AlarmsConst[2];
+extern const AlarmConstType AlarmsConst[5];
 
 /** \brief Alarms Constant Structure */
 extern const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT];
