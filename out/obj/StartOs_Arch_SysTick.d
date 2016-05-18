@@ -1,4 +1,4 @@
-StartOs_Arch_SysTick.o: modules\rtos\src\cortexM4\StartOs_Arch_SysTick.c \
+StartOs_Arch_SysTick.o: modules/rtos/src/cortexM4/StartOs_Arch_SysTick.c \
  modules/rtos/inc/cortexM4/lpc43xx/Os_Internal_Arch_Cpu.h \
  modules/base/inc/ciaaPlatforms.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \

@@ -76,39 +76,15 @@
 /** \brief Task Definition */
 #define InitTask 0
 /** \brief Task Definition */
-#define ButtonTask 1
-/** \brief Task Definition */
-#define LedTaskBlink 2
-/** \brief Task Definition */
-#define LedTaskButton 3
+#define LedTask 1
 
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
-/** \brief Definition of the Event evQueueTimeOutPut */
-#define evQueueTimeOutPut 0x1U
-/** \brief Definition of the Event evQueueTimeOutGet */
-#define evQueueTimeOutGet 0x2U
-/** \brief Definition of the Event evQueueSpace */
-#define evQueueSpace 0x4U
-/** \brief Definition of the Event evTime */
-#define evTime 0x8U
+/** \brief Definition of the Event evTIMER1 */
+#define evTIMER1 0x1U
 
-/** \brief Definition of the resource LedGreen */
-#define LedGreen ((ResourceType)0)
 
-/** \brief Definition of the Alarm ActivateButtonTask */
-#define ActivateButtonTask 0
-/** \brief Definition of the Alarm ActivateLedTaskButton */
-#define ActivateLedTaskButton 1
-/** \brief Definition of the Alarm ActivateLedTaskBlink */
-#define ActivateLedTaskBlink 2
-/** \brief Definition of the Alarm AlarmQueueTimeoutPut */
-#define AlarmQueueTimeoutPut 3
-/** \brief Definition of the Alarm AlarmQueueTimeoutGet */
-#define AlarmQueueTimeoutGet 4
-/** \brief Definition of the Alarm AlarmLedTimeEvent */
-#define AlarmLedTimeEvent 5
 
 /** \brief Definition of the Counter HardwareCounter */
 #define HardwareCounter 0
@@ -199,13 +175,11 @@ extern void ErrorHook(void);
 
 /** \brief Task Declaration of Task InitTask */
 DeclareTask(InitTask);
-/** \brief Task Declaration of Task ButtonTask */
-DeclareTask(ButtonTask);
-/** \brief Task Declaration of Task LedTaskBlink */
-DeclareTask(LedTaskBlink);
-/** \brief Task Declaration of Task LedTaskButton */
-DeclareTask(LedTaskButton);
+/** \brief Task Declaration of Task LedTask */
+DeclareTask(LedTask);
 
+/** \brief ISR Declaration */
+extern void OSEK_ISR_TIMER1_IRQ(void); /* Interrupt Handler TIMER1_IRQ */
 
 
 /** \brief Schedule this Task if higher priority Task are Active
