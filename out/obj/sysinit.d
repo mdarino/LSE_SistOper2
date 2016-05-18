@@ -1,4 +1,4 @@
-sysinit.o: externals/drivers/cortexM4/lpc43xx/src/sysinit.c \
+sysinit.o: externals\drivers\cortexM4\lpc43xx\src\sysinit.c \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \

@@ -170,7 +170,7 @@ void (* const g_pfnVectors[])(void) = {
    OSEK_ISR_NoHandler, /* 0x1a 0x00000068 - No Handler set for ISR SCT (IRQ 10) */
    OSEK_ISR_NoHandler, /* 0x1b 0x0000006C - No Handler set for ISR RIT (IRQ 11) */
    OSEK_ISR_NoHandler, /* 0x1c 0x00000070 - No Handler set for ISR TIMER0 (IRQ 12) */
-   OSEK_ISR2_TIMER1_IRQ, /* 0x1d 0x00000074 ISR for TIMER1 (IRQ 13) Category 2 */
+   OSEK_ISR_NoHandler, /* 0x1d 0x00000074 - No Handler set for ISR TIMER1 (IRQ 13) */
    OSEK_ISR_NoHandler, /* 0x1e 0x00000078 - No Handler set for ISR TIMER2 (IRQ 14) */
    OSEK_ISR_NoHandler, /* 0x1f 0x0000007C - No Handler set for ISR TIMER3 (IRQ 15) */
    OSEK_ISR_NoHandler, /* 0x20 0x00000080 - No Handler set for ISR MCPWM (IRQ 16) */
@@ -215,24 +215,16 @@ void (* const g_pfnVectors[])(void) = {
 /** \brief Interrupt enabling and priority setting function */
 void Enable_User_ISRs(void)
 {
-   /* Enabling IRQ TIMER1 with priority 0 */
-   NVIC_EnableIRQ(13);
-   NVIC_SetPriority(13, 0);
-
 }
 
 /** \brief Enable user defined category 2 ISRs */
 void Enable_ISR2_Arch(void)
 {
-   /* Enabling IRQ TIMER1 */
-   NVIC_EnableIRQ(13);
 }
 
 /** \brief Disable user defined category 2 ISRs */
 void Disable_ISR2_Arch(void)
 {
-   /* Disabling IRQ TIMER1 */
-   NVIC_DisableIRQ(13);
 }
 
 /** @} doxygen end group definition */

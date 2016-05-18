@@ -62,7 +62,8 @@ OSEK OSEK {
    EVENT = evQueueTimeOutGet;
    EVENT = evQueueSpace;
 
-   EVENT = evTime;
+   EVENT = evTIMER1;
+
  
    TASK InitTask {
       PRIORITY = 1;
@@ -105,7 +106,6 @@ OSEK OSEK {
       EVENT = evQueueTimeOutPut;
       EVENT = evQueueTimeOutGet;
       EVENT = evQueueSpace;
-      EVENT = evTime;
       RESOURCE = LedGreen;
    }
 
@@ -150,13 +150,18 @@ OSEK OSEK {
       }
    }
 
-   ALARM AlarmLedTimeEvent {
+
+   ALARM TickHook {
       COUNTER = HardwareCounter;
-      ACTION = SETEVENT {
-         TASK = LedTaskButton;
-         EVENT = evTime;
+      ACTION = ALARMCALLBACK {
+         ALARMCALLBACKNAME = TickHook;
       }
-   }   
+      AUTOSTART = TRUE {
+         APPMODE = AppMode1;
+         ALARMTIME = 0;
+         CYCLETIME = 1;
+      }
+   }
 
    COUNTER HardwareCounter {
       MAXALLOWEDVALUE = 100000;

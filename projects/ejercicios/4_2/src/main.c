@@ -47,6 +47,8 @@ hasta 3 pulsaciones del botón, que a su vez generarán 3 destellos del led.
 
 /*==================[internal data declaration]==============================*/
 
+static uint32_t tiempoBlinkLED_ms;
+
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
@@ -175,7 +177,7 @@ TASK(ButtonTask)
          timeButton=buttonGetLastTime(&button1);
          dataTest.data=timeButton;
          //Send the data to queue
-         queuePut(&cola, &dataTest,10); //if it si full wait 10mseg and unblock
+         queuePut(&cola, &dataTest,10); //if it is full wait 10mseg and unblock
       }
     }  
 
@@ -193,26 +195,17 @@ TASK(ButtonTask)
  
 TASK(LedTaskBlink)
 {
-  static uint8_t flag=0;
-
-  led_SetToggle(LED_1); // debug
   
-  // //blink  
-  // if (flag==0)
-  // {
-  //   flag=1;
-  //   GetResource(LedGreen);
-  //   led_SetON(LED_3);
-  //   ReleaseResource(LedGreen);
-  // }
-  // else
-  // {
-  //   flag=0;
-  //   led_SetOFF(LED_3);
-  //   //ReleaseResource(LedGreen);
-  // } 
-  // // LEDx a 1Hz (50% duty cycle)
-  // SetRelAlarm(ActivateLedTaskBlink, 500,0);
+  tiempoBlinkLED_ms = 500; 
+  GetResource(LedGreen);
+  led_SetON(LED_3);
+  led_SetON(LED_1); //debug
+  while(tiempoBlinkLED_ms);
+  ReleaseResource(LedGreen);
+
+  SetRelAlarm(ActivateLedTaskBlink, 500,0);
+  led_SetOFF(LED_3);
+  led_SetOFF(LED_1); //debug
   TerminateTask();
 }
 
@@ -227,35 +220,45 @@ TASK(LedTaskBlink)
 TASK(LedTaskButton)
 {
  
-  led_SetToggle(LED_2); // debug
-  
   queueItem_t dataRXTest;
   //waiting the data
   queueGet(&cola,&dataRXTest,0);
   //Set the min time
   if(dataRXTest.data<10)
     dataRXTest.data=10;
+    
+  GetResource(LedGreen);
 
-  //GetResource(LedGreen);
-  led_SetON(LED_3);  
+  tiempoBlinkLED_ms = 20;
+  while(tiempoBlinkLED_ms);
+
+  tiempoBlinkLED_ms = dataRXTest.data; 
+  led_SetON(LED_2); //debug
+  led_SetON(LED_3);
+  while(tiempoBlinkLED_ms);
   
-  //Set the delay
-  SetRelAlarm(AlarmLedTimeEvent, dataRXTest.data, 0);
-  //Waiting the time...
-  WaitEvent(evTime);
-  //Clean the event
-  ClearEvent(evTime);
-
   led_SetOFF(LED_3);
-  //ReleaseResource(LedGreen);
-   
-  //Start again the task
-  ChainTask(LedTaskButton);
+  led_SetOFF(LED_2); //debug
   
-  //TerminateTask();
+  tiempoBlinkLED_ms = 20;
+  while(tiempoBlinkLED_ms);
 
+  ReleaseResource(LedGreen);
+
+  
+  ChainTask(LedTaskButton);
    
 }
+
+
+
+/* TickHook de 1ms */
+ALARMCALLBACK(TickHook)
+{
+  if(tiempoBlinkLED_ms)
+    tiempoBlinkLED_ms--;
+}
+
 
 /** @} doxygen end group definition */
 

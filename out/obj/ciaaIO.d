@@ -1,4 +1,4 @@
-ciaaIO.o: projects/ciaa_driver/src/ciaaIO.c \
+ciaaIO.o: projects\ciaa_driver\src\ciaaIO.c \
  projects/ciaa_driver/inc/ciaaIO.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \

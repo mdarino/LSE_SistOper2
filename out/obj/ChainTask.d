@@ -1,4 +1,4 @@
-ChainTask.o: modules/rtos/src/ChainTask.c modules/rtos/inc/Os_Internal.h \
+ChainTask.o: modules\rtos\src\ChainTask.c modules/rtos/inc/Os_Internal.h \
  modules/rtos/inc/os.h modules/rtos/inc/Types.h \
  modules/rtos/inc/Compiler.h modules/rtos/inc/Types_Arch.h \
  out/gen/inc/Os_Cfg.h modules/rtos/inc/cortexM4/Os_Arch.h \

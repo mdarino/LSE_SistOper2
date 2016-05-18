@@ -1,4 +1,4 @@
-ciaaAOUT.o: projects/ciaa_driver/src/ciaaAOUT.c \
+ciaaAOUT.o: projects\ciaa_driver\src\ciaaAOUT.c \
  projects/ciaa_driver/inc/ciaaAOUT.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \

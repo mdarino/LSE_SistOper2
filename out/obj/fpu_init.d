@@ -1,4 +1,4 @@
-fpu_init.o: externals/drivers/cortexM4/lpc43xx/src/fpu_init.c \
+fpu_init.o: externals\drivers\cortexM4\lpc43xx\src\fpu_init.c \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \
  externals/drivers/cortexM4/lpc43xx/inc/cmsis.h \
  externals/drivers/cortexM4/lpc43xx/inc/lpc_types.h \
