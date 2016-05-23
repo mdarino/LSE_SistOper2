@@ -1,9 +1,12 @@
-/*
- * queue.c
- *
- *  Created on: Oct 21, 2014
- *      Author: pablo
- */
+/*************************************************************************//**
+
+  @file     queue.c
+
+  @brief    Software Library to make work with a queue
+
+  @author   Marcos Darino (MD)
+
+ ******************************************************************************/
 
 #include "queue.h"
 

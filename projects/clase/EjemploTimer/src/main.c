@@ -42,7 +42,7 @@ otra tarea que destella un led durante el tiempo recibido.
 #include "HW_buttons.h"
 #include "queue.h"
 #include "ciaaIO.h"
-#include "ciaaTIMER.h"
+#include "delay.h"
 #include "os.h"               /* <= operating system header */
 
 /*==================[macros and definitions]=================================*/
@@ -111,7 +111,7 @@ TASK(InitTask)
    
    //ciaak_start();
    ciaaIOInit();
-   ciaaTIMERInit();
+   delay_init();
    led_Init();
 
    /* activate periodic task:
@@ -135,7 +135,7 @@ TASK(LedTask)
 {
  
   /* terminate task */
-   ciaaTIMERSet(2000000);
+   delay_us(20000);
    led_SetToggle(LED_GREEN);
    ChainTask(LedTask);
    
@@ -151,8 +151,14 @@ TASK(LedTask)
 
 ISR(TIMER1_IRQ)
 {
-   if (Chip_TIMER_MatchPending(LPC_TIMER1, 0)) {
-      SetEvent(LedTask,evTIMER1);      
-   }
-   Chip_TIMER_ClearMatch(LPC_TIMER1, 0);
+  delay_setEvent(); //time!!!
 }
+
+
+// ISR(TIMER1_IRQ)
+// {
+//    if (Chip_TIMER_MatchPending(LPC_TIMER1, 0)) {
+//       SetEvent(LedTask,evTIMER1);      
+//    }
+//    Chip_TIMER_ClearMatch(LPC_TIMER1, 0);
+// }

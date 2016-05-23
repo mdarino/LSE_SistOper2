@@ -1,9 +1,12 @@
-/*
- * queue.h
- *
- *  Created on: Oct 21, 2014
- *      Author: pablo
- */
+/*************************************************************************//**
+
+  @file     queue.h
+
+  @brief    Software Library to make work with a queue
+
+  @author   Marcos Darino (MD)
+
+ ******************************************************************************/
 
 #ifndef QUEUE_H_
 #define QUEUE_H_

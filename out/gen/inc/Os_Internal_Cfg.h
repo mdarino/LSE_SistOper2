@@ -76,13 +76,13 @@
 #define ERROR_CHECKING_EXTENDED   2
 
 /** \brief Count of task */
-#define TASKS_COUNT 4U
+#define TASKS_COUNT 2U
 
 /** \brief Remote tasks count */
 #define REMOTE_TASKS_COUNT 0U
 
 /** \brief Count of resources */
-#define RESOURCES_COUNT 1
+#define RESOURCES_COUNT 0
 
 /** \brief Error Checking Type */
 #define ERROR_CHECKING_TYPE ERROR_CHECKING_EXTENDED
@@ -112,11 +112,11 @@
       ErrorHookRunning = (uint8)0U;   \
    }
 
-#define ALARM_AUTOSTART_COUNT 1
+#define ALARM_AUTOSTART_COUNT 0
 
 #define OSEK_COUNTER_HardwareCounter 0
 /** \brief ALARMS_COUNT define */
-#define ALARMS_COUNT 6
+#define ALARMS_COUNT 0
 
 /** \brief NON_PREEMPTIVE macro definition */
 #define NON_PREEMPTIVE OSEK_ENABLE
@@ -342,7 +342,7 @@ extern const TaskType TasksAppModeAppMode1[1];
 extern const AutoStartType AutoStart[1];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[1];
+extern const TaskPriorityType ResourcesPriority[0];
 
 /** \brief Ready Const List */
 extern const ReadyConstType ReadyConst[2];
@@ -351,13 +351,13 @@ extern const ReadyConstType ReadyConst[2];
 extern ReadyVarType ReadyVar[2];
 
 /** \brief Resources Priorities */
-extern const TaskPriorityType ResourcesPriority[1];
+extern const TaskPriorityType ResourcesPriority[0];
 
 /** \brief Alarms Variable Structure */
-extern AlarmVarType AlarmsVar[6];
+extern AlarmVarType AlarmsVar[0];
 
 /** \brief Alarms Constant Structure */
-extern const AlarmConstType AlarmsConst[6];
+extern const AlarmConstType AlarmsConst[0];
 
 /** \brief Alarms Constant Structure */
 extern const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT];
@@ -368,6 +368,9 @@ extern CounterVarType CountersVar[1];
 /** \brief Counter Const Structure */
 extern const CounterConstType CountersConst[1];
 /*==================[external functions declaration]=========================*/
+/** \brief Interrupt Cat 2 TIMER1_IRQ
+ **/
+extern void OSEK_ISR2_TIMER1_IRQ(void);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
