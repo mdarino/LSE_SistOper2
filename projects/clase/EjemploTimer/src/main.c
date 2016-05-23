@@ -135,7 +135,7 @@ TASK(LedTask)
 {
  
   /* terminate task */
-   delay_us(20000);
+   delay_us(200000);
    led_SetToggle(LED_GREEN);
    ChainTask(LedTask);
    
