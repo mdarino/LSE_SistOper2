@@ -1,4 +1,4 @@
-ciaaI2C.o: projects\ciaa_driver\src\ciaaI2C.c \
+ciaaI2C.o: projects/ciaa_driver/src/ciaaI2C.c \
  projects/ciaa_driver/inc/ciaaI2C.h \
  externals/drivers/cortexM4/lpc43xx/inc/chip.h \
  externals/drivers/cortexM4/lpc43xx/inc/sys_config.h \

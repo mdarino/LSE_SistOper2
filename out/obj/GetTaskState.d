@@ -1,4 +1,4 @@
-GetTaskState.o: modules\rtos\src\GetTaskState.c \
+GetTaskState.o: modules/rtos/src/GetTaskState.c \
  modules/rtos/inc/Os_Internal.h modules/rtos/inc/os.h \
  modules/rtos/inc/Types.h modules/rtos/inc/Compiler.h \
  modules/rtos/inc/Types_Arch.h out/gen/inc/Os_Cfg.h \

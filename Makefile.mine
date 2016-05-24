@@ -93,7 +93,7 @@ BOARD          ?= edu_ciaa_nxp
 #
 
 
-PROJECT_PATH  ?= projects/clase/$(DS)EjemploPinIsr
+PROJECT_PATH  ?= projects/clase/$(DS)EjemploPinIsrSetEvent
 
 LFLAGS += -lc -lrdimon
 

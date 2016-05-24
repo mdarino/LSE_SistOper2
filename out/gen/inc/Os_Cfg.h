@@ -81,6 +81,8 @@
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
+/** \brief Definition of the Event evPIN */
+#define evPIN 0x1U
 
 
 
