@@ -183,16 +183,16 @@ void (* const g_pfnVectors[])(void) = {
    OSEK_ISR_NoHandler, /* 0x27 0x0000009C - No Handler set for ISR SSP1 (IRQ 23) */
    OSEK_ISR_NoHandler, /* 0x28 0x000000A0 - No Handler set for ISR UART0 (IRQ 24) */
    OSEK_ISR_NoHandler, /* 0x29 0x000000A4 - No Handler set for ISR UART1 (IRQ 25) */
-   OSEK_ISR_NoHandler, /* 0x2a 0x000000A8 - No Handler set for ISR UART2 (IRQ 26) */
+   OSEK_ISR2_UART_IRQ, /* 0x2a 0x000000A8 ISR for UART2 (IRQ 26) Category 2 */
    OSEK_ISR_NoHandler, /* 0x2b 0x000000AC - No Handler set for ISR UART3 (IRQ 27) */
    OSEK_ISR_NoHandler, /* 0x2c 0x000000B0 - No Handler set for ISR I2S0 (IRQ 28) */
    OSEK_ISR_NoHandler, /* 0x2d 0x000000B4 - No Handler set for ISR I2S1 (IRQ 29) */
    OSEK_ISR_NoHandler, /* 0x2e 0x000000B8 - No Handler set for ISR SPIFI (IRQ 30) */
    OSEK_ISR_NoHandler, /* 0x2f 0x000000BC - No Handler set for ISR SGPIO (IRQ 31) */
    OSEK_ISR2_GPIO0_IRQ, /* 0x30 0x000000C0 ISR for GPIO0 (IRQ 32) Category 2 */
-   OSEK_ISR2_GPIO1_IRQ, /* 0x31 0x000000C4 ISR for GPIO1 (IRQ 33) Category 2 */
-   OSEK_ISR2_GPIO2_IRQ, /* 0x32 0x000000C8 ISR for GPIO2 (IRQ 34) Category 2 */
-   OSEK_ISR2_GPIO3_IRQ, /* 0x33 0x000000CC ISR for GPIO3 (IRQ 35) Category 2 */
+   OSEK_ISR_NoHandler, /* 0x31 0x000000C4 - No Handler set for ISR GPIO1 (IRQ 33) */
+   OSEK_ISR_NoHandler, /* 0x32 0x000000C8 - No Handler set for ISR GPIO2 (IRQ 34) */
+   OSEK_ISR_NoHandler, /* 0x33 0x000000CC - No Handler set for ISR GPIO3 (IRQ 35) */
    OSEK_ISR_NoHandler, /* 0x34 0x000000D0 - No Handler set for ISR GPIO4 (IRQ 36) */
    OSEK_ISR_NoHandler, /* 0x35 0x000000D4 - No Handler set for ISR GPIO5 (IRQ 37) */
    OSEK_ISR_NoHandler, /* 0x36 0x000000D8 - No Handler set for ISR GPIO6 (IRQ 38) */
@@ -215,48 +215,32 @@ void (* const g_pfnVectors[])(void) = {
 /** \brief Interrupt enabling and priority setting function */
 void Enable_User_ISRs(void)
 {
+   /* Enabling IRQ UART2 with priority 0 */
+   NVIC_EnableIRQ(26);
+   NVIC_SetPriority(26, 0);
+
    /* Enabling IRQ GPIO0 with priority 0 */
    NVIC_EnableIRQ(32);
    NVIC_SetPriority(32, 0);
-
-   /* Enabling IRQ GPIO1 with priority 0 */
-   NVIC_EnableIRQ(33);
-   NVIC_SetPriority(33, 0);
-
-   /* Enabling IRQ GPIO2 with priority 0 */
-   NVIC_EnableIRQ(34);
-   NVIC_SetPriority(34, 0);
-
-   /* Enabling IRQ GPIO3 with priority 0 */
-   NVIC_EnableIRQ(35);
-   NVIC_SetPriority(35, 0);
 
 }
 
 /** \brief Enable user defined category 2 ISRs */
 void Enable_ISR2_Arch(void)
 {
+   /* Enabling IRQ UART2 */
+   NVIC_EnableIRQ(26);
    /* Enabling IRQ GPIO0 */
    NVIC_EnableIRQ(32);
-   /* Enabling IRQ GPIO1 */
-   NVIC_EnableIRQ(33);
-   /* Enabling IRQ GPIO2 */
-   NVIC_EnableIRQ(34);
-   /* Enabling IRQ GPIO3 */
-   NVIC_EnableIRQ(35);
 }
 
 /** \brief Disable user defined category 2 ISRs */
 void Disable_ISR2_Arch(void)
 {
+   /* Disabling IRQ UART2 */
+   NVIC_DisableIRQ(26);
    /* Disabling IRQ GPIO0 */
    NVIC_DisableIRQ(32);
-   /* Disabling IRQ GPIO1 */
-   NVIC_DisableIRQ(33);
-   /* Disabling IRQ GPIO2 */
-   NVIC_DisableIRQ(34);
-   /* Disabling IRQ GPIO3 */
-   NVIC_DisableIRQ(35);
 }
 
 /** @} doxygen end group definition */

@@ -72,9 +72,9 @@
 /*==================[internal data definition]===============================*/
 /** \brief InitTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskInitTask[512 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskInitTask[1024 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskInitTask[512];
+uint8 StackTaskInitTask[1024];
 #endif
 /** \brief LedTask stack */
 #if ( x86 == ARCH )
@@ -140,7 +140,7 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | evPIN , /* events mask */
+      0 , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    }
@@ -220,6 +220,30 @@ uint8 ErrorHookRunning;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
+void OSEK_ISR2_UART_IRQ(void)
+{
+   /* store the calling context in a variable */
+   ContextType actualContext = GetCallingContext();
+   /* set isr 2 context */
+   SetActualContext(CONTEXT_ISR2);
+
+   /* trigger isr 2 */
+   OSEK_ISR_UART_IRQ();
+
+   /* reset context */
+   SetActualContext(actualContext);
+
+#if (NON_PREEMPTIVE == OSEK_DISABLE)
+   /* check if the actual task is preemptive */
+   if ( ( CONTEXT_TASK == actualContext ) &&
+        ( TasksConst[GetRunningTask()].ConstFlags.Preemtive ) )
+   {
+      /* this shall force a call to the scheduler */
+      PostIsr2_Arch(isr);
+   }
+#endif /* #if (NON_PREEMPTIVE == OSEK_ENABLE) */
+}
+
 void OSEK_ISR2_GPIO0_IRQ(void)
 {
    /* store the calling context in a variable */
@@ -229,78 +253,6 @@ void OSEK_ISR2_GPIO0_IRQ(void)
 
    /* trigger isr 2 */
    OSEK_ISR_GPIO0_IRQ();
-
-   /* reset context */
-   SetActualContext(actualContext);
-
-#if (NON_PREEMPTIVE == OSEK_DISABLE)
-   /* check if the actual task is preemptive */
-   if ( ( CONTEXT_TASK == actualContext ) &&
-        ( TasksConst[GetRunningTask()].ConstFlags.Preemtive ) )
-   {
-      /* this shall force a call to the scheduler */
-      PostIsr2_Arch(isr);
-   }
-#endif /* #if (NON_PREEMPTIVE == OSEK_ENABLE) */
-}
-
-void OSEK_ISR2_GPIO1_IRQ(void)
-{
-   /* store the calling context in a variable */
-   ContextType actualContext = GetCallingContext();
-   /* set isr 2 context */
-   SetActualContext(CONTEXT_ISR2);
-
-   /* trigger isr 2 */
-   OSEK_ISR_GPIO1_IRQ();
-
-   /* reset context */
-   SetActualContext(actualContext);
-
-#if (NON_PREEMPTIVE == OSEK_DISABLE)
-   /* check if the actual task is preemptive */
-   if ( ( CONTEXT_TASK == actualContext ) &&
-        ( TasksConst[GetRunningTask()].ConstFlags.Preemtive ) )
-   {
-      /* this shall force a call to the scheduler */
-      PostIsr2_Arch(isr);
-   }
-#endif /* #if (NON_PREEMPTIVE == OSEK_ENABLE) */
-}
-
-void OSEK_ISR2_GPIO2_IRQ(void)
-{
-   /* store the calling context in a variable */
-   ContextType actualContext = GetCallingContext();
-   /* set isr 2 context */
-   SetActualContext(CONTEXT_ISR2);
-
-   /* trigger isr 2 */
-   OSEK_ISR_GPIO2_IRQ();
-
-   /* reset context */
-   SetActualContext(actualContext);
-
-#if (NON_PREEMPTIVE == OSEK_DISABLE)
-   /* check if the actual task is preemptive */
-   if ( ( CONTEXT_TASK == actualContext ) &&
-        ( TasksConst[GetRunningTask()].ConstFlags.Preemtive ) )
-   {
-      /* this shall force a call to the scheduler */
-      PostIsr2_Arch(isr);
-   }
-#endif /* #if (NON_PREEMPTIVE == OSEK_ENABLE) */
-}
-
-void OSEK_ISR2_GPIO3_IRQ(void)
-{
-   /* store the calling context in a variable */
-   ContextType actualContext = GetCallingContext();
-   /* set isr 2 context */
-   SetActualContext(CONTEXT_ISR2);
-
-   /* trigger isr 2 */
-   OSEK_ISR_GPIO3_IRQ();
 
    /* reset context */
    SetActualContext(actualContext);
