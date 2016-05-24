@@ -81,10 +81,24 @@
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
-/** \brief Definition of the Event evUART */
-#define evUART 0x1U
+/** \brief Definition of the Event evPIN */
+#define evPIN 0x1U
+/** \brief Definition of the Event evTime */
+#define evTime 0x2U
+/** \brief Definition of the Event evQueueTimeOutPut */
+#define evQueueTimeOutPut 0x4U
+/** \brief Definition of the Event evQueueTimeOutGet */
+#define evQueueTimeOutGet 0x8U
+/** \brief Definition of the Event evQueueSpace */
+#define evQueueSpace 0x10U
 
 
+/** \brief Definition of the Alarm AlarmLedTimeEvent */
+#define AlarmLedTimeEvent 0
+/** \brief Definition of the Alarm AlarmQueueTimeoutPut */
+#define AlarmQueueTimeoutPut 1
+/** \brief Definition of the Alarm AlarmQueueTimeoutGet */
+#define AlarmQueueTimeoutGet 2
 
 /** \brief Definition of the Counter HardwareCounter */
 #define HardwareCounter 0
@@ -178,8 +192,6 @@ DeclareTask(InitTask);
 /** \brief Task Declaration of Task LedTask */
 DeclareTask(LedTask);
 
-/** \brief ISR Declaration */
-extern void OSEK_ISR_UART_IRQ(void); /* Interrupt Handler UART_IRQ */
 /** \brief ISR Declaration */
 extern void OSEK_ISR_GPIO0_IRQ(void); /* Interrupt Handler GPIO0_IRQ */
 

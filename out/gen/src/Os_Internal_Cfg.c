@@ -72,9 +72,9 @@
 /*==================[internal data definition]===============================*/
 /** \brief InitTask stack */
 #if ( x86 == ARCH )
-uint8 StackTaskInitTask[1024 + TASK_STACK_ADDITIONAL_SIZE];
+uint8 StackTaskInitTask[512 + TASK_STACK_ADDITIONAL_SIZE];
 #else
-uint8 StackTaskInitTask[1024];
+uint8 StackTaskInitTask[512];
 #endif
 /** \brief LedTask stack */
 #if ( x86 == ARCH )
@@ -94,7 +94,10 @@ TaskType ReadyList1[1];
 /** \brief Ready List for Priority 0 */
 TaskType ReadyList0[1];
 
-const AlarmType OSEK_ALARMLIST_HardwareCounter[0] = {
+const AlarmType OSEK_ALARMLIST_HardwareCounter[3] = {
+   AlarmLedTimeEvent, /* this alarm has to be incremented with this counter */
+   AlarmQueueTimeoutPut, /* this alarm has to be incremented with this counter */
+   AlarmQueueTimeoutGet, /* this alarm has to be incremented with this counter */
 };
 
 
@@ -140,7 +143,7 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | evUART , /* events mask */
+      0 | evPIN | evTime | evQueueTimeOutPut | evQueueTimeOutGet | evQueueSpace , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    }
@@ -185,11 +188,40 @@ const TaskPriorityType ResourcesPriority[0]  = {
 
 };
 /** TODO replace next line with: 
- ** AlarmVarType AlarmsVar[0]; */
-AlarmVarType AlarmsVar[0];
+ ** AlarmVarType AlarmsVar[3]; */
+AlarmVarType AlarmsVar[3];
 
-const AlarmConstType AlarmsConst[0]  = {
-
+const AlarmConstType AlarmsConst[3]  = {
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      SETEVENT, /* Alarm action */
+      {
+         NULL, /* no callback */
+         LedTask, /* TaskID */
+         evTime, /* no event */
+         0 /* no counter */
+      },
+   },
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      SETEVENT, /* Alarm action */
+      {
+         NULL, /* no callback */
+         LedTask, /* TaskID */
+         evQueueTimeOutPut, /* no event */
+         0 /* no counter */
+      },
+   },
+   {
+      OSEK_COUNTER_HardwareCounter, /* Counter */
+      SETEVENT, /* Alarm action */
+      {
+         NULL, /* no callback */
+         LedTask, /* TaskID */
+         evQueueTimeOutGet, /* no event */
+         0 /* no counter */
+      },
+   }
 };
 
 const AutoStartAlarmType AutoStartAlarm[ALARM_AUTOSTART_COUNT] = {
@@ -200,7 +232,7 @@ CounterVarType CountersVar[1];
 
 const CounterConstType CountersConst[1] = {
    {
-      0, /* quantity of alarms for this counter */
+      3, /* quantity of alarms for this counter */
       (AlarmType*)OSEK_ALARMLIST_HardwareCounter, /* alarms list */
       100000, /* max allowed value */
       1, /* min cycle */
@@ -220,30 +252,6 @@ uint8 ErrorHookRunning;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
-void OSEK_ISR2_UART_IRQ(void)
-{
-   /* store the calling context in a variable */
-   ContextType actualContext = GetCallingContext();
-   /* set isr 2 context */
-   SetActualContext(CONTEXT_ISR2);
-
-   /* trigger isr 2 */
-   OSEK_ISR_UART_IRQ();
-
-   /* reset context */
-   SetActualContext(actualContext);
-
-#if (NON_PREEMPTIVE == OSEK_DISABLE)
-   /* check if the actual task is preemptive */
-   if ( ( CONTEXT_TASK == actualContext ) &&
-        ( TasksConst[GetRunningTask()].ConstFlags.Preemtive ) )
-   {
-      /* this shall force a call to the scheduler */
-      PostIsr2_Arch(isr);
-   }
-#endif /* #if (NON_PREEMPTIVE == OSEK_ENABLE) */
-}
-
 void OSEK_ISR2_GPIO0_IRQ(void)
 {
    /* store the calling context in a variable */

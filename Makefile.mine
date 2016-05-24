@@ -92,8 +92,8 @@ BOARD          ?= edu_ciaa_nxp
 # examples/rtos_example              (example using rtos)
 #
 
-
-PROJECT_PATH  ?= projects/clase/$(DS)EjemploUART
+PROJECT_PATH  ?= projects/ejercicios/$(DS)5_2
+#PROJECT_PATH  ?= projects/clase/$(DS)EjemploUART
 
 LFLAGS += -lc -lrdimon
 
