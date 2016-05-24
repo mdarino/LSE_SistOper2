@@ -116,10 +116,10 @@ void UART0_IRQHandler(void)
 	uart_irq(CIAA_UART_485);
 }
 
-void UART2_IRQHandler(void)
-{
-	uart_irq(CIAA_UART_USB);
-}
+// void UART2_IRQHandler(void)
+// {
+// 	uart_irq(CIAA_UART_USB);
+// }
 
 void UART3_IRQHandler(void)
 {

@@ -129,8 +129,9 @@ TASK(LedTask)
   led_SetOFF(LED_RED);
   led_SetOFF(LED_BLUE);
   led_SetOFF(LED_GREEN);
-  dbgPrint("Waiting...");
-  TerminateTask();
+  WaitEvent(evUART);
+  ClearEvent(evUART);
+  ChainTask(LedTask);
    
 }
 
@@ -146,6 +147,7 @@ ISR(GPIO0_IRQ)
 
 ISR (UART_IRQ) {
   uart_irq(CIAA_UART_USB);
+  SetEvent(LedTask,evUART);
 
 }
 

@@ -122,7 +122,7 @@
 #define NON_PREEMPTIVE OSEK_ENABLE
 
 /** \brief NO_EVENTS macro definition */
-#define NO_EVENTS OSEK_ENABLE
+#define NO_EVENTS OSEK_DISABLE
 
 /** \brief NO_RES_SCHEDULER macro definition */
 #define NO_RES_SCHEDULER OSEK_ENABLE

@@ -81,6 +81,8 @@
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
+/** \brief Definition of the Event evUART */
+#define evUART 0x1U
 
 
 
