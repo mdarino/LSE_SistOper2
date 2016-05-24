@@ -140,7 +140,7 @@ const TaskConstType TasksConst[TASKS_COUNT] = {
          0, /* non preemtive task */
          0
       }, /* task const flags */
-      0 | evTIMER1 , /* events mask */
+      0 , /* events mask */
       0 ,/* resources mask */
       0 /* core */
    }
@@ -220,7 +220,7 @@ uint8 ErrorHookRunning;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
-void OSEK_ISR2_TIMER1_IRQ(void)
+void OSEK_ISR2_GPIO0_IRQ(void)
 {
    /* store the calling context in a variable */
    ContextType actualContext = GetCallingContext();
@@ -228,7 +228,7 @@ void OSEK_ISR2_TIMER1_IRQ(void)
    SetActualContext(CONTEXT_ISR2);
 
    /* trigger isr 2 */
-   OSEK_ISR_TIMER1_IRQ();
+   OSEK_ISR_GPIO0_IRQ();
 
    /* reset context */
    SetActualContext(actualContext);

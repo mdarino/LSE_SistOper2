@@ -3,7 +3,7 @@
 
 
 #include "ciaaTIMER.h"
-#include "os.h"               /* <= operating system header */
+
 
 
 void ciaaTIMER1Init(void)
@@ -47,34 +47,21 @@ void ciaaTIMER1ClearMatch(uint8_t match){
 }
 
 
-// 
-// 
-// void ciaaTIMER1Set(uint32_t usec)
-// {
-//    Chip_TIMER_SetMatch(LPC_TIMER1, 0, usec);
-//    Chip_TIMER_Reset(LPC_TIMER1);
-//    Chip_TIMER_Enable(LPC_TIMER1);
-
-//    WaitEvent(evTIMER1);
-//    ClearEvent(evTIMER1);
-//    Chip_TIMER_Disable(LPC_TIMER1);
-
-// }
 
 
-
-
-//copiar en la app 
-
-/* Handler de interrupción del Timer 1 */
 /*
-void TIMER1_IRQHandler(void)
-{
-   if (Chip_TIMER_MatchPending(LPC_TIMER1, 0)) {
-      SetEvent(evTIMER1);      
-   }
-   Chip_TIMER_ClearMatch(LPC_TIMER1, 0);
+AGREGAR EN EL .OIL
+
+ISR TIMER1_IRQ {
+   CATEGORY=2;
+   INTERRUPT=TIMER1;
+   PRIORITY=0;
 }
 
+AGREGAR EN EL .c
 
+ISR(TIMER1_IRQ)
+{
+  delay_setEvent(); //time!!!
+}
 */

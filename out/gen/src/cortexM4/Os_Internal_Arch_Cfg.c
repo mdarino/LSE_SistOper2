@@ -170,7 +170,7 @@ void (* const g_pfnVectors[])(void) = {
    OSEK_ISR_NoHandler, /* 0x1a 0x00000068 - No Handler set for ISR SCT (IRQ 10) */
    OSEK_ISR_NoHandler, /* 0x1b 0x0000006C - No Handler set for ISR RIT (IRQ 11) */
    OSEK_ISR_NoHandler, /* 0x1c 0x00000070 - No Handler set for ISR TIMER0 (IRQ 12) */
-   OSEK_ISR2_TIMER1_IRQ, /* 0x1d 0x00000074 ISR for TIMER1 (IRQ 13) Category 2 */
+   OSEK_ISR_NoHandler, /* 0x1d 0x00000074 - No Handler set for ISR TIMER1 (IRQ 13) */
    OSEK_ISR_NoHandler, /* 0x1e 0x00000078 - No Handler set for ISR TIMER2 (IRQ 14) */
    OSEK_ISR_NoHandler, /* 0x1f 0x0000007C - No Handler set for ISR TIMER3 (IRQ 15) */
    OSEK_ISR_NoHandler, /* 0x20 0x00000080 - No Handler set for ISR MCPWM (IRQ 16) */
@@ -189,7 +189,7 @@ void (* const g_pfnVectors[])(void) = {
    OSEK_ISR_NoHandler, /* 0x2d 0x000000B4 - No Handler set for ISR I2S1 (IRQ 29) */
    OSEK_ISR_NoHandler, /* 0x2e 0x000000B8 - No Handler set for ISR SPIFI (IRQ 30) */
    OSEK_ISR_NoHandler, /* 0x2f 0x000000BC - No Handler set for ISR SGPIO (IRQ 31) */
-   OSEK_ISR_NoHandler, /* 0x30 0x000000C0 - No Handler set for ISR GPIO0 (IRQ 32) */
+   OSEK_ISR2_GPIO0_IRQ, /* 0x30 0x000000C0 ISR for GPIO0 (IRQ 32) Category 2 */
    OSEK_ISR_NoHandler, /* 0x31 0x000000C4 - No Handler set for ISR GPIO1 (IRQ 33) */
    OSEK_ISR_NoHandler, /* 0x32 0x000000C8 - No Handler set for ISR GPIO2 (IRQ 34) */
    OSEK_ISR_NoHandler, /* 0x33 0x000000CC - No Handler set for ISR GPIO3 (IRQ 35) */
@@ -215,24 +215,24 @@ void (* const g_pfnVectors[])(void) = {
 /** \brief Interrupt enabling and priority setting function */
 void Enable_User_ISRs(void)
 {
-   /* Enabling IRQ TIMER1 with priority 0 */
-   NVIC_EnableIRQ(13);
-   NVIC_SetPriority(13, 0);
+   /* Enabling IRQ GPIO0 with priority 0 */
+   NVIC_EnableIRQ(32);
+   NVIC_SetPriority(32, 0);
 
 }
 
 /** \brief Enable user defined category 2 ISRs */
 void Enable_ISR2_Arch(void)
 {
-   /* Enabling IRQ TIMER1 */
-   NVIC_EnableIRQ(13);
+   /* Enabling IRQ GPIO0 */
+   NVIC_EnableIRQ(32);
 }
 
 /** \brief Disable user defined category 2 ISRs */
 void Disable_ISR2_Arch(void)
 {
-   /* Disabling IRQ TIMER1 */
-   NVIC_DisableIRQ(13);
+   /* Disabling IRQ GPIO0 */
+   NVIC_DisableIRQ(32);
 }
 
 /** @} doxygen end group definition */

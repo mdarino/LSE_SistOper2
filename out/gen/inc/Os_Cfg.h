@@ -81,8 +81,6 @@
 /** \brief Definition of the Application Mode AppMode1 */
 #define AppMode1 0
 
-/** \brief Definition of the Event evTIMER1 */
-#define evTIMER1 0x1U
 
 
 
@@ -179,7 +177,7 @@ DeclareTask(InitTask);
 DeclareTask(LedTask);
 
 /** \brief ISR Declaration */
-extern void OSEK_ISR_TIMER1_IRQ(void); /* Interrupt Handler TIMER1_IRQ */
+extern void OSEK_ISR_GPIO0_IRQ(void); /* Interrupt Handler GPIO0_IRQ */
 
 
 /** \brief Schedule this Task if higher priority Task are Active

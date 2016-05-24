@@ -4,34 +4,15 @@
 
   @file     main.c
 
-  @brief    EJERCICIO 3.1 - RTOS 2 OSEK
+  @brief    EJERCICIO PIN ISR - RTOS 2 OSEK
 
   @author   Marcos Darino (MD)
 
  ******************************************************************************/
 
 
-/**
 
- EJERCICIO 3.1    (Spanish)
-
-Este   es   el   uso   más   simple   de   las   colas   del   RTOS:   Los   mensajes   se   pasan   por   copia   dentro   de   la  
-cola, dándole persistencia a los mismos una vez que la tarea productora sale de contexto. 
- 
-Caso de uso​
-: Una tarea manejadora de evento bloquea hasta recibir el mismo. 
- 
-Ejercicio​
-:   Una   tarea   mide   el   tiempo   de   opresión   de   un   pulsador.   Cuando   lo   obtiene   lo   envía   par   cola   a  
-otra tarea que destella un led durante el tiempo recibido. 
-
- **/
-
-
-
-
-
-/** \addtogroup OSEK_RTOS Ejer1.4
+/** \addtogroup OSEK_RTOS PIN_ISR
  ** @{ */
 /*==================[inclusions]=============================================*/
 //#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
@@ -40,9 +21,7 @@ otra tarea que destella un led durante el tiempo recibido.
 #include "main.h"         /* <= own header */
 #include "HW_leds.h"
 #include "HW_buttons.h"
-#include "queue.h"
 #include "ciaaIO.h"
-#include "delay.h"
 #include "os.h"               /* <= operating system header */
 
 /*==================[macros and definitions]=================================*/
@@ -111,14 +90,14 @@ TASK(InitTask)
    
    //ciaak_start();
    ciaaIOInit();
-   delay_init();
+   ciaaIO_ISR_Init();
    led_Init();
 
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every TIME_UPDATE_BUTTON ticks (10 ms)
     */
-   
+   ciaaIO_ISR_SetButton1(0);
    ActivateTask(LedTask);  
    /* terminate task */
    TerminateTask();
@@ -134,11 +113,28 @@ TASK(InitTask)
 TASK(LedTask)
 {
  
-  /* terminate task */
-   delay_us(2000000);
-   led_SetToggle(LED_GREEN);
-   ChainTask(LedTask);
+  led_SetOFF(LED_1);
+  led_SetOFF(LED_2);
+  led_SetOFF(LED_3);
+  TerminateTask();
    
+}
+
+
+
+void GPIO0_IRQ()
+{
+
+
+   
+   if (Chip_PININT_GetFallStates(LPC_GPIO_PIN_INT)&PININTCH0)
+    { 
+      Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT,PININTCH0);   
+      led_SetON(LED_1);
+
+    }
+
+
 }
 
 
@@ -146,19 +142,3 @@ TASK(LedTask)
 
 /*==================[end of file]============================================*/
 
-
-  
-
-ISR(TIMER1_IRQ)
-{
-  delay_setEvent(); //time!!!
-}
-
-
-// ISR(TIMER1_IRQ)
-// {
-//    if (Chip_TIMER_MatchPending(LPC_TIMER1, 0)) {
-//       SetEvent(LedTask,evTIMER1);      
-//    }
-//    Chip_TIMER_ClearMatch(LPC_TIMER1, 0);
-// }
