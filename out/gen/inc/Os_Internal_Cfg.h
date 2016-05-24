@@ -371,6 +371,15 @@ extern const CounterConstType CountersConst[1];
 /** \brief Interrupt Cat 2 GPIO0_IRQ
  **/
 extern void OSEK_ISR2_GPIO0_IRQ(void);
+/** \brief Interrupt Cat 2 GPIO1_IRQ
+ **/
+extern void OSEK_ISR2_GPIO1_IRQ(void);
+/** \brief Interrupt Cat 2 GPIO2_IRQ
+ **/
+extern void OSEK_ISR2_GPIO2_IRQ(void);
+/** \brief Interrupt Cat 2 GPIO3_IRQ
+ **/
+extern void OSEK_ISR2_GPIO3_IRQ(void);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

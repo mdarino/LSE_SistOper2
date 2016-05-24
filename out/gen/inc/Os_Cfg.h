@@ -178,6 +178,12 @@ DeclareTask(LedTask);
 
 /** \brief ISR Declaration */
 extern void OSEK_ISR_GPIO0_IRQ(void); /* Interrupt Handler GPIO0_IRQ */
+/** \brief ISR Declaration */
+extern void OSEK_ISR_GPIO1_IRQ(void); /* Interrupt Handler GPIO1_IRQ */
+/** \brief ISR Declaration */
+extern void OSEK_ISR_GPIO2_IRQ(void); /* Interrupt Handler GPIO2_IRQ */
+/** \brief ISR Declaration */
+extern void OSEK_ISR_GPIO3_IRQ(void); /* Interrupt Handler GPIO3_IRQ */
 
 
 /** \brief Schedule this Task if higher priority Task are Active

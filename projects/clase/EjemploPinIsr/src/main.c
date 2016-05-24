@@ -22,6 +22,7 @@
 #include "HW_leds.h"
 #include "HW_buttons.h"
 #include "ciaaIO.h"
+#include "ciaaIO_ISR.h"
 #include "os.h"               /* <= operating system header */
 
 /*==================[macros and definitions]=================================*/
@@ -98,6 +99,10 @@ TASK(InitTask)
     *  - and then every TIME_UPDATE_BUTTON ticks (10 ms)
     */
    ciaaIO_ISR_SetButton1(0);
+   ciaaIO_ISR_SetButton2(1);
+   ciaaIO_ISR_SetButton3(0);
+   ciaaIO_ISR_SetButton4(1);
+
    ActivateTask(LedTask);  
    /* terminate task */
    TerminateTask();
@@ -116,27 +121,39 @@ TASK(LedTask)
   led_SetOFF(LED_1);
   led_SetOFF(LED_2);
   led_SetOFF(LED_3);
+  led_SetOFF(LED_RED);
+  led_SetOFF(LED_BLUE);
+  led_SetOFF(LED_GREEN);
   TerminateTask();
    
 }
 
 
-
-void GPIO0_IRQ()
+ISR(GPIO0_IRQ)
 {
 
-
-   
-   if (Chip_PININT_GetFallStates(LPC_GPIO_PIN_INT)&PININTCH0)
-    { 
       Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT,PININTCH0);   
       led_SetON(LED_1);
-
-    }
-
-
+     
 }
 
+ISR(GPIO1_IRQ)
+{
+      Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT,PININTCH1);   
+      led_SetON(LED_2);
+}
+
+ISR(GPIO2_IRQ)
+{
+      Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT,PININTCH2);   
+      led_SetON(LED_3);
+}
+
+ISR(GPIO3_IRQ)
+{
+      Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT,PININTCH3);   
+      led_SetON(LED_RED);
+}
 
 /** @} doxygen end group definition */
 
