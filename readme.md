@@ -1,13 +1,25 @@
-<h1>Readme</h1>
+##  Real time system II - (RTOS)
 
-MARCOS DARINO: VER PROJECT -> SOLO SE REALIZARON EJERCICIOS PARA LA MATERIA RTOS 2, EL RESTO CORRESPONDE AL CIAA FIRMWARE DESCRIPTO:
+Personal resolution of the different practices required in the Subject.
+
+Curse program ([link](http://laboratorios.fi.uba.ar/lse/cursos.html#Oferta_cursos_2020)) 
+LSE ([link](http://laboratorios.fi.uba.ar/lse/))
+University ([link](http://www.fi.uba.ar/)) Universidad de Buenos Aires
 
 This is the root directory of the CIAA Firmware Project
 
 <b>git clone <i>--recursive</i> https://github.com/ciaa/Firmware.git</b>
 
-<h2>Project Information</h2>
+## Supported boards:
+- CIAA-NXP and EDU-CIAA-NXP (www.proyecto-ciaa.com.ar)
 
- * Project page: http://www.proyecto-ciaa.com.ar
- * Support is provided over the Google Group [CIAA-Firmware](https://groups.google.com/forum/#!forum/ciaa-firmware). Before asking for support check our wiki page for help.
- * If you found a bug please report it to: https://github.com/ciaa/firmware/issues. Also bugs found in submodules like rtos and modbus shall be reported to the master project.
+## Supported toolchains:
+- gcc-arm-none-eabi
+
+## Usage
+* Copy ```project.mk.template``` to ```project.mk```.
+* Define ```PROJECT```, ```TARGET``` and ```BOARD``` (optional) variables in ```project.mk``` according to the project you want to compile.
+* Compile with ```make```.
+* Clean with ```make clean```.
+* Download to target via OpenOCD with ```make download```.
+
